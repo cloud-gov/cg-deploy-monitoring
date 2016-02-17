@@ -1,0 +1,128 @@
+---
+jobs:
+
+- name: deploy-monitoring-production
+  plan:
+  - aggregate:
+    - get: pipeline-tasks
+    - get: monitoring-config
+      trigger: true
+    - get: monitoring-secrets-production
+      trigger: true
+    - get: riemann-release
+    - get: monitoring-stemcell
+  - task: monitoring-decrypt
+    file: pipelines-tasks/decrypt.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-private-production
+      params:
+        INPUT_FILE: monitoring-secrets-production/monitoring.yml
+        OUTPUT_FILE: decrypt/secrets.yml
+        PASSPHRASE: {{monitoring-production-private-passphrase}}
+  - task: monitoring-manifest
+    file: pipelines-tasks/spiff-merge.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-config
+        - name: decrypt
+      params:
+        OUTPUT_FILE: spiff-merge/manifest.yml
+        SOURCE_FILE: monitoring-config/monitoring.yml
+        MERGE_FILES: decrypt/secrets.yml
+  - task: bosh-prod-ssl-cert
+    file: pipelines-tasks/write_file.yml
+    config:
+      params:
+        FILE_NAME: write_file/BOSHRootCA.pem
+        CONTENT: {{monitoring-production-deployment-bosh-cert}}
+  - put: monitoring-production-deployment
+    params:
+      cert: write_file/BOSHRootCA.pem
+      manifest: spiff-merge/manifest.yml
+      releases:
+        - riemann-release/*.tgz
+      stemcells:
+        - monitoring-stemcell/*.tgz
+    on_failure:
+      put: slack
+      params:
+        text: |
+          :x: FAILED to deploy monitoring on production
+          <https://ci.cloud.gov/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+    on_success:
+      put: slack
+      params:
+        text: |
+          :white_check_mark: Successfully deployed monitoring on production
+          <https://ci.cloud.gov/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+
+
+resources:
+- name: riemann-release
+  type: bosh-io-release
+  source:
+    repository: hybris/riemann-boshrelease
+
+- name: monitoring-config
+  type: git
+  source:
+    uri: {{cg-deploy-monitoring-git-url}}
+    branch: {{cg-deploy-monitoring-git-branch}}
+
+- name: monitoring-secrets-staging
+  type: s3
+  source:
+    bucket: {{monitoring-private-bucket-staging}}
+    versioned_file: monitoring-staging.yml
+    access_key_id: {{monitoring-private-access-key-id-staging}}
+    secret_access_key: {{monitoring-private-secret-access-key-staging}}
+    region_name: {{monitoring-private-region-name}}
+    private: true
+
+- name: monitoring-secrets-production
+  type: s3
+  source:
+    bucket: {{monitoring-private-bucket-production}}
+    versioned_file: monitoring.yml
+    access_key_id: {{monitoring-private-access-key-id-production}}
+    secret_access_key: {{monitoring-private-secret-access-key-production}}
+    region_name: {{monitoring-private-region-name}}
+    private: true
+
+- name: monitoring-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: {{monitoring-stemcell}}
+
+- name: monitoring-staging-deployment
+  type: bosh-deployment
+  source:
+    target: {{monitoring-staging-deployment-bosh-target}}
+    username: {{monitoring-staging-deployment-bosh-username}}
+    password: {{monitoring-staging-deployment-bosh-password}}
+    deployment: {{monitoring-staging-deployment-bosh-deployment}}
+    ignore_ssl: false
+
+- name: monitoring-production-deployment
+  type: bosh-deployment
+  source:
+    target: {{monitoring-production-deployment-bosh-target}}
+    username: {{monitoring-production-deployment-bosh-username}}
+    password: {{monitoring-production-deployment-bosh-password}}
+    deployment: {{monitoring-production-deployment-bosh-deployment}}
+    ignore_ssl: false
+
+- name: pipeline-tasks
+  type: git
+  source:
+    uri: {{pipeline-tasks-git-url}}
+    branch: {{pipeline-tasks-git-branch}}
