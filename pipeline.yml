@@ -16,7 +16,7 @@ jobs:
     config:
       inputs:
         - name: pipeline-tasks
-        - name: monitoring-private-production
+        - name: monitoring-secrets-production
       params:
         INPUT_FILE: monitoring-secrets-production/monitoring.yml
         OUTPUT_FILE: decrypt/secrets.yml
