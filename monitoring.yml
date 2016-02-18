@@ -1,6 +1,9 @@
 name: graphite-prod
 
 meta:
+  grafana:
+    user: ~
+    pass: ~
   subnet: ~
   security_groups: ~
   default_security_group: ~
