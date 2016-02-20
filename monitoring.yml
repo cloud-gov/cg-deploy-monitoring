@@ -4,9 +4,15 @@ meta:
   grafana:
     user: ~
     pass: ~
-  subnet: ~
-  security_groups: ~
-  default_security_group: ~
+  riemann:
+    pagerduty_api_key: ~
+  network:
+    range: ~
+    reserved: ~
+    dns: ~
+    discovery_ip: ~
+    subnet: ~
+    security_groups: ~
 
 director_uuid: (( merge ))
 
@@ -30,7 +36,8 @@ jobs:
   resource_pool: medium_z1
   persistent_disk: 30000
   networks:
-  - name: default
+  - name: monitoring
+    static_ips: [*discovery_static_ip]
 
 properties:
   env: graphite-prod
@@ -59,6 +66,8 @@ properties:
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
     root_url: https://grafana-prod.18f.gov
+  riemann:
+    pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
 
 resource_pools:
 - name: medium_z1
@@ -93,8 +102,16 @@ update:
   update_watch_time: 1000-30000
 
 networks:
-- cloud_properties:
-    security_groups: (( meta.security_groups ))
-    subnet: (( meta.subnet ))
-  name: default
-  type: dynamic
+  - name: monitoring
+    type: manual
+    subnets:
+      - range: (( meta.network.range ))
+        reserved: (( meta.network.reserved ))
+        gateway: (( meta.network.gateway ))
+        dns: (( meta.network.dns ))
+        static:
+          - &discovery_static_ip (( meta.network.discovery_ip ))
+        cloud_properties:
+          security_groups: (( meta.network.security_groups ))
+          subnet: (( meta.network.subnet ))
+
