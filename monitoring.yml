@@ -113,7 +113,7 @@ properties:
 resource_pools:
 - name: medium_z1
   network: monitoring
-  size: 1
+  size: 2
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
