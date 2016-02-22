@@ -12,8 +12,8 @@ meta:
   network:
     range: ~
     reserved: ~
+    static: ~
     dns: ~
-    discovery_ip: ~
     gateway: ~
     subnet: ~
     security_groups: ~
@@ -38,8 +38,7 @@ networks:
         reserved: (( meta.network.reserved ))
         gateway: (( meta.network.gateway ))
         dns: (( meta.network.dns ))
-        static:
-          - &discovery_static_ip (( meta.network.discovery_ip ))
+        static: (( meta.network.static ))
         cloud_properties:
           security_groups: (( meta.network.security_groups ))
           subnet: (( meta.network.subnet ))
@@ -58,7 +57,7 @@ jobs:
   persistent_disk: 30000
   networks:
   - name: monitoring
-    static_ips: [*discovery_static_ip]
+    static_ips: (( static_ips(0) ))
 
 - name: influxdb
   templates:
@@ -68,7 +67,7 @@ jobs:
   persistent_disk: 30000
   networks:
   - name: monitoring
-    static_ips: [*discovery_static_ip]
+    static_ips: (( static_ips(1) ))
 
 properties:
   env: graphite-prod
