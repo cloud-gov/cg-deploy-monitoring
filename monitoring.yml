@@ -24,6 +24,20 @@ releases:
 - name: riemann
   version: 0.16.0
 
+networks:
+  - name: monitoring
+    type: manual
+    subnets:
+      - range: (( meta.network.range ))
+        reserved: (( meta.network.reserved ))
+        gateway: (( meta.network.gateway ))
+        dns: (( meta.network.dns ))
+        static:
+          - &discovery_static_ip (( meta.network.discovery_ip ))
+        cloud_properties:
+          security_groups: (( meta.network.security_groups ))
+          subnet: (( meta.network.subnet ))
+
 jobs:
 - name: graphite
   templates:
@@ -100,18 +114,4 @@ update:
   max_in_flight: 50
   serial: false
   update_watch_time: 1000-30000
-
-networks:
-  - name: monitoring
-    type: manual
-    subnets:
-      - range: (( meta.network.range ))
-        reserved: (( meta.network.reserved ))
-        gateway: (( meta.network.gateway ))
-        dns: (( meta.network.dns ))
-        static:
-          - &discovery_static_ip (( meta.network.discovery_ip ))
-        cloud_properties:
-          security_groups: (( meta.network.security_groups ))
-          subnet: (( meta.network.subnet ))
 
