@@ -51,7 +51,6 @@ jobs:
   - {name: statsd, release: graphite}
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
-  - {name: influxdb, release: influxdb}
   instances: 1
   resource_pool: medium_z1
   persistent_disk: 30000
