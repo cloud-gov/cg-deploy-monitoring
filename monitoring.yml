@@ -4,6 +4,9 @@ meta:
   grafana:
     user: ~
     pass: ~
+  influxdb:
+    user: ~
+    password: ~
   riemann:
     pagerduty_api_key: ~
   network:
@@ -22,6 +25,8 @@ releases:
   version: 0+dev.2
 - name: grafana
   version: 2
+- name: influxdb
+  version: 3
 - name: riemann
   version: 0.16.0
 
@@ -47,6 +52,7 @@ jobs:
   - {name: statsd, release: graphite}
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
+  - {name: influxdb, release: influxdb}
   instances: 1
   resource_pool: medium_z1
   persistent_disk: 30000
@@ -81,6 +87,10 @@ properties:
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
     root_url: https://grafana-prod.18f.gov
+  influxdb:
+    database: "production"
+    user: (( meta.influxdb.user ))
+    password: (( meta.influxdb.password ))
   riemann:
     pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
 
