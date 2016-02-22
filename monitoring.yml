@@ -24,7 +24,7 @@ releases:
 - name: graphite
   version: 0+dev.2
 - name: grafana
-  version: 2
+  version: 3+dev.1
 - name: influxdb
   version: 3
 - name: riemann
