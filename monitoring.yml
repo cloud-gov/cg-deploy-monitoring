@@ -60,6 +60,16 @@ jobs:
   - name: monitoring
     static_ips: [*discovery_static_ip]
 
+- name: influxdb
+  templates:
+  - {name: influxdb, release: influxdb}
+  instances: 1
+  resource_pool: medium_z1
+  persistent_disk: 30000
+  networks:
+  - name: monitoring
+    static_ips: [*discovery_static_ip]
+
 properties:
   env: graphite-prod
   carbon:
@@ -87,6 +97,13 @@ properties:
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
     root_url: https://grafana-prod.18f.gov
+    datasource:
+      database_type: "influxdb"
+      database_name: "production"
+      name: "influxdb_production"
+      user: (( meta.influxdb.user ))
+      password: (( meta.influxdb.password ))
+
   influxdb:
     database: "production"
     user: (( meta.influxdb.user ))
