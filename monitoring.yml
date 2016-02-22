@@ -86,7 +86,7 @@ properties:
 
 resource_pools:
 - name: medium_z1
-  network: default
+  network: monitoring
   size: 1
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
@@ -99,7 +99,7 @@ resource_pools:
     availability_zone: us-east-1b
 
 compilation:
-  network: default
+  network: monitoring
   reuse_compilation_vms: true
   workers: 4
   cloud_properties:
