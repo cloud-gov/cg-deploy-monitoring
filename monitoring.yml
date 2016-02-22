@@ -4,13 +4,16 @@ meta:
   grafana:
     user: ~
     pass: ~
+  influxdb:
+    user: ~
+    password: ~
   riemann:
     pagerduty_api_key: ~
   network:
     range: ~
     reserved: ~
+    static: ~
     dns: ~
-    discovery_ip: ~
     gateway: ~
     subnet: ~
     security_groups: ~
@@ -22,6 +25,8 @@ releases:
   version: 0+dev.2
 - name: grafana
   version: 2
+- name: influxdb
+  version: 3
 - name: riemann
   version: 0.16.0
 
@@ -33,8 +38,7 @@ networks:
         reserved: (( meta.network.reserved ))
         gateway: (( meta.network.gateway ))
         dns: (( meta.network.dns ))
-        static:
-          - &discovery_static_ip (( meta.network.discovery_ip ))
+        static: (( meta.network.static ))
         cloud_properties:
           security_groups: (( meta.network.security_groups ))
           subnet: (( meta.network.subnet ))
@@ -52,7 +56,17 @@ jobs:
   persistent_disk: 30000
   networks:
   - name: monitoring
-    static_ips: [*discovery_static_ip]
+    static_ips: (( static_ips(0) ))
+
+- name: influxdb
+  templates:
+  - {name: influxdb, release: influxdb}
+  instances: 1
+  resource_pool: medium_z1
+  persistent_disk: 30000
+  networks:
+  - name: monitoring
+    static_ips: (( static_ips(1) ))
 
 properties:
   env: graphite-prod
@@ -81,6 +95,18 @@ properties:
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
     root_url: https://grafana-prod.18f.gov
+    datasource:
+      database_type: "influxdb"
+      database_name: "production"
+      url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
+      name: "influxdb_production"
+      user: (( meta.influxdb.user ))
+      password: (( meta.influxdb.password ))
+
+  influxdb:
+    database: "production"
+    user: (( meta.influxdb.user ))
+    password: (( meta.influxdb.password ))
   riemann:
     pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
 
