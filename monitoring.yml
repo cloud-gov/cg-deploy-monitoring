@@ -26,7 +26,7 @@ releases:
 - name: grafana
   version: 3+dev.1
 - name: influxdb
-  version: 3
+  version: 5
 - name: riemann
   version: 0.16.0
 
