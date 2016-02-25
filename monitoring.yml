@@ -63,7 +63,7 @@ jobs:
   - {name: influxdb, release: influxdb}
   instances: 1
   resource_pool: medium_z1
-  persistent_disk: 30000
+  persistent_disk: 500000
   networks:
   - name: monitoring
     static_ips: (( static_ips(1) ))
