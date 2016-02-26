@@ -1,4 +1,4 @@
-name: graphite-prod
+name: monitoring
 
 meta:
   grafana:
@@ -21,8 +21,6 @@ meta:
 director_uuid: (( merge ))
 
 releases:
-- name: graphite
-  version: 0+dev.2
 - name: grafana
   version: 3+dev.1
 - name: influxdb
@@ -44,11 +42,8 @@ networks:
           subnet: (( meta.network.subnet ))
 
 jobs:
-- name: graphite
+- name: monitoring
   templates:
-  - {name: carbon, release: graphite}
-  - {name: graphite-web, release: graphite}
-  - {name: statsd, release: graphite}
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   instances: 1
@@ -69,27 +64,7 @@ jobs:
     static_ips: (( static_ips(1) ))
 
 properties:
-  env: graphite-prod
-  carbon:
-    storage_schemas:
-    - name: default
-      pattern: ".*"
-      retentions: 1m:1d,5m:2y
-    storage_aggregations:
-    - name: my_storage_aggregation
-      pattern: "^my\\.metrics\\.*"
-      xFilesFactor: '0.5'
-      aggregationMethod: average
-    - name: my_storage_aggregation_2
-      pattern: metrics$
-      xFilesFactor: '0.1'
-      aggregationMethod: max
-  graphite-web:
-    time_zone: Europe/London
-    httpd:
-      port: 80
-    wsgi:
-      inactivity-timeout: 60
+  env: monitoring
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
