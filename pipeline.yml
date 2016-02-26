@@ -7,40 +7,23 @@ jobs:
     - get: pipeline-tasks
     - get: monitoring-config
       trigger: true
-    - get: monitoring-secrets-production
-      trigger: true
+    - get: common-prod
     - get: riemann-release
     - get: monitoring-stemcell
-  - task: monitoring-decrypt
-    file: pipeline-tasks/decrypt.yml
-    config:
-      inputs:
-        - name: pipeline-tasks
-        - name: monitoring-secrets-production
-      params:
-        INPUT_FILE: monitoring-secrets-production/monitoring.yml
-        OUTPUT_FILE: decrypt/secrets.yml
-        PASSPHRASE: {{monitoring-production-private-passphrase}}
   - task: monitoring-manifest
     file: pipeline-tasks/spiff-merge.yml
     config:
       inputs:
         - name: pipeline-tasks
         - name: monitoring-config
-        - name: decrypt
+        - name: common-prod
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
         SOURCE_FILE: monitoring-config/monitoring.yml
-        MERGE_FILES: decrypt/secrets.yml
-  - task: bosh-prod-ssl-cert
-    file: pipeline-tasks/write_file.yml
-    config:
-      params:
-        FILE_NAME: write_file/BOSHRootCA.pem
-        CONTENT: {{monitoring-production-deployment-bosh-cert}}
+        MERGE_FILES: common-prod/secrets.yml
   - put: monitoring-production-deployment
     params:
-      cert: write_file/BOSHRootCA.pem
+      cert: common-prod/boshCA.crt
       manifest: spiff-merge/manifest.yml
       releases:
         - riemann-release/*.tgz
@@ -67,6 +50,26 @@ jobs:
 
 
 resources:
+- name: common-stage
+  type: cg-common
+  source:
+    bucket_name: {{monitoring-private-bucket-staging}}
+    access_key_id: {{monitoring-private-access-key-id-staging}}
+    secret_access_key: {{monitoring-private-secret-access-key-staging}}
+    secrets_file: monitoring-staging.yml
+    secrets_passphrase: {{monitoring-staging-private-passphrase}}
+    bosh_cert: bosh.pem
+
+- name: common-prod
+  type: cg-common
+  source:
+    bucket_name: {{monitoring-private-bucket-production}}
+    access_key_id: {{monitoring-private-access-key-id-production}}
+    secret_access_key: {{monitoring-private-secret-access-key-production}}
+    secrets_file: monitoring.yml
+    secrets_passphrase: {{monitoring-production-private-passphrase}}
+    bosh_cert: bosh.pem
+
 - name: riemann-release
   type: bosh-io-release
   source:
@@ -77,26 +80,6 @@ resources:
   source:
     uri: {{cg-deploy-monitoring-git-url}}
     branch: {{cg-deploy-monitoring-git-branch}}
-
-- name: monitoring-secrets-staging
-  type: s3
-  source:
-    bucket: {{monitoring-private-bucket-staging}}
-    versioned_file: monitoring-staging.yml
-    access_key_id: {{monitoring-private-access-key-id-staging}}
-    secret_access_key: {{monitoring-private-secret-access-key-staging}}
-    region_name: {{monitoring-private-region-name}}
-    private: true
-
-- name: monitoring-secrets-production
-  type: s3
-  source:
-    bucket: {{monitoring-private-bucket-production}}
-    versioned_file: monitoring.yml
-    access_key_id: {{monitoring-private-access-key-id-production}}
-    secret_access_key: {{monitoring-private-secret-access-key-production}}
-    region_name: {{monitoring-private-region-name}}
-    private: true
 
 - name: monitoring-stemcell
   type: bosh-io-stemcell
@@ -131,4 +114,3 @@ resources:
   type: slack-notification
   source:
     url: {{slack-webhook-url}}
-    
