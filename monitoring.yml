@@ -26,7 +26,7 @@ releases:
 - name: influxdb
   version: 5
 - name: riemann
-  version: 0.16.0
+  version: 0.16.1
 
 networks:
   - name: monitoring
@@ -72,7 +72,7 @@ properties:
     root_url: https://grafana-prod.18f.gov
     datasource:
       database_type: "influxdb"
-      database_name: "production"
+      database_name: (( meta.influxdb.database ))
       url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
       name: "influxdb_production"
       user: (( meta.influxdb.user ))
@@ -84,6 +84,18 @@ properties:
     password: (( meta.influxdb.password ))
   riemann:
     pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
+    swap:
+      critical: 1000000000
+      warn: 5000000000
+    disk:
+      critical: 90
+      warn: 85
+    influxdb:
+      host: (( jobs.influxdb.networks.monitoring.static_ips.[0] ))
+      username: (( meta.influxdb.user ))
+      password: (( meta.influxdb.password ))
+      port: 8086
+      database: (( meta.influxdb.database ))
 
 resource_pools:
 - name: medium_z1
