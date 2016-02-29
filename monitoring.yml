@@ -80,7 +80,7 @@ properties:
       password: (( meta.influxdb.password ))
 
   influxdb:
-    database: "production"
+    database: (( meta.influxdb.database ))
     user: (( meta.influxdb.user ))
     password: (( meta.influxdb.password ))
   riemann:
