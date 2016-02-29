@@ -1,4 +1,4 @@
-name: monitoring
+name: monitoring-prod
 
 meta:
   grafana:
