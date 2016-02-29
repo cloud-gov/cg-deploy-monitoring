@@ -7,6 +7,7 @@ meta:
   influxdb:
     user: ~
     password: ~
+    database: ~
   riemann:
     pagerduty_api_key: ~
   network:
