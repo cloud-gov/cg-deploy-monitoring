@@ -86,8 +86,8 @@ properties:
   riemann:
     pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
     swap:
-      critical: 1000000000
-      warn: 5000000000
+      critical: 25
+      warn: 10
     disk:
       critical: 90
       warn: 85
