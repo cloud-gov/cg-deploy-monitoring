@@ -97,6 +97,8 @@ properties:
       password: (( meta.influxdb.password ))
       port: 8086
       database: (( meta.influxdb.database ))
+  hm:
+    cloud_watch_enabled: true
 
 resource_pools:
 - name: medium_z1
