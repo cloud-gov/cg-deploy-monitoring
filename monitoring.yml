@@ -76,7 +76,7 @@ properties:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
-    root_url: https://grafana-prod.18f.gov
+    root_url: https://grafana.cloud.gov
     auth:
       github:
         enabled: true
@@ -146,3 +146,4 @@ update:
   max_in_flight: 50
   serial: false
   update_watch_time: 1000-30000
+
