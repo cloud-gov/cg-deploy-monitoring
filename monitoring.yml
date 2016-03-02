@@ -4,6 +4,12 @@ meta:
   grafana:
     user: ~
     pass: ~
+    auth:
+      github:
+        client_id: ~
+        client_secret: ~
+        allowed_organizations: ~
+        team_ids: ~
   influxdb:
     user: ~
     password: ~
@@ -71,6 +77,17 @@ properties:
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
     root_url: https://grafana-prod.18f.gov
+    auth:
+      github:
+        enabled: true
+        client_id: (( meta.grafana.auth.github.client_id ))
+        client_secret: (( meta.grafana.auth.github.client_secret ))
+        allowed_sign_up: true
+        auth_url: https://github.com/login/oauth/authorize
+        token_url: https://github.com/login/oauth/access_token
+        api_url: https://api.github.com/user
+        team_ids: (( meta.grafana.auth.github.team_ids ))
+        allowed_organizations: (( meta.grafana.auth.github.allowed_organizations ))
     datasource:
       database_type: "influxdb"
       database_name: (( meta.influxdb.database ))
@@ -129,4 +146,3 @@ update:
   max_in_flight: 50
   serial: false
   update_watch_time: 1000-30000
-
