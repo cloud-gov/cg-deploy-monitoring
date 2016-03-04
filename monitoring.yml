@@ -64,7 +64,7 @@ jobs:
   templates:
   - {name: influxdb, release: influxdb}
   instances: 1
-  resource_pool: medium_z1
+  resource_pool: large_z1
   persistent_disk: 500000
   networks:
   - name: monitoring
@@ -118,7 +118,7 @@ properties:
 resource_pools:
 - name: medium_z1
   network: monitoring
-  size: 2
+  size: 1 
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
@@ -128,6 +128,19 @@ resource_pools:
       size: 30000
       type: gp2
     availability_zone: us-east-1b
+- name: large_z1
+  network: monitoring
+  size: 1 
+  stemcell:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: latest
+  cloud_properties:
+    instance_type: m4.large
+    ephemeral_disk:
+      size: 30000
+      type: gp2
+    availability_zone: us-east-1b
+
 
 compilation:
   network: monitoring
