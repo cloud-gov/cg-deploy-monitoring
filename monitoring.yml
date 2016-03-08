@@ -80,7 +80,7 @@ jobs:
 properties:
   env: monitoring
   collectd:
-    hostname_refix: (( meta.environment "." ))
+    hostname_prefix: (( meta.environment "." ))
     riemann_server: (( merge ))
   grafana:
     admin_username: (( meta.grafana.user ))
