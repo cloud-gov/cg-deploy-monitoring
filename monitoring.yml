@@ -3,6 +3,7 @@ name: monitoring-prod
 meta:
   collectd:
     riemann_server: ~
+  environment: ~
   grafana:
     user: ~
     pass: ~
