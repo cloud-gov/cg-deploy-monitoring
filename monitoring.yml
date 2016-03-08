@@ -1,6 +1,8 @@
 name: monitoring-prod
 
 meta:
+  collectd:
+    riemann_server: ~
   grafana:
     user: ~
     pass: ~
@@ -81,7 +83,7 @@ properties:
   env: monitoring
   collectd:
     hostname_prefix: (( meta.environment "." ))
-    riemann_server: (( merge ))
+    riemann_server: (( meta.collectd.riemann_server ))
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
