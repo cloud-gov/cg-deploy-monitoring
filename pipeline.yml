@@ -8,7 +8,8 @@ jobs:
     - get: monitoring-config
       trigger: true
     - get: common-prod
-    - get: riemann-release
+    - get: cg-s3-riemann-release
+    - get: cg-s3-collectd-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
     file: pipeline-tasks/spiff-merge.yml
@@ -26,7 +27,8 @@ jobs:
       cert: common-prod/boshCA.crt
       manifest: spiff-merge/manifest.yml
       releases:
-        - riemann-release/*.tgz
+        - cg-s3-riemann-release/riemann*.tgz
+        - cg-s3-collectd-release/collectd*.tgz
       stemcells:
         - monitoring-stemcell/*.tgz
     on_failure:
@@ -70,10 +72,24 @@ resources:
     secrets_passphrase: {{monitoring-production-private-passphrase}}
     bosh_cert: bosh.pem
 
-- name: riemann-release
-  type: bosh-io-release
+- name: cg-s3-collectd-release
+  type: s3
   source:
-    repository: hybris/riemann-boshrelease
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: collectd-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+
+- name: cg-s3-riemann-release
+  type: s3
+  source:
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: riemann-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
 
 - name: monitoring-config
   type: git
