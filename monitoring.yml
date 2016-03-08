@@ -38,6 +38,8 @@ releases:
   version: 6
 - name: riemann
   version: 0.16.1
+- name: collectd
+  version: latest
 
 networks:
   - name: monitoring
@@ -67,6 +69,7 @@ jobs:
 - name: influxdb
   templates:
   - {name: influxdb, release: influxdb}
+  - {name: collectd, release: collectd}
   instances: 1
   resource_pool: large_z1
   persistent_disk: 500000
@@ -76,6 +79,9 @@ jobs:
 
 properties:
   env: monitoring
+  collectd:
+    hostname_refix: (( meta.environment "." ))
+    riemann_server: (( merge ))
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
