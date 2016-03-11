@@ -101,13 +101,44 @@ properties:
         api_url: https://api.github.com/user
         team_ids: (( meta.grafana.auth.github.team_ids ))
         allowed_organizations: (( meta.grafana.auth.github.allowed_organizations ))
-    datasource:
-      database_type: "influxdb"
-      database_name: (( meta.influxdb.database ))
-      url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-      name: "influxdb_production"
-      user: (( meta.grafana.influxdb_user ))
-      password: (( meta.grafana.influxdb_password ))
+    datasources:
+      - database_type: "influxdb"
+        database_name: (( meta.influxdb.database ))
+        url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
+        name: "influxdb_production"
+        user: (( meta.grafana.influxdb_user ))
+        password: (( meta.grafana.influxdb_password ))
+    dashboards:
+      - path: dashboards/All_In_One_CF.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Cloud_Controller.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/DEA.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Doppler_Server.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Gorouter.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Metron_Agent.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Syslog.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/Traffic_Controller.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/UAA.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/etcd.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
 
   influxdb:
     database: (( meta.influxdb.database ))
