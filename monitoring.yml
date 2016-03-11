@@ -36,11 +36,11 @@ director_uuid: (( merge ))
 
 releases:
 - name: grafana
-  version: 3+dev.1
+  version: latest
 - name: influxdb
-  version: 6
+  version: latest
 - name: riemann
-  version: 0.16.1
+  version: latest
 - name: collectd
   version: latest
 
