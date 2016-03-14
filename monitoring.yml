@@ -109,31 +109,31 @@ properties:
         user: (( meta.grafana.influxdb_user ))
         password: (( meta.grafana.influxdb_password ))
     dashboards:
-      - path: dashboards/All_In_One_CF.json
+      - path: dashboards/all-in-one-cf-components-dashboard.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Cloud_Controller.json
+      - path: dashboards/cloud-controller.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/DEA.json
+      - path: dashboards/dea.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Doppler_Server.json
+      - path: dashboards/doppler-server.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Gorouter.json
+      - path: dashboards/gorouter.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Metron_Agent.json
+      - path: dashboards/metron-agent.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Syslog.json
+      - path: dashboards/syslog.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/Traffic_Controller.json
+      - path: dashboards/traffic-controller.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
-      - path: dashboards/UAA.json
+      - path: dashboards/uaa.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
       - path: dashboards/etcd.json
