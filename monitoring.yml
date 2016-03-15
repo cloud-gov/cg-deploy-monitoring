@@ -89,7 +89,7 @@ properties:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
-    root_url: https://grafana.cloud.gov
+    root_url: https://metrics.cloud.gov
     auth:
       github:
         enabled: true
