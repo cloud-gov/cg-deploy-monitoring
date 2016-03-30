@@ -31,6 +31,7 @@ meta:
     gateway: ~
     subnet: ~
     security_groups: ~
+  elbs: []
 
 director_uuid: (( merge ))
 
@@ -63,7 +64,7 @@ jobs:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   instances: 1
-  resource_pool: medium_z1
+  resource_pool: grafana_z1
   persistent_disk: 30000
   networks:
   - name: monitoring
@@ -160,21 +161,20 @@ properties:
       database: (( meta.influxdb.database ))
 
 resource_pools:
-- name: medium_z1
+- name: grafana_z1
   network: monitoring
-  size: 1 
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   cloud_properties:
     instance_type: t2.medium
+    elbs: (( meta.elbs ))
     ephemeral_disk:
       size: 30000
       type: gp2
     availability_zone: us-east-1b
 - name: large_z1
   network: monitoring
-  size: 1 
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
