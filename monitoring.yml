@@ -31,7 +31,7 @@ meta:
     gateway: ~
     subnet: ~
     security_groups: ~
-  elbs: []
+  elbs: ~
 
 director_uuid: (( merge ))
 
