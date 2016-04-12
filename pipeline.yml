@@ -124,7 +124,7 @@ resources:
     name: {{monitoring-stemcell}}
 
 - name: monitoring-staging-deployment
-  type: bosh-deployment
+  type: 18f-bosh-deployment
   source:
     target: {{monitoring-staging-deployment-bosh-target}}
     username: {{monitoring-staging-deployment-bosh-username}}
@@ -133,7 +133,7 @@ resources:
     ignore_ssl: false
 
 - name: monitoring-production-deployment
-  type: bosh-deployment
+  type: 18f-bosh-deployment
   source:
     target: {{monitoring-production-deployment-bosh-target}}
     username: {{monitoring-production-deployment-bosh-username}}
