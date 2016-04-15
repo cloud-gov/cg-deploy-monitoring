@@ -151,8 +151,8 @@ properties:
       critical: 25
       warn: 10
     disk:
-      critical: 90
-      warn: 85
+      critical: 80
+      warn: 75
     influxdb:
       host: (( jobs.influxdb.networks.monitoring.static_ips.[0] ))
       username: (( meta.riemann.influxdb_user ))
