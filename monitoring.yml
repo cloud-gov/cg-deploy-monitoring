@@ -47,6 +47,8 @@ releases:
   version: latest
 - name: collectd
   version: latest
+- name: encrypt-blobstore
+  version: latest
 
 networks:
   - name: monitoring
