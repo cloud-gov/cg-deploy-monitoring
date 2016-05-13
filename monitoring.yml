@@ -1,6 +1,9 @@
 name: monitoring-prod
 
 meta:
+  aws:
+    access_key_id: ~
+    secret_access_key: ~
   collectd:
     riemann_server: ~
   environment: ~
@@ -63,6 +66,7 @@ jobs:
   templates:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
+  - {name: encrypt-blobstore, release: encrypt-blobstore}
   instances: 1
   resource_pool: grafana_z1
   persistent_disk: 30000
@@ -86,6 +90,10 @@ properties:
   collectd:
     hostname_prefix: (( meta.environment "." ))
     riemann_server: (( meta.collectd.riemann_server ))
+  encrypt-blobstore:
+    bucket: "18f-cf-green-blobstore"
+    access_key: (( meta.aws.access_key_id ))
+    secret_access_key: (( meta.aws.secret_access_key ))
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))

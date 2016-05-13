@@ -12,6 +12,7 @@ jobs:
     - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
+    - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
     file: pipeline-tasks/spiff-merge.yml
@@ -110,6 +111,15 @@ resources:
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: grafana-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-encrypt-blobstore-release
+  type: s3
+  source:
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: encrypt-blobstore-(.*).tgz
     secret_access_key: {{s3-bosh-releases-secret-access-key}}
 
 - name: monitoring-config
