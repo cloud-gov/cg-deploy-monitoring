@@ -99,6 +99,7 @@ properties:
     - "cloud-gov-varz"
     - "cloud-gov-varz-stage"
     - "18f-cf-green-blobstore"
+    - "cloud-gov-bosh-prod-blobstore"
     access_key: (( meta.aws.access_key_id ))
     secret_access_key: (( meta.aws.secret_access_key ))
   grafana:
