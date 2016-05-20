@@ -93,7 +93,12 @@ properties:
     hostname_prefix: (( meta.environment "." ))
     riemann_server: (( meta.collectd.riemann_server ))
   encrypt-blobstore:
-    bucket: "18f-cf-green-blobstore"
+    buckets:
+    - "18f-boshrelease-blob"
+    - "cloud-gov-bosh-releases"
+    - "cloud-gov-varz"
+    - "cloud-gov-varz-stage"
+    - "18f-cf-green-blobstore"
     access_key: (( meta.aws.access_key_id ))
     secret_access_key: (( meta.aws.secret_access_key ))
   grafana:
