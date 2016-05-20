@@ -206,7 +206,7 @@ compilation:
   reuse_compilation_vms: true
   workers: 4
   cloud_properties:
-    instance_type: t2.medium
+    instance_type: c4.xlarge
     ephemeral_disk:
       size: 30000
       type: gp2
