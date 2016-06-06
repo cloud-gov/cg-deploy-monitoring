@@ -49,6 +49,16 @@ releases:
   version: latest
 - name: encrypt-blobstore
   version: latest
+- name: fisma
+  version: latest
+- name: tripwire
+  version: latest
+- name: awslogs
+  version: latest
+- name: nessus-agent
+  version: latest
+- name: newrelic
+  version: latest
 
 networks:
   - name: monitoring
@@ -69,6 +79,12 @@ jobs:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   - {name: encrypt-blobstore, release: encrypt-blobstore}
+  - {name: harden, release: fisma}
+  - {name: tripwire, release: tripwire}
+  - {name: awslogs, release: awslogs}
+  - {name: nessus-agent, release: nessus-agent}
+  - {name: newrelic-monitor, release: newrelic}
+
   instances: 1
   resource_pool: grafana_z1
   persistent_disk: 30000
@@ -80,6 +96,11 @@ jobs:
   templates:
   - {name: influxdb, release: influxdb}
   - {name: collectd, release: collectd}
+  - {name: harden, release: fisma}
+  - {name: tripwire, release: tripwire}
+  - {name: awslogs, release: awslogs}
+  - {name: nessus-agent, release: nessus-agent}
+  - {name: newrelic-monitor, release: newrelic}
   instances: 1
   resource_pool: large_z1
   persistent_disk: 500000
@@ -175,6 +196,10 @@ properties:
       password: (( meta.riemann.influxdb_password ))
       port: 8086
       database: (( meta.influxdb.database ))
+  tripwire: ~
+  awslogs: ~
+  nessus-agent: ~
+  newrelic: ~
 
 resource_pools:
 - name: grafana_z1
