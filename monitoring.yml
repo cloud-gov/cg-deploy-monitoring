@@ -102,7 +102,7 @@ jobs:
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
   instances: 1
-  resource_pool: large_z1
+  resource_pool: xlarge_z1
   persistent_disk: 500000
   networks:
   - name: monitoring
@@ -214,13 +214,13 @@ resource_pools:
       size: 30000
       type: gp2
     availability_zone: us-east-1b
-- name: large_z1
+- name: xlarge_z1
   network: monitoring
   stemcell:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   cloud_properties:
-    instance_type: m4.large
+    instance_type: m4.xlarge
     ephemeral_disk:
       size: 30000
       type: gp2
