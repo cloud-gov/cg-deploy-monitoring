@@ -61,26 +61,29 @@ resources:
 - name: common-stage
   type: cg-common
   source:
+    region: {{monitoring-private-region}}
     bucket_name: {{monitoring-private-bucket-staging}}
-    access_key_id: {{monitoring-private-access-key-id-staging}}
-    secret_access_key: {{monitoring-private-secret-access-key-staging}}
+    access_key_id: {{monitoring-private-access-key-id}}
+    secret_access_key: {{monitoring-private-secret-access-key}}
     secrets_file: monitoring-staging.yml
-    secrets_passphrase: {{monitoring-staging-private-passphrase}}
+    secrets_passphrase: {{monitoring-private-passphrase-staging}}
     bosh_cert: bosh.pem
 
 - name: common-prod
   type: cg-common
   source:
+    region: {{monitoring-private-region}}
     bucket_name: {{monitoring-private-bucket-production}}
-    access_key_id: {{monitoring-private-access-key-id-production}}
-    secret_access_key: {{monitoring-private-secret-access-key-production}}
+    access_key_id: {{monitoring-private-access-key-id}}
+    secret_access_key: {{monitoring-private-secret-access-key}}
     secrets_file: monitoring.yml
-    secrets_passphrase: {{monitoring-production-private-passphrase}}
+    secrets_passphrase: {{monitoring-private-passphrase-production}}
     bosh_cert: bosh.pem
 
 - name: cg-s3-collectd-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
@@ -90,6 +93,7 @@ resources:
 - name: cg-s3-influxdb-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
@@ -99,6 +103,7 @@ resources:
 - name: cg-s3-riemann-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
@@ -108,6 +113,7 @@ resources:
 - name: cg-s3-grafana-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
@@ -117,6 +123,7 @@ resources:
 - name: cg-s3-encrypt-blobstore-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
@@ -126,6 +133,7 @@ resources:
 - name: cg-s3-nessus-manager-release
   type: s3
   source:
+    region: {{s3-bosh-releases-region}}
     access_key_id: {{s3-bosh-releases-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
