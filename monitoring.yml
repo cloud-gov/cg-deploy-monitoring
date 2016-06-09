@@ -65,6 +65,10 @@ releases:
   version: latest
 - name: newrelic
   version: latest
+- name: riemannc
+  version: latest
+- name: clamav
+  version: latest
 
 networks:
   - name: monitoring
@@ -91,6 +95,8 @@ jobs:
   - {name: nessus-agent, release: nessus-agent}
   - {name: nessus-manager, release: nessus-manager}
   - {name: newrelic-monitor, release: newrelic}
+  - {name: riemannc, release: riemannc}
+  - {name: clamav, release: clamav}
 
   instances: 1
   resource_pool: grafana_z1
@@ -108,6 +114,8 @@ jobs:
   - {name: awslogs, release: awslogs}
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
+  - {name: riemannc, release: riemannc}
+  - {name: clamav, release: clamav}
   instances: 1
   resource_pool: xlarge_z1
   persistent_disk: 500000
@@ -211,6 +219,9 @@ properties:
   awslogs: ~
   nessus-agent: ~
   newrelic: ~
+  riemann:
+    server: (( properties.collectd.riemann_server ))
+    port: 5555
 
 resource_pools:
 - name: grafana_z1
