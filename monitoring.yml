@@ -202,6 +202,8 @@ properties:
     username: (( meta.nessus-manager.username ))
     password: (( meta.nessus-manager.password ))
   riemann:
+    server: (( properties.collectd.riemann_server ))
+    port: 5555
     pagerduty_api_key: (( meta.riemann.pagerduty_api_key ))
     swap:
       critical: 25
@@ -219,9 +221,6 @@ properties:
   awslogs: ~
   nessus-agent: ~
   newrelic: ~
-  riemann:
-    server: (( properties.collectd.riemann_server ))
-    port: 5555
 
 resource_pools:
 - name: grafana_z1
