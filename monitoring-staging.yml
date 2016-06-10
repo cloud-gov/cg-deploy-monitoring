@@ -1,4 +1,4 @@
-name: monitoring-prod
+name: monitoring-staging
 
 meta:
   aws:
@@ -34,7 +34,6 @@ meta:
     gateway: ~
     subnet: ~
     security_groups: ~
-  elbs: ~
 
 director_uuid: (( merge ))
 
@@ -117,7 +116,6 @@ jobs:
     static_ips: (( static_ips(1) ))
 
 properties:
-  env: monitoring
   collectd:
     hostname_prefix: (( meta.environment "." ))
     riemann_server: (( meta.collectd.riemann_server ))
@@ -129,7 +127,7 @@ properties:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
-    root_url: https://metrics.cloud.gov
+    root_url: https://metrics.fr-stage.cloud.gov
     auth:
       github:
         enabled: true
@@ -145,7 +143,7 @@ properties:
       - database_type: "influxdb"
         database_name: (( meta.influxdb.database ))
         url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-        name: "influxdb_production"
+        name: "influxdb_staging"
         user: (( meta.grafana.influxdb_user ))
         password: (( meta.grafana.influxdb_password ))
     dashboards:
@@ -213,7 +211,6 @@ resource_pools:
     version: latest
   cloud_properties:
     instance_type: t2.medium
-    elbs: (( meta.elbs ))
     ephemeral_disk:
       size: 30000
       type: gp2
