@@ -1,0 +1,259 @@
+---
+groups:
+  - name: all
+    jobs:
+    - deploy-monitoring-staging
+    - deploy-monitoring-production
+  - name: staging
+    jobs:
+    - deploy-monitoring-staging
+  - name: production
+    jobs:
+    - deploy-monitoring-production
+
+jobs:
+- name: deploy-monitoring-staging
+  plan:
+  - aggregate:
+    - get: pipeline-tasks
+    - get: monitoring-staging-config
+      trigger: true
+    - get: common-prod
+    - get: cg-s3-riemann-release
+    - get: cg-s3-influxdb-release
+    - get: cg-s3-collectd-release
+    - get: cg-s3-grafana-release
+    - get: cg-s3-encrypt-blobstore-release
+    - get: cg-s3-nessus-manager-release
+    - get: monitoring-stemcell
+  - task: monitoring-manifest
+    file: pipeline-tasks/spiff-merge.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-staging-config
+        - name: common-stage
+      params:
+        OUTPUT_FILE: spiff-merge/manifest.yml
+        SOURCE_FILE: monitoring-staging-config/monitoring-staging.yml
+        MERGE_FILES: common-stage/secrets.yml
+  - put: monitoring-staging-deployment
+    params:
+      cert: common-stage/boshCA.crt
+      manifest: spiff-merge/manifest.yml
+      releases:
+        - cg-s3-influxdb-release/influxdb*.tgz
+        - cg-s3-riemann-release/riemann*.tgz
+        - cg-s3-grafana-release/grafana*.tgz
+        - cg-s3-collectd-release/collectd*.tgz
+        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
+        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      stemcells:
+        - monitoring-stemcell/*.tgz
+    on_failure:
+      put: slack
+      params:
+        text: |
+          :x: FAILED to deploy monitoring on staging
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+    on_success:
+      put: slack
+      params:
+        text: |
+          :white_check_mark: Successfully deployed monitoring on staging
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+
+- name: deploy-monitoring-production
+  serial: true
+  passed: deploy-monitoring-staging
+  plan:
+  - aggregate:
+    - get: pipeline-tasks
+    - get: monitoring-production-config
+      trigger: true
+    - get: common-prod
+    - get: cg-s3-riemann-release
+    - get: cg-s3-influxdb-release
+    - get: cg-s3-collectd-release
+    - get: cg-s3-grafana-release
+    - get: cg-s3-encrypt-blobstore-release
+    - get: cg-s3-nessus-manager-release
+    - get: monitoring-stemcell
+  - task: monitoring-manifest
+    file: pipeline-tasks/spiff-merge.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-production-config
+        - name: common-prod
+      params:
+        OUTPUT_FILE: spiff-merge/manifest.yml
+        SOURCE_FILE: monitoring-production-config/monitoring.yml
+        MERGE_FILES: common-prod/secrets.yml
+  - put: monitoring-production-deployment
+    params:
+      cert: common-prod/boshCA.crt
+      manifest: spiff-merge/manifest.yml
+      releases:
+        - cg-s3-influxdb-release/influxdb*.tgz
+        - cg-s3-riemann-release/riemann*.tgz
+        - cg-s3-grafana-release/grafana*.tgz
+        - cg-s3-collectd-release/collectd*.tgz
+        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
+        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      stemcells:
+        - monitoring-stemcell/*.tgz
+    on_failure:
+      put: slack
+      params:
+        text: |
+          :x: FAILED to deploy monitoring on production
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+    on_success:
+      put: slack
+      params:
+        text: |
+          :white_check_mark: Successfully deployed monitoring on production
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+
+
+resources:
+- name: common-stage
+  type: cg-common
+  source:
+    region: {{monitoring-staging-private-region}}
+    bucket_name: {{monitoring-staging-private-bucket}}
+    access_key_id: {{monitoring-staging-private-access-key-id}}
+    secret_access_key: {{monitoring-staging-private-secret-access-key}}
+    secrets_file: monitoring.yml
+    secrets_passphrase: {{monitoring-staging-private-passphrase}}
+    bosh_cert: bosh.pem
+
+- name: common-prod
+  type: cg-common
+  source:
+    region: {{monitoring-production-private-region}}
+    bucket_name: {{monitoring-production-private-bucket}}
+    access_key_id: {{monitoring-production-private-access-key-id}}
+    secret_access_key: {{monitoring-production-private-secret-access-key}}
+    secrets_file: monitoring.yml
+    secrets_passphrase: {{monitoring-production-private-passphrase}}
+    bosh_cert: bosh.pem
+
+- name: cg-s3-collectd-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: collectd-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-influxdb-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: influxdb-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-riemann-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: riemann-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-grafana-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: grafana-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-encrypt-blobstore-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: encrypt-blobstore-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: cg-s3-nessus-manager-release
+  type: s3
+  source:
+    region: {{s3-bosh-releases-region}}
+    access_key_id: {{s3-bosh-releases-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: nessus-manager-(.*).tgz
+    secret_access_key: {{s3-bosh-releases-secret-access-key}}
+
+- name: monitoring-production-config
+  type: git
+  source:
+    uri: {{cg-deploy-monitoring-git-url}}
+    branch: master
+
+- name: monitoring-staging-config
+  type: git
+  source:
+    uri: {{cg-deploy-monitoring-git-url}}
+    branch: staging
+
+- name: monitoring-stemcell
+  type: bosh-io-stemcell
+  source:
+    name: {{monitoring-stemcell}}
+
+- name: monitoring-staging-deployment
+  type: 18f-bosh-deployment
+  source:
+    target: {{monitoring-staging-deployment-bosh-target}}
+    username: {{monitoring-staging-deployment-bosh-username}}
+    password: {{monitoring-staging-deployment-bosh-password}}
+    deployment: {{monitoring-staging-deployment-bosh-deployment}}
+    ignore_ssl: false
+
+- name: monitoring-production-deployment
+  type: 18f-bosh-deployment
+  source:
+    target: {{monitoring-production-deployment-bosh-target}}
+    username: {{monitoring-production-deployment-bosh-username}}
+    password: {{monitoring-production-deployment-bosh-password}}
+    deployment: {{monitoring-production-deployment-bosh-deployment}}
+    ignore_ssl: false
+
+- name: pipeline-tasks
+  type: git
+  source:
+    uri: {{pipeline-tasks-git-url}}
+    branch: {{pipeline-tasks-git-branch}}
+
+- name: slack
+  type: slack-notification
+  source:
+    url: {{slack-webhook-url}}
