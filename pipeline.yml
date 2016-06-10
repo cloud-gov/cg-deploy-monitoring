@@ -1,11 +1,22 @@
 ---
-jobs:
+groups:
+  - name: all
+    jobs:
+    - deploy-monitoring-staging
+    - deploy-monitoring-production
+  - name: staging
+    jobs:
+    - deploy-monitoring-staging
+  - name: production
+    jobs:
+    - deploy-monitoring-production
 
-- name: deploy-monitoring-production
+jobs:
+- name: deploy-monitoring-staging
   plan:
   - aggregate:
     - get: pipeline-tasks
-    - get: monitoring-config
+    - get: monitoring-staging-config
       trigger: true
     - get: common-prod
     - get: cg-s3-riemann-release
@@ -20,11 +31,70 @@ jobs:
     config:
       inputs:
         - name: pipeline-tasks
-        - name: monitoring-config
+        - name: monitoring-staging-config
+        - name: common-stage
+      params:
+        OUTPUT_FILE: spiff-merge/manifest.yml
+        SOURCE_FILE: monitoring-staging-config/monitoring-staging.yml
+        MERGE_FILES: common-stage/secrets.yml
+  - put: monitoring-staging-deployment
+    params:
+      cert: common-stage/boshCA.crt
+      manifest: spiff-merge/manifest.yml
+      releases:
+        - cg-s3-influxdb-release/influxdb*.tgz
+        - cg-s3-riemann-release/riemann*.tgz
+        - cg-s3-grafana-release/grafana*.tgz
+        - cg-s3-collectd-release/collectd*.tgz
+        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
+        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      stemcells:
+        - monitoring-stemcell/*.tgz
+    on_failure:
+      put: slack
+      params:
+        text: |
+          :x: FAILED to deploy monitoring on staging
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+    on_success:
+      put: slack
+      params:
+        text: |
+          :white_check_mark: Successfully deployed monitoring on staging
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+
+- name: deploy-monitoring-production
+  serial: true
+  passed: deploy-monitoring-staging
+  plan:
+  - aggregate:
+    - get: pipeline-tasks
+    - get: monitoring-production-config
+      trigger: true
+    - get: common-prod
+    - get: cg-s3-riemann-release
+    - get: cg-s3-influxdb-release
+    - get: cg-s3-collectd-release
+    - get: cg-s3-grafana-release
+    - get: cg-s3-encrypt-blobstore-release
+    - get: cg-s3-nessus-manager-release
+    - get: monitoring-stemcell
+  - task: monitoring-manifest
+    file: pipeline-tasks/spiff-merge.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-production-config
         - name: common-prod
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-config/monitoring.yml
+        SOURCE_FILE: monitoring-production-config/monitoring.yml
         MERGE_FILES: common-prod/secrets.yml
   - put: monitoring-production-deployment
     params:
@@ -35,6 +105,8 @@ jobs:
         - cg-s3-riemann-release/riemann*.tgz
         - cg-s3-grafana-release/grafana*.tgz
         - cg-s3-collectd-release/collectd*.tgz
+        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
+        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
       stemcells:
         - monitoring-stemcell/*.tgz
     on_failure:
@@ -61,23 +133,23 @@ resources:
 - name: common-stage
   type: cg-common
   source:
-    region: {{monitoring-private-region}}
-    bucket_name: {{monitoring-private-bucket-staging}}
-    access_key_id: {{monitoring-private-access-key-id}}
-    secret_access_key: {{monitoring-private-secret-access-key}}
-    secrets_file: monitoring-staging.yml
-    secrets_passphrase: {{monitoring-private-passphrase-staging}}
+    region: {{monitoring-staging-private-region}}
+    bucket_name: {{monitoring-staging-private-bucket}}
+    access_key_id: {{monitoring-staging-private-access-key-id}}
+    secret_access_key: {{monitoring-staging-private-secret-access-key}}
+    secrets_file: monitoring.yml
+    secrets_passphrase: {{monitoring-staging-private-passphrase}}
     bosh_cert: bosh.pem
 
 - name: common-prod
   type: cg-common
   source:
-    region: {{monitoring-private-region}}
-    bucket_name: {{monitoring-private-bucket-production}}
-    access_key_id: {{monitoring-private-access-key-id}}
-    secret_access_key: {{monitoring-private-secret-access-key}}
+    region: {{monitoring-production-private-region}}
+    bucket_name: {{monitoring-production-private-bucket}}
+    access_key_id: {{monitoring-production-private-access-key-id}}
+    secret_access_key: {{monitoring-production-private-secret-access-key}}
     secrets_file: monitoring.yml
-    secrets_passphrase: {{monitoring-private-passphrase-production}}
+    secrets_passphrase: {{monitoring-production-private-passphrase}}
     bosh_cert: bosh.pem
 
 - name: cg-s3-collectd-release
@@ -140,11 +212,17 @@ resources:
     regexp: nessus-manager-(.*).tgz
     secret_access_key: {{s3-bosh-releases-secret-access-key}}
 
-- name: monitoring-config
+- name: monitoring-production-config
   type: git
   source:
     uri: {{cg-deploy-monitoring-git-url}}
-    branch: {{cg-deploy-monitoring-git-branch}}
+    branch: master
+
+- name: monitoring-staging-config
+  type: git
+  source:
+    uri: {{cg-deploy-monitoring-git-url}}
+    branch: staging
 
 - name: monitoring-stemcell
   type: bosh-io-stemcell
