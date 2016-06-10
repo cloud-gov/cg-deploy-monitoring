@@ -1,4 +1,4 @@
-name: monitoring-stage
+name: monitoring-staging
 
 meta:
   aws:
