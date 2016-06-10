@@ -228,7 +228,7 @@ resource_pools:
     ephemeral_disk:
       size: 30000
       type: gp2
-    availability_zone: us-gov-west-1b
+    availability_zone: us-gov-west-1a
 - name: xlarge_z1
   network: monitoring
   stemcell:
@@ -239,7 +239,7 @@ resource_pools:
     ephemeral_disk:
       size: 30000
       type: gp2
-    availability_zone: us-gov-west-1b
+    availability_zone: us-gov-west-1a
 
 
 compilation:
@@ -251,7 +251,7 @@ compilation:
     ephemeral_disk:
       size: 30000
       type: gp2
-    availability_zone: us-gov-west-1b
+    availability_zone: us-gov-west-1a
 
 update:
   canaries: 1
