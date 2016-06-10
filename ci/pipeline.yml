@@ -226,9 +226,13 @@ resources:
     branch: staging
 
 - name: monitoring-stemcell
-  type: bosh-io-stemcell
+  type: s3
   source:
-    name: {{monitoring-stemcell}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: cg-stemcell-images
+    regexp: light-bosh-stemcell-(.*)-aws-xen-hvm-ubuntu-trusty-go_agent.tgz
+    region_name: us-gov-west-1
+    secret_access_key: {{ci-secret-access-key}}
 
 - name: monitoring-staging-deployment
   type: 18f-bosh-deployment
