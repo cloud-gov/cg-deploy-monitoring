@@ -22,10 +22,6 @@ meta:
     user: ~
     password: ~
     database: ~
-  nessus-manager:
-    license: ~
-    username: ~
-    password: ~
   riemann:
     pagerduty_api_key: ~
     influxdb_user: ~
@@ -61,8 +57,6 @@ releases:
   version: latest
 - name: nessus-agent
   version: latest
-- name: nessus-manager
-  version: latest
 - name: newrelic
   version: latest
 - name: riemannc
@@ -93,7 +87,6 @@ jobs:
   - {name: tripwire, release: tripwire}
   - {name: awslogs, release: awslogs}
   - {name: nessus-agent, release: nessus-agent}
-  - {name: nessus-manager, release: nessus-manager}
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
   - {name: clamav, release: clamav}
@@ -191,10 +184,6 @@ properties:
     database: (( meta.influxdb.database ))
     user: (( meta.influxdb.user ))
     password: (( meta.influxdb.password ))
-  nessus-manager:
-    license: (( meta.nessus-manager.license ))
-    username: (( meta.nessus-manager.username ))
-    password: (( meta.nessus-manager.password ))
   riemann:
     server: (( properties.collectd.riemann_server ))
     port: 5555
