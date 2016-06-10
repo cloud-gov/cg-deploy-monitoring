@@ -24,7 +24,6 @@ jobs:
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
-    - get: cg-s3-nessus-manager-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
     file: pipeline-tasks/spiff-merge.yml
@@ -46,7 +45,6 @@ jobs:
         - cg-s3-riemann-release/riemann*.tgz
         - cg-s3-grafana-release/grafana*.tgz
         - cg-s3-collectd-release/collectd*.tgz
-        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
         - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
       stemcells:
         - monitoring-stemcell/*.tgz
@@ -84,7 +82,6 @@ jobs:
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
-    - get: cg-s3-nessus-manager-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
     file: pipeline-tasks/spiff-merge.yml
@@ -106,7 +103,6 @@ jobs:
         - cg-s3-riemann-release/riemann*.tgz
         - cg-s3-grafana-release/grafana*.tgz
         - cg-s3-collectd-release/collectd*.tgz
-        - cg-s3-nessus-manager-release/nessus-manager-*.tgz
         - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
       stemcells:
         - monitoring-stemcell/*.tgz
@@ -201,16 +197,6 @@ resources:
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: encrypt-blobstore-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
-
-- name: cg-s3-nessus-manager-release
-  type: s3
-  source:
-    region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
-    bucket: {{s3-bosh-releases-bucket}}
-    private: true
-    regexp: nessus-manager-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
 - name: monitoring-production-config
