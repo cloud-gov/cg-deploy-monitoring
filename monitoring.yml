@@ -1,4 +1,4 @@
-name: monitoring-prod
+name: monitoring-production
 
 meta:
   aws:
