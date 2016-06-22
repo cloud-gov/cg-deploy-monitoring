@@ -1,4 +1,8 @@
 # YAML property files
+monitoring-production-govcloud-secrets.yml
+monitoring-production-encrypted-secrets.yml
+monitoring-encrypted-secrets.yml
+monitoring-secrets.yml
 manifest.yml
 cf-secrets.yml
 secrets.yml
@@ -6,6 +10,7 @@ cf-secrets-staging.yml
 manifest-staging.yml
 manifest-staging.yml--
 credentials.yml
+monitoring-govcloud-secrets.yml
 
 # Mac files
 .DS_Store
