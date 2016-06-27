@@ -93,7 +93,7 @@ jobs:
 
   instances: 1
   resource_pool: riemann_z1
-  persistent_disk: 30000
+  persistent_disk_pool: riemann
   networks:
   - name: monitoring
     static_ips: (( static_ips(0) ))
@@ -111,7 +111,7 @@ jobs:
   - {name: clamav, release: clamav}
   instances: 1
   resource_pool: xlarge_z1
-  persistent_disk: 500000
+  persistent_disk_pool: influxdb
   networks:
   - name: monitoring
     static_ips: (( static_ips(1) ))
@@ -232,6 +232,15 @@ resource_pools:
       encrypted: true
     availability_zone: us-gov-west-1a
 
+disk_pools:
+- name: riemann
+  disk_size: 30_000
+  cloud_properties:
+    encrypted: true
+- name: influxdb
+  disk_size: 500_000
+  cloud_properties:
+    encrypted: true
 
 compilation:
   network: monitoring
