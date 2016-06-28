@@ -123,6 +123,7 @@ properties:
     buckets: (( properties.encrypt-blobstore.buckets ))
     access_key: (( meta.aws.access_key_id ))
     secret_access_key: (( meta.aws.secret_access_key ))
+    default_region: (( meta.aws.default_region ))
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
