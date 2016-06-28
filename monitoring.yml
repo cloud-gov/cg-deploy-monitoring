@@ -4,6 +4,7 @@ meta:
   aws:
     access_key_id: ~
     secret_access_key: ~
+    default_region: ~
   collectd:
     riemann_server: ~
   environment: ~
