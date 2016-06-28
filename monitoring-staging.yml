@@ -62,6 +62,8 @@ releases:
   version: latest
 - name: clamav
   version: latest
+- name: snort
+  version: latest
 
 networks:
   - name: monitoring
@@ -89,6 +91,7 @@ jobs:
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
   - {name: clamav, release: clamav}
+  - {name: snort, release: snort}
 
   instances: 1
   resource_pool: riemann_z1
