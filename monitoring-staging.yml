@@ -4,6 +4,7 @@ meta:
   aws:
     access_key_id: ~
     secret_access_key: ~
+    default_region: ~
   collectd:
     riemann_server: ~
   environment: ~
@@ -62,6 +63,8 @@ releases:
   version: latest
 - name: clamav
   version: latest
+- name: snort
+  version: latest
 
 networks:
   - name: monitoring
@@ -89,10 +92,11 @@ jobs:
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
   - {name: clamav, release: clamav}
+  - {name: snort, release: snort}
 
   instances: 1
   resource_pool: riemann_z1
-  persistent_disk: 30000
+  persistent_disk_pool: riemann
   networks:
   - name: monitoring
     static_ips: (( static_ips(0) ))
@@ -110,7 +114,7 @@ jobs:
   - {name: clamav, release: clamav}
   instances: 1
   resource_pool: xlarge_z1
-  persistent_disk: 500000
+  persistent_disk_pool: influxdb
   networks:
   - name: monitoring
     static_ips: (( static_ips(1) ))
@@ -123,6 +127,7 @@ properties:
     buckets: (( properties.encrypt-blobstore.buckets ))
     access_key: (( meta.aws.access_key_id ))
     secret_access_key: (( meta.aws.secret_access_key ))
+    default_region: (( meta.aws.default_region ))
   grafana:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
@@ -214,6 +219,7 @@ resource_pools:
     ephemeral_disk:
       size: 30000
       type: gp2
+      encrypted: true
     availability_zone: us-gov-west-1a
 - name: xlarge_z1
   network: monitoring
@@ -225,18 +231,29 @@ resource_pools:
     ephemeral_disk:
       size: 30000
       type: gp2
+      encrypted: true
     availability_zone: us-gov-west-1a
 
+disk_pools:
+- name: riemann
+  disk_size: 30_000
+  cloud_properties:
+    encrypted: true
+- name: influxdb
+  disk_size: 500_000
+  cloud_properties:
+    encrypted: true
 
 compilation:
   network: monitoring
   reuse_compilation_vms: true
   workers: 4
   cloud_properties:
-    instance_type: m3.large
+    instance_type: m3.xlarge
     ephemeral_disk:
       size: 30000
       type: gp2
+      encrypted: true
     availability_zone: us-gov-west-1a
 
 update:
