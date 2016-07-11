@@ -2,8 +2,12 @@
 groups:
   - name: all
     jobs:
+    - deploy-monitoring-tooling
     - deploy-monitoring-staging
     - deploy-monitoring-production
+  - name: tooling
+    jobs:
+    - deploy-monitoring-tooling
   - name: staging
     jobs:
     - deploy-monitoring-staging
@@ -12,13 +16,69 @@ groups:
     - deploy-monitoring-production
 
 jobs:
+- name: deploy-monitoring-tooling
+  plan:
+  - aggregate:
+    - get: monitoring-tooling-config
+      trigger: true
+    - get: common-tooling
+    - get: pipeline-tasks
+    - get: cg-s3-riemann-release
+    - get: cg-s3-influxdb-release
+    - get: cg-s3-collectd-release
+    - get: cg-s3-grafana-release
+    - get: cg-s3-encrypt-blobstore-release
+    - get: monitoring-stemcell
+  - task: monitoring-manifest
+    file: pipeline-tasks/spiff-merge.yml
+    config:
+      inputs:
+        - name: pipeline-tasks
+        - name: monitoring-tooling-config
+        - name: common-tooling
+      params:
+        OUTPUT_FILE: spiff-merge/manifest.yml
+        SOURCE_FILE: monitoring-tooling-config/monitoring.yml
+        MERGE_FILES: common-tooling/secrets.yml
+  - put: monitoring-tooling-deployment
+    params:
+      cert: common-tooling/boshCA.crt
+      manifest: spiff-merge/manifest.yml
+      releases: &releases
+        - cg-s3-influxdb-release/influxdb*.tgz
+        - cg-s3-riemann-release/riemann*.tgz
+        - cg-s3-grafana-release/grafana*.tgz
+        - cg-s3-collectd-release/collectd*.tgz
+        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      stemcells:
+        - monitoring-stemcell/*.tgz
+    on_failure:
+      put: slack
+      params:
+        text: |
+          :x: FAILED to deploy monitoring on tooling
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+    on_success:
+      put: slack
+      params:
+        text: |
+          :white_check_mark: Successfully deployed monitoring on tooling
+          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+        channel: {{slack-channel}}
+        username: {{slack-username}}
+        icon_url: {{slack-icon-url}}
+
 - name: deploy-monitoring-staging
   plan:
   - aggregate:
-    - get: pipeline-tasks
     - get: monitoring-staging-config
       trigger: true
     - get: common-stage
+    - get: common-tooling
+    - get: pipeline-tasks
     - get: cg-s3-riemann-release
     - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
@@ -34,18 +94,13 @@ jobs:
         - name: common-stage
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-staging-config/monitoring-staging.yml
+        SOURCE_FILE: monitoring-staging-config/monitoring.yml
         MERGE_FILES: common-stage/secrets.yml
   - put: monitoring-staging-deployment
     params:
       cert: common-stage/boshCA.crt
       manifest: spiff-merge/manifest.yml
-      releases:
-        - cg-s3-influxdb-release/influxdb*.tgz
-        - cg-s3-riemann-release/riemann*.tgz
-        - cg-s3-grafana-release/grafana*.tgz
-        - cg-s3-collectd-release/collectd*.tgz
-        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      releases: <<: *releases
       stemcells:
         - monitoring-stemcell/*.tgz
     on_failure:
@@ -73,10 +128,11 @@ jobs:
   - aggregate:
     - get: monitoring-staging-deployment
       passed: [deploy-monitoring-staging]
-    - get: pipeline-tasks
     - get: monitoring-production-config
       trigger: true
     - get: common-prod
+    - get: common-tooling
+    - get: pipeline-tasks
     - get: cg-s3-riemann-release
     - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
@@ -98,12 +154,7 @@ jobs:
     params:
       cert: common-prod/boshCA.crt
       manifest: spiff-merge/manifest.yml
-      releases:
-        - cg-s3-influxdb-release/influxdb*.tgz
-        - cg-s3-riemann-release/riemann*.tgz
-        - cg-s3-grafana-release/grafana*.tgz
-        - cg-s3-collectd-release/collectd*.tgz
-        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      releases: <<: *releases
       stemcells:
         - monitoring-stemcell/*.tgz
     on_failure:
@@ -127,6 +178,17 @@ jobs:
 
 
 resources:
+- name: common-tooling
+  type: cg-common
+  source:
+    region: {{monitoring-tooling-private-region}}
+    bucket_name: {{monitoring-tooling-private-bucket}}
+    access_key_id: {{ci-access-key-id}}
+    secret_access_key: {{ci-secret-access-key}}
+    secrets_file: monitoring.yml
+    secrets_passphrase: {{monitoring-tooling-private-passphrase}}
+    bosh_cert: bosh.pem
+
 - name: common-stage
   type: cg-common
   source:
@@ -199,17 +261,23 @@ resources:
     regexp: encrypt-blobstore-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
-- name: monitoring-production-config
+- name: monitoring-tooling-config
   type: git
   source:
     uri: {{cg-deploy-monitoring-git-url}}
-    branch: master
+    branch: tooling
 
 - name: monitoring-staging-config
   type: git
   source:
     uri: {{cg-deploy-monitoring-git-url}}
     branch: staging
+
+- name: monitoring-production-config
+  type: git
+  source:
+    uri: {{cg-deploy-monitoring-git-url}}
+    branch: master
 
 - name: monitoring-stemcell
   type: s3
@@ -219,6 +287,15 @@ resources:
     regexp: light-bosh-stemcell-(.*)-aws-xen-hvm-ubuntu-trusty-go_agent.tgz
     region_name: us-gov-west-1
     secret_access_key: {{ci-secret-access-key}}
+
+- name: monitoring-tooling-deployment
+  type: 18f-bosh-deployment
+  source:
+    target: {{monitoring-tooling-deployment-bosh-target}}
+    username: {{monitoring-tooling-deployment-bosh-username}}
+    password: {{monitoring-tooling-deployment-bosh-password}}
+    deployment: {{monitoring-tooling-deployment-bosh-deployment}}
+    ignore_ssl: false
 
 - name: monitoring-staging-deployment
   type: 18f-bosh-deployment
