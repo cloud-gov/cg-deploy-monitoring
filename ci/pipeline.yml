@@ -77,7 +77,6 @@ jobs:
     - get: monitoring-staging-config
       trigger: true
     - get: common-stage
-    - get: common-tooling
     - get: pipeline-tasks
     - get: cg-s3-riemann-release
     - get: cg-s3-influxdb-release
@@ -131,7 +130,6 @@ jobs:
     - get: monitoring-production-config
       trigger: true
     - get: common-prod
-    - get: common-tooling
     - get: pipeline-tasks
     - get: cg-s3-riemann-release
     - get: cg-s3-influxdb-release

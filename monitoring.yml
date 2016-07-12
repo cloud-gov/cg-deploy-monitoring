@@ -13,8 +13,6 @@ meta:
     url: ~
     user: ~
     pass: ~
-    influxdb_user: ~
-    influxdb_password: ~
     auth:
       github:
         client_id: ~
@@ -28,8 +26,6 @@ meta:
     database: ~
   riemann:
     pagerduty_api_key: ~
-    influxdb_user: ~
-    influxdb_password: ~
   network:
     range: ~
     reserved: ~
@@ -153,9 +149,9 @@ properties:
       - database_type: "influxdb"
         database_name: (( meta.influxdb.database ))
         url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-        name: (( meta.grafana.name ))
-        user: (( meta.grafana.influxdb_user ))
-        password: (( meta.grafana.influxdb_password ))
+        name: (( meta.influxdb.name ))
+        user: (( meta.influxdb.user ))
+        password: (( meta.influxdb.password ))
     dashboards:
       - path: dashboards/all-in-one-cf-components-dashboard.json
         branch: master
@@ -204,8 +200,8 @@ properties:
       warn: 70
     influxdb:
       host: (( jobs.influxdb.networks.monitoring.static_ips.[0] ))
-      username: (( meta.riemann.influxdb_user ))
-      password: (( meta.riemann.influxdb_password ))
+      username: (( meta.influxdb.user ))
+      password: (( meta.influxdb.password ))
       port: 8086
       database: (( meta.influxdb.database ))
   tripwire: ~
