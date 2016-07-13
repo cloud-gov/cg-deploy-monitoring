@@ -19,7 +19,7 @@ jobs:
 - name: deploy-monitoring-tooling
   plan:
   - aggregate:
-    - get: monitoring-tooling-config
+    - get: monitoring-config
       trigger: true
     - get: common-tooling
     - get: pipeline-tasks
@@ -34,11 +34,11 @@ jobs:
     config:
       inputs:
         - name: pipeline-tasks
-        - name: monitoring-tooling-config
+        - name: monitoring-config
         - name: common-tooling
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-tooling-config/monitoring.yml
+        SOURCE_FILE: monitoring-config/monitoring.yml
         MERGE_FILES: common-tooling/secrets.yml
   - put: monitoring-tooling-deployment
     params:
@@ -74,7 +74,7 @@ jobs:
 - name: deploy-monitoring-staging
   plan:
   - aggregate:
-    - get: monitoring-staging-config
+    - get: monitoring-config
       trigger: true
     - get: common-stage
     - get: pipeline-tasks
@@ -89,11 +89,11 @@ jobs:
     config:
       inputs:
         - name: pipeline-tasks
-        - name: monitoring-staging-config
+        - name: monitoring-config
         - name: common-stage
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-staging-config/monitoring.yml
+        SOURCE_FILE: monitoring-config/monitoring.yml
         MERGE_FILES: common-stage/secrets.yml
   - put: monitoring-staging-deployment
     params:
@@ -127,7 +127,8 @@ jobs:
   - aggregate:
     - get: monitoring-staging-deployment
       passed: [deploy-monitoring-staging]
-    - get: monitoring-production-config
+    - get: monitoring-config
+      passed: [deploy-monitoring-staging]
       trigger: true
     - get: common-prod
     - get: pipeline-tasks
@@ -142,11 +143,11 @@ jobs:
     config:
       inputs:
         - name: pipeline-tasks
-        - name: monitoring-production-config
+        - name: monitoring-config
         - name: common-prod
       params:
         OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-production-config/monitoring.yml
+        SOURCE_FILE: monitoring-config/monitoring.yml
         MERGE_FILES: common-prod/secrets.yml
   - put: monitoring-production-deployment
     params:
@@ -259,23 +260,11 @@ resources:
     regexp: encrypt-blobstore-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
-- name: monitoring-tooling-config
+- name: monitoring-config
   type: git
   source:
     uri: {{cg-deploy-monitoring-git-url}}
-    branch: tooling
-
-- name: monitoring-staging-config
-  type: git
-  source:
-    uri: {{cg-deploy-monitoring-git-url}}
-    branch: staging
-
-- name: monitoring-production-config
-  type: git
-  source:
-    uri: {{cg-deploy-monitoring-git-url}}
-    branch: master
+    branch: {{cg-deploy-monitoring-git-branch}}
 
 - name: monitoring-stemcell
   type: s3
