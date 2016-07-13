@@ -26,6 +26,8 @@ meta:
     database: ~
   riemann:
     pagerduty_api_key: ~
+    platform_logs_threshold: ~
+    app_logs_threshold: ~
   network:
     range: ~
     reserved: ~
@@ -204,6 +206,9 @@ properties:
       password: (( meta.influxdb.password ))
       port: 8086
       database: (( meta.influxdb.database ))
+    logsearch:
+      platform_logs_threshold: (( meta.riemann.platform_logs_threshold ))
+      app_logs_threshold: (( meta.riemann.app_logs_threshold ))
   tripwire: ~
   awslogs: ~
   nessus-agent: ~
