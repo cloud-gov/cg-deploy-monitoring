@@ -1,6 +1,7 @@
-name: monitoring-production
+name: (( merge ))
 
 meta:
+  env: ~
   aws:
     access_key_id: ~
     secret_access_key: ~
@@ -9,10 +10,9 @@ meta:
     riemann_server: ~
   environment: ~
   grafana:
+    url: ~
     user: ~
     pass: ~
-    influxdb_user: ~
-    influxdb_password: ~
     auth:
       github:
         client_id: ~
@@ -20,13 +20,12 @@ meta:
         allowed_organizations: ~
         team_ids: ~
   influxdb:
+    name: ~
     user: ~
     password: ~
     database: ~
   riemann:
     pagerduty_api_key: ~
-    influxdb_user: ~
-    influxdb_password: ~
     platform_logs_threshold: ~
     app_logs_threshold: ~
   network:
@@ -123,7 +122,7 @@ jobs:
     static_ips: (( static_ips(1) ))
 
 properties:
-  env: monitoring
+  env: (( meta.env ))
   collectd:
     hostname_prefix: (( meta.environment "." ))
     riemann_server: (( meta.collectd.riemann_server ))
@@ -136,7 +135,7 @@ properties:
     admin_username: (( meta.grafana.user ))
     admin_password: (( meta.grafana.pass ))
     listen_port: 3000
-    root_url: https://metrics.fr.cloud.gov
+    root_url: (( meta.grafana.url ))
     auth:
       github:
         enabled: true
@@ -152,9 +151,9 @@ properties:
       - database_type: "influxdb"
         database_name: (( meta.influxdb.database ))
         url: (( "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-        name: "influxdb_production"
-        user: (( meta.grafana.influxdb_user ))
-        password: (( meta.grafana.influxdb_password ))
+        name: (( meta.influxdb.name ))
+        user: (( meta.influxdb.user ))
+        password: (( meta.influxdb.password ))
     dashboards:
       - path: dashboards/all-in-one-cf-components-dashboard.json
         branch: master
@@ -203,8 +202,8 @@ properties:
       warn: 70
     influxdb:
       host: (( jobs.influxdb.networks.monitoring.static_ips.[0] ))
-      username: (( meta.riemann.influxdb_user ))
-      password: (( meta.riemann.influxdb_password ))
+      username: (( meta.influxdb.user ))
+      password: (( meta.influxdb.password ))
       port: 8086
       database: (( meta.influxdb.database ))
     logsearch:
