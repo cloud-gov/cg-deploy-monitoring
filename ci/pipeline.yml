@@ -184,7 +184,7 @@ resources:
     bucket_name: {{monitoring-tooling-private-bucket}}
     access_key_id: {{ci-access-key-id}}
     secret_access_key: {{ci-secret-access-key}}
-    secrets_file: monitoring.yml
+    secrets_file: monitoring-tooling.yml
     secrets_passphrase: {{monitoring-tooling-private-passphrase}}
     bosh_cert: bosh.pem
 
