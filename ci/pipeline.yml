@@ -186,7 +186,7 @@ resources:
     secret_access_key: {{ci-secret-access-key}}
     secrets_file: monitoring-tooling.yml
     secrets_passphrase: {{monitoring-tooling-private-passphrase}}
-    bosh_cert: bosh.pem
+    bosh_cert: bosh-tooling.pem
 
 - name: common-stage
   type: cg-common
