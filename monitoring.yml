@@ -27,6 +27,7 @@ meta:
     pagerduty_api_key: ~
     platform_logs_threshold: ~
     app_logs_threshold: ~
+    rds_cpu_threshold: ~
   network:
     range: ~
     reserved: ~
@@ -207,6 +208,8 @@ properties:
     logsearch:
       platform_logs_threshold: (( meta.riemann.platform_logs_threshold ))
       app_logs_threshold: (( meta.riemann.app_logs_threshold ))
+    rds:
+      cpu_threshold: (( meta.riemann.rds_cpu_threshold ))
   tripwire: ~
   awslogs: ~
   nessus-agent: ~
