@@ -4,6 +4,8 @@ meta:
   aws:
     access_key_id: ~
     secret_access_key: ~
+    availability_zone: ~
+    availability_zone2: ~
     default_region: ~
   collectd:
     riemann_server: ~
@@ -228,7 +230,7 @@ resource_pools:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: us-gov-west-1a
+    availability_zone: (( meta.aws.availability_zone ))
 - name: xlarge_z1
   network: monitoring
   stemcell:
@@ -240,7 +242,7 @@ resource_pools:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: us-gov-west-1a
+    availability_zone: (( meta.aws.availability_zone ))
 
 disk_pools:
 - name: riemann
@@ -262,7 +264,7 @@ compilation:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: us-gov-west-1a
+    availability_zone: (( meta.aws.availability_zone ))
 
 update:
   canaries: 1
