@@ -165,6 +165,9 @@ properties:
       - path: dashboards/dea.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
+      - path: dashboards/diego.json
+        branch: master
+        repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
       - path: dashboards/doppler-server.json
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
