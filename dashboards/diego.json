@@ -1,6 +1,6 @@
 {
   "dashboard": {
-    "id": 2,
+    "id": null,
     "title": "Diego",
     "tags": [],
     "style": "dark",
@@ -17,7 +17,7 @@
           {
             "aliasColors": {},
             "bars": true,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -157,7 +157,7 @@
           {
             "aliasColors": {},
             "bars": false,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -305,7 +305,7 @@
           {
             "aliasColors": {},
             "bars": false,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -525,7 +525,7 @@
           {
             "aliasColors": {},
             "bars": false,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -646,7 +646,7 @@
           {
             "aliasColors": {},
             "bars": false,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 2,
@@ -903,7 +903,7 @@
           {
             "aliasColors": {},
             "bars": false,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -1119,7 +1119,7 @@
           {
             "aliasColors": {},
             "bars": true,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -1238,7 +1238,7 @@
           {
             "aliasColors": {},
             "bars": true,
-            "datasource": "$Source",
+            "datasource": "influxdb_production",
             "editable": true,
             "error": false,
             "fill": 1,
@@ -1419,14 +1419,14 @@
     "annotations": {
       "list": [
         {
-          "datasource": "$Source",
+          "datasource": "influxdb_production",
           "enable": true,
           "iconColor": "rgb(5, 0, 255)",
           "name": "BBS Master Elections",
           "query": "SELECT value FROM \"cf.bbs.BBSMasterElected\" WHERE $timeFilter"
         },
         {
-          "datasource": "$Source",
+          "datasource": "influxdb_production",
           "enable": false,
           "iconColor": "rgb(192, 196, 0)",
           "name": "Staging",
