@@ -25,6 +25,8 @@ meta:
     user: ~
     password: ~
     database: ~
+  elasticsearch:
+    hosts: ~
   riemann:
     pagerduty_api_key: ~
     platform_logs_threshold: ~
@@ -59,6 +61,8 @@ releases:
   version: latest
 - name: awslogs
   version: latest
+- name: bosh-log-forwarder
+  version: latest
 - name: nessus-agent
   version: latest
 - name: newrelic
@@ -92,6 +96,7 @@ jobs:
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
   - {name: awslogs, release: awslogs}
+  - {name: bosh-log-forwarder, release: bosh-log-forwarder}
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
@@ -112,6 +117,7 @@ jobs:
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
   - {name: awslogs, release: awslogs}
+  - {name: bosh-log-forwarder, release: bosh-log-forwarder}
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
@@ -190,6 +196,9 @@ properties:
         branch: master
         repo_url: https://raw.githubusercontent.com/18F/cg-deploy-monitoring
 
+  bosh-log-forwarder:
+    elasticsearch:
+      hosts: (( meta.elasticsearch.hosts ))
   influxdb:
     database: (( meta.influxdb.database ))
     user: (( meta.influxdb.user ))
