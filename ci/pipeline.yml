@@ -23,8 +23,8 @@ jobs:
       trigger: true
     - get: common-tooling
     - get: pipeline-tasks
+    - get: influxdb-release
     - get: cg-s3-riemann-release
-    - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
@@ -45,7 +45,7 @@ jobs:
       cert: common-tooling/boshCA.crt
       manifest: spiff-merge/manifest.yml
       releases: &releases
-        - cg-s3-influxdb-release/influxdb*.tgz
+        - influxdb-release/*.tgz
         - cg-s3-riemann-release/riemann*.tgz
         - cg-s3-grafana-release/grafana*.tgz
         - cg-s3-collectd-release/collectd*.tgz
@@ -78,8 +78,8 @@ jobs:
       trigger: true
     - get: common-stage
     - get: pipeline-tasks
+    - get: influxdb-release
     - get: cg-s3-riemann-release
-    - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
@@ -132,8 +132,8 @@ jobs:
       trigger: true
     - get: common-prod
     - get: pipeline-tasks
+    - get: influxdb-release
     - get: cg-s3-riemann-release
-    - get: cg-s3-influxdb-release
     - get: cg-s3-collectd-release
     - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
@@ -220,15 +220,10 @@ resources:
     regexp: collectd-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
-- name: cg-s3-influxdb-release
-  type: s3
+- name: influxdb-release
+  type: bosh-io-release
   source:
-    region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
-    bucket: {{s3-bosh-releases-bucket}}
-    private: true
-    regexp: influxdb-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
+    repository: vito/influxdb-boshrelease
 
 - name: cg-s3-riemann-release
   type: s3
