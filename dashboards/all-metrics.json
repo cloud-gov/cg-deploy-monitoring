@@ -1,0 +1,1700 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canStar": true,
+    "slug": "cloud-controller",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2016-08-03T20:05:32Z",
+    "updated": "2016-08-05T19:36:37Z"
+  },
+  "dashboard": {
+    "id": 6,
+    "title": "All metrics",
+    "originalTitle": "All metrics",
+    "tags": [],
+    "style": "dark",
+    "timezone": "browser",
+    "editable": true,
+    "hideControls": false,
+    "sharedCrosshair": false,
+    "rows": [
+      {
+	"collapse": false,
+	"editable": true,
+	"height": "250px",
+	"panels": [
+	  {
+	    "aliasColors": {},
+	    "bars": false,
+	    "datasource": null,
+	    "editable": true,
+	    "error": false,
+	    "fill": 1,
+	    "grid": {
+	      "leftLogBase": 1,
+	      "leftMax": null,
+	      "leftMin": null,
+	      "rightLogBase": 1,
+	      "rightMax": null,
+	      "rightMin": null,
+	      "threshold1": null,
+	      "threshold1Color": "rgba(216, 200, 27, 0.27)",
+	      "threshold2": null,
+	      "threshold2Color": "rgba(234, 112, 112, 0.22)"
+	    },
+	    "id": 1,
+	    "isNew": true,
+	    "legend": {
+	      "avg": false,
+	      "current": false,
+	      "max": false,
+	      "min": false,
+	      "show": true,
+	      "total": false,
+	      "values": false
+	    },
+	    "lines": true,
+	    "linewidth": 2,
+	    "links": [],
+	    "nullPointMode": "connected",
+	    "percentage": false,
+	    "pointradius": 5,
+	    "points": false,
+	    "renderer": "flot",
+	    "scopedVars": {
+	      "metrics": {
+		"text": "cf.DEA.available_disk_ratio",
+		"value": "cf.DEA.available_disk_ratio",
+		"selected": true
+	      }
+	    },
+	    "seriesOverrides": [],
+	    "span": 12,
+	    "stack": false,
+	    "steppedLine": false,
+	    "targets": [
+	      {
+		"dsType": "influxdb",
+		"groupBy": [
+		  {
+		    "params": [
+		      "$interval"
+		    ],
+		    "type": "time"
+		  },
+		  {
+		    "params": [
+		      "/$group_by$/"
+		    ],
+		    "type": "tag"
+		  },
+		  {
+		    "params": [
+		      "null"
+		    ],
+		    "type": "fill"
+		  }
+		],
+		"hide": false,
+		"measurement": "/$metrics$/",
+		"query": "SELECT mean(\"value\") FROM /$metrics$/ WHERE $timeFilter GROUP BY time($interval), $group_by fill(null)",
+		"rawQuery": true,
+		"refId": "A",
+		"resultFormat": "time_series",
+		"select": [
+		  [
+		    {
+		      "params": [
+			"value"
+		      ],
+		      "type": "field"
+		    },
+		    {
+		      "params": [],
+		      "type": "mean"
+		    }
+		  ]
+		],
+		"tags": []
+	      }
+	    ],
+	    "timeFrom": null,
+	    "timeShift": null,
+	    "title": "$metrics",
+	    "tooltip": {
+	      "shared": true,
+	      "value_type": "cumulative"
+	    },
+	    "type": "graph",
+	    "x-axis": true,
+	    "y-axis": true,
+	    "y_formats": [
+	      "short",
+	      "short"
+	    ]
+	  }
+	],
+	"repeat": "metrics",
+	"scopedVars": {
+	  "metrics": {
+	    "text": "cf.DEA.available_disk_ratio",
+	    "value": "cf.DEA.available_disk_ratio",
+	    "selected": true
+	  }
+	},
+	"showTitle": false,
+	"title": ""
+      },
+      {
+	"title": "New row",
+	"height": "250px",
+	"editable": true,
+	"collapse": false,
+	"panels": [
+	  {
+	    "aliasColors": {},
+	    "bars": false,
+	    "datasource": null,
+	    "editable": true,
+	    "error": false,
+	    "fill": 1,
+	    "grid": {
+	      "leftLogBase": 1,
+	      "leftMax": null,
+	      "leftMin": null,
+	      "rightLogBase": 1,
+	      "rightMax": null,
+	      "rightMin": null,
+	      "threshold1": null,
+	      "threshold1Color": "rgba(216, 200, 27, 0.27)",
+	      "threshold2": null,
+	      "threshold2Color": "rgba(234, 112, 112, 0.22)"
+	    },
+	    "id": 2,
+	    "isNew": true,
+	    "legend": {
+	      "avg": false,
+	      "current": false,
+	      "max": false,
+	      "min": false,
+	      "show": true,
+	      "total": false,
+	      "values": false
+	    },
+	    "lines": true,
+	    "linewidth": 2,
+	    "links": [],
+	    "nullPointMode": "connected",
+	    "percentage": false,
+	    "pointradius": 5,
+	    "points": false,
+	    "renderer": "flot",
+	    "seriesOverrides": [],
+	    "span": 12,
+	    "stack": false,
+	    "steppedLine": false,
+	    "targets": [
+	      {
+		"dsType": "influxdb",
+		"groupBy": [
+		  {
+		    "params": [
+		      "$interval"
+		    ],
+		    "type": "time"
+		  },
+		  {
+		    "params": [
+		      "$group_by"
+		    ],
+		    "type": "tag"
+		  },
+		  {
+		    "params": [
+		      "null"
+		    ],
+		    "type": "fill"
+		  }
+		],
+		"hide": false,
+		"measurement": "/$counter_events$/",
+		"query": "SELECT derivative(mean(\"value\"), 10s) FROM /$counter_events$/ WHERE $timeFilter GROUP BY time($interval), \"$group_by\" fill(null)",
+		"rawQuery": false,
+		"refId": "A",
+		"resultFormat": "time_series",
+		"select": [
+		  [
+		    {
+		      "type": "field",
+		      "params": [
+			"value"
+		      ]
+		    },
+		    {
+		      "type": "mean",
+		      "params": []
+		    },
+		    {
+		      "type": "derivative",
+		      "params": [
+			"10s"
+		      ]
+		    }
+		  ]
+		],
+		"tags": []
+	      }
+	    ],
+	    "timeFrom": null,
+	    "timeShift": null,
+	    "title": "$counter_events",
+	    "tooltip": {
+	      "shared": true,
+	      "value_type": "cumulative"
+	    },
+	    "type": "graph",
+	    "x-axis": true,
+	    "y-axis": true,
+	    "y_formats": [
+	      "short",
+	      "short"
+	    ],
+	    "scopedVars": {
+	      "counter_events": {
+		"text": "cf.DEA.total_warden_response_time_in_ms",
+		"value": "cf.DEA.total_warden_response_time_in_ms",
+		"selected": true
+	      }
+	    }
+	  }
+	],
+	"repeat": "counter_events",
+	"scopedVars": {
+	  "counter_events": {
+	    "text": "cf.DEA.total_warden_response_time_in_ms",
+	    "value": "cf.DEA.total_warden_response_time_in_ms",
+	    "selected": true
+	  }
+	}
+      }
+    ],
+    "time": {
+      "from": "now/d",
+      "to": "now/d"
+    },
+    "timepicker": {
+      "now": true,
+      "refresh_intervals": [
+	"5s",
+	"10s",
+	"30s",
+	"1m",
+	"5m",
+	"15m",
+	"30m",
+	"1h",
+	"2h",
+	"1d"
+      ],
+      "time_options": [
+	"5m",
+	"15m",
+	"1h",
+	"6h",
+	"12h",
+	"24h",
+	"2d",
+	"7d",
+	"30d"
+      ]
+    },
+    "templating": {
+      "list": [
+	{
+	  "allFormat": "pipe",
+	  "current": {
+	    "text": "cf.DEA.available_disk_ratio",
+	    "value": "cf.DEA.available_disk_ratio"
+	  },
+	  "datasource": null,
+	  "includeAll": false,
+	  "multi": true,
+	  "multiFormat": "glob",
+	  "name": "metrics",
+	  "options": [
+	    {
+	      "text": "cf.DEA.available_disk_ratio",
+	      "value": "cf.DEA.available_disk_ratio",
+	      "selected": true
+	    },
+	    {
+	      "text": "cf.DEA.available_memory_ratio",
+	      "value": "cf.DEA.available_memory_ratio",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.avg_cpu_load",
+	      "value": "cf.DEA.avg_cpu_load",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_born",
+	      "value": "cf.DEA.dea_registry_born",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_crashed",
+	      "value": "cf.DEA.dea_registry_crashed",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_evacuating",
+	      "value": "cf.DEA.dea_registry_evacuating",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_resuming",
+	      "value": "cf.DEA.dea_registry_resuming",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_running",
+	      "value": "cf.DEA.dea_registry_running",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_starting",
+	      "value": "cf.DEA.dea_registry_starting",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_stopped",
+	      "value": "cf.DEA.dea_registry_stopped",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.dea_registry_stopping",
+	      "value": "cf.DEA.dea_registry_stopping",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.instances",
+	      "value": "cf.DEA.instances",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.mem_free_bytes",
+	      "value": "cf.DEA.mem_free_bytes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.mem_used_bytes",
+	      "value": "cf.DEA.mem_used_bytes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.remaining_disk",
+	      "value": "cf.DEA.remaining_disk",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.remaining_memory",
+	      "value": "cf.DEA.remaining_memory",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.reservable_stagers",
+	      "value": "cf.DEA.reservable_stagers",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DEA.uptime",
+	      "value": "cf.DEA.uptime",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.LinuxFileDescriptor",
+	      "value": "cf.DopplerServer.LinuxFileDescriptor",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.Uptime",
+	      "value": "cf.DopplerServer.Uptime",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.DopplerServer.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.numBytesAllocated",
+	      "value": "cf.DopplerServer.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.DopplerServer.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.DopplerServer.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.numFrees",
+	      "value": "cf.DopplerServer.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.memoryStats.numMallocs",
+	      "value": "cf.DopplerServer.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.messageRouter.numberOfContainerMetricSinks",
+	      "value": "cf.DopplerServer.messageRouter.numberOfContainerMetricSinks",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.messageRouter.numberOfDumpSinks",
+	      "value": "cf.DopplerServer.messageRouter.numberOfDumpSinks",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.messageRouter.numberOfFirehoseSinks",
+	      "value": "cf.DopplerServer.messageRouter.numberOfFirehoseSinks",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.messageRouter.numberOfWebsocketSinks",
+	      "value": "cf.DopplerServer.messageRouter.numberOfWebsocketSinks",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.numCPUS",
+	      "value": "cf.DopplerServer.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.numGoRoutines",
+	      "value": "cf.DopplerServer.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.LinuxFileDescriptor",
+	      "value": "cf.LoggregatorTrafficController.LinuxFileDescriptor",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.Uptime",
+	      "value": "cf.LoggregatorTrafficController.Uptime",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocated",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.numFrees",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.memoryStats.numMallocs",
+	      "value": "cf.LoggregatorTrafficController.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.numCPUS",
+	      "value": "cf.LoggregatorTrafficController.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.numGoRoutines",
+	      "value": "cf.LoggregatorTrafficController.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.MetronAgent.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.numBytesAllocated",
+	      "value": "cf.MetronAgent.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.MetronAgent.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.MetronAgent.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.numFrees",
+	      "value": "cf.MetronAgent.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.memoryStats.numMallocs",
+	      "value": "cf.MetronAgent.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.numCPUS",
+	      "value": "cf.MetronAgent.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.numGoRoutines",
+	      "value": "cf.MetronAgent.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.LockHeld.hm9000.analyzer",
+	      "value": "cf.analyzer.LockHeld.hm9000.analyzer",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.LockHeldDuration.hm9000.analyzer",
+	      "value": "cf.analyzer.LockHeldDuration.hm9000.analyzer",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfAppsWithAllInstancesReporting",
+	      "value": "cf.analyzer.NumberOfAppsWithAllInstancesReporting",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfAppsWithMissingInstances",
+	      "value": "cf.analyzer.NumberOfAppsWithMissingInstances",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfCrashedIndices",
+	      "value": "cf.analyzer.NumberOfCrashedIndices",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfCrashedInstances",
+	      "value": "cf.analyzer.NumberOfCrashedInstances",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfDesiredApps",
+	      "value": "cf.analyzer.NumberOfDesiredApps",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfDesiredAppsPendingStaging",
+	      "value": "cf.analyzer.NumberOfDesiredAppsPendingStaging",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfDesiredInstances",
+	      "value": "cf.analyzer.NumberOfDesiredInstances",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfMissingIndices",
+	      "value": "cf.analyzer.NumberOfMissingIndices",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfRunningInstances",
+	      "value": "cf.analyzer.NumberOfRunningInstances",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.NumberOfUndesiredRunningApps",
+	      "value": "cf.analyzer.NumberOfUndesiredRunningApps",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.analyzer.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.numBytesAllocated",
+	      "value": "cf.analyzer.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.analyzer.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.analyzer.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.numFrees",
+	      "value": "cf.analyzer.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.memoryStats.numMallocs",
+	      "value": "cf.analyzer.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.numCPUS",
+	      "value": "cf.analyzer.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.analyzer.numGoRoutines",
+	      "value": "cf.analyzer.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.apiserver.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.numBytesAllocated",
+	      "value": "cf.apiserver.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.apiserver.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.apiserver.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.numFrees",
+	      "value": "cf.apiserver.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.memoryStats.numMallocs",
+	      "value": "cf.apiserver.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.numCPUS",
+	      "value": "cf.apiserver.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.apiserver.numGoRoutines",
+	      "value": "cf.apiserver.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.failed_job_count.total",
+	      "value": "cf.cc.failed_job_count.total",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.http_status.2XX",
+	      "value": "cf.cc.http_status.2XX",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.job_queue_length.cc-generic",
+	      "value": "cf.cc.job_queue_length.cc-generic",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.job_queue_length.total",
+	      "value": "cf.cc.job_queue_length.total",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.all",
+	      "value": "cf.cc.log_count.all",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.debug",
+	      "value": "cf.cc.log_count.debug",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.debug1",
+	      "value": "cf.cc.log_count.debug1",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.debug2",
+	      "value": "cf.cc.log_count.debug2",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.error",
+	      "value": "cf.cc.log_count.error",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.fatal",
+	      "value": "cf.cc.log_count.fatal",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.info",
+	      "value": "cf.cc.log_count.info",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.off",
+	      "value": "cf.cc.log_count.off",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.log_count.warn",
+	      "value": "cf.cc.log_count.warn",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.requests.completed",
+	      "value": "cf.cc.requests.completed",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.requests.outstanding",
+	      "value": "cf.cc.requests.outstanding",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.tasks_running.count",
+	      "value": "cf.cc.tasks_running.count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.tasks_running.memory_in_mb",
+	      "value": "cf.cc.tasks_running.memory_in_mb",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.event_machine.connection_count",
+	      "value": "cf.cc.thread_info.event_machine.connection_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.event_machine.resultqueue.num_waiting",
+	      "value": "cf.cc.thread_info.event_machine.resultqueue.num_waiting",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.event_machine.resultqueue.size",
+	      "value": "cf.cc.thread_info.event_machine.resultqueue.size",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.event_machine.threadqueue.num_waiting",
+	      "value": "cf.cc.thread_info.event_machine.threadqueue.num_waiting",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.event_machine.threadqueue.size",
+	      "value": "cf.cc.thread_info.event_machine.threadqueue.size",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.thread_info.thread_count",
+	      "value": "cf.cc.thread_info.thread_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.total_users",
+	      "value": "cf.cc.total_users",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.cpu",
+	      "value": "cf.cc.vitals.cpu",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.cpu_load_avg",
+	      "value": "cf.cc.vitals.cpu_load_avg",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.mem_bytes",
+	      "value": "cf.cc.vitals.mem_bytes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.mem_free_bytes",
+	      "value": "cf.cc.vitals.mem_free_bytes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.mem_used_bytes",
+	      "value": "cf.cc.vitals.mem_used_bytes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.num_cores",
+	      "value": "cf.cc.vitals.num_cores",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.cc.vitals.uptime",
+	      "value": "cf.cc.vitals.uptime",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.dea_logging_agent.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.numBytesAllocated",
+	      "value": "cf.dea_logging_agent.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.dea_logging_agent.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.dea_logging_agent.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.numFrees",
+	      "value": "cf.dea_logging_agent.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.memoryStats.numMallocs",
+	      "value": "cf.dea_logging_agent.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.numCPUS",
+	      "value": "cf.dea_logging_agent.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.numGoRoutines",
+	      "value": "cf.dea_logging_agent.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CompareAndDeleteFail",
+	      "value": "cf.etcd.CompareAndDeleteFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CompareAndDeleteSuccess",
+	      "value": "cf.etcd.CompareAndDeleteSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CompareAndSwapFail",
+	      "value": "cf.etcd.CompareAndSwapFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CompareAndSwapSuccess",
+	      "value": "cf.etcd.CompareAndSwapSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CreateFail",
+	      "value": "cf.etcd.CreateFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.CreateSuccess",
+	      "value": "cf.etcd.CreateSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.DeleteFail",
+	      "value": "cf.etcd.DeleteFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.DeleteSuccess",
+	      "value": "cf.etcd.DeleteSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.EtcdIndex",
+	      "value": "cf.etcd.EtcdIndex",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.ExpireCount",
+	      "value": "cf.etcd.ExpireCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.Followers",
+	      "value": "cf.etcd.Followers",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.GetsFail",
+	      "value": "cf.etcd.GetsFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.GetsSuccess",
+	      "value": "cf.etcd.GetsSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.IsLeader",
+	      "value": "cf.etcd.IsLeader",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.RaftIndex",
+	      "value": "cf.etcd.RaftIndex",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.RaftTerm",
+	      "value": "cf.etcd.RaftTerm",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.ReceivedAppendRequests",
+	      "value": "cf.etcd.ReceivedAppendRequests",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.ReceivingBandwidthRate",
+	      "value": "cf.etcd.ReceivingBandwidthRate",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.ReceivingRequestRate",
+	      "value": "cf.etcd.ReceivingRequestRate",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.SendingBandwidthRate",
+	      "value": "cf.etcd.SendingBandwidthRate",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.SendingRequestRate",
+	      "value": "cf.etcd.SendingRequestRate",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.SentAppendRequests",
+	      "value": "cf.etcd.SentAppendRequests",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.SetsFail",
+	      "value": "cf.etcd.SetsFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.SetsSuccess",
+	      "value": "cf.etcd.SetsSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.UpdateFail",
+	      "value": "cf.etcd.UpdateFail",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.UpdateSuccess",
+	      "value": "cf.etcd.UpdateSuccess",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.Watchers",
+	      "value": "cf.etcd.Watchers",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.logSenderTotalMessagesRead",
+	      "value": "cf.etcd.logSenderTotalMessagesRead",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.etcd.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.numBytesAllocated",
+	      "value": "cf.etcd.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.etcd.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.etcd.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.numFrees",
+	      "value": "cf.etcd.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.memoryStats.numMallocs",
+	      "value": "cf.etcd.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.numCPUS",
+	      "value": "cf.etcd.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.etcd.numGoRoutines",
+	      "value": "cf.etcd.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.LockHeld.hm9000.evacuator",
+	      "value": "cf.evacuator.LockHeld.hm9000.evacuator",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.LockHeldDuration.hm9000.evacuator",
+	      "value": "cf.evacuator.LockHeldDuration.hm9000.evacuator",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.evacuator.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.numBytesAllocated",
+	      "value": "cf.evacuator.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.evacuator.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.evacuator.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.numFrees",
+	      "value": "cf.evacuator.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.memoryStats.numMallocs",
+	      "value": "cf.evacuator.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.numCPUS",
+	      "value": "cf.evacuator.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.evacuator.numGoRoutines",
+	      "value": "cf.evacuator.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.latency",
+	      "value": "cf.gorouter.latency",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.latency.CloudController",
+	      "value": "cf.gorouter.latency.CloudController",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.latency.uaa",
+	      "value": "cf.gorouter.latency.uaa",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.gorouter.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.numBytesAllocated",
+	      "value": "cf.gorouter.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.gorouter.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.gorouter.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.numFrees",
+	      "value": "cf.gorouter.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.memoryStats.numMallocs",
+	      "value": "cf.gorouter.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.ms_since_last_registry_update",
+	      "value": "cf.gorouter.ms_since_last_registry_update",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.numCPUS",
+	      "value": "cf.gorouter.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.numGoRoutines",
+	      "value": "cf.gorouter.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.total_routes",
+	      "value": "cf.gorouter.total_routes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.uptime",
+	      "value": "cf.gorouter.uptime",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.LockHeld.hm9000.listener",
+	      "value": "cf.listener.LockHeld.hm9000.listener",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.LockHeldDuration.hm9000.listener",
+	      "value": "cf.listener.LockHeldDuration.hm9000.listener",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.ReceivedHeartbeats",
+	      "value": "cf.listener.ReceivedHeartbeats",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.SavedHeartbeats",
+	      "value": "cf.listener.SavedHeartbeats",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.listener.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.numBytesAllocated",
+	      "value": "cf.listener.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.listener.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.listener.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.numFrees",
+	      "value": "cf.listener.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.memoryStats.numMallocs",
+	      "value": "cf.listener.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.numCPUS",
+	      "value": "cf.listener.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.listener.numGoRoutines",
+	      "value": "cf.listener.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.LockHeld.hm9000.shredder",
+	      "value": "cf.shredder.LockHeld.hm9000.shredder",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.LockHeldDuration.hm9000.shredder",
+	      "value": "cf.shredder.LockHeldDuration.hm9000.shredder",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.shredder.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.numBytesAllocated",
+	      "value": "cf.shredder.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.shredder.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.shredder.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.numFrees",
+	      "value": "cf.shredder.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.memoryStats.numMallocs",
+	      "value": "cf.shredder.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.numCPUS",
+	      "value": "cf.shredder.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.shredder.numGoRoutines",
+	      "value": "cf.shredder.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.lastGCPauseTimeNS",
+	      "value": "cf.syslog_drain_binder.memoryStats.lastGCPauseTimeNS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.numBytesAllocated",
+	      "value": "cf.syslog_drain_binder.memoryStats.numBytesAllocated",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.numBytesAllocatedHeap",
+	      "value": "cf.syslog_drain_binder.memoryStats.numBytesAllocatedHeap",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.numBytesAllocatedStack",
+	      "value": "cf.syslog_drain_binder.memoryStats.numBytesAllocatedStack",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.numFrees",
+	      "value": "cf.syslog_drain_binder.memoryStats.numFrees",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.memoryStats.numMallocs",
+	      "value": "cf.syslog_drain_binder.memoryStats.numMallocs",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.numCPUS",
+	      "value": "cf.syslog_drain_binder.numCPUS",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.numGoRoutines",
+	      "value": "cf.syslog_drain_binder.numGoRoutines",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.totalDrains",
+	      "value": "cf.syslog_drain_binder.totalDrains",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.principal_authentication_failure_count",
+	      "value": "cf.uaa.audit_service.principal_authentication_failure_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.principal_not_found_count",
+	      "value": "cf.uaa.audit_service.principal_not_found_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.user_authentication_count",
+	      "value": "cf.uaa.audit_service.user_authentication_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.user_authentication_failure_count",
+	      "value": "cf.uaa.audit_service.user_authentication_failure_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.user_not_found_count",
+	      "value": "cf.uaa.audit_service.user_not_found_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.user_password_changes",
+	      "value": "cf.uaa.audit_service.user_password_changes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.uaa.audit_service.user_password_failures",
+	      "value": "cf.uaa.audit_service.user_password_failures",
+	      "selected": false
+	    }
+	  ],
+	  "query": " SHOW MEASUREMENTS WITH MEASUREMENT =~ /cf\\..*/ WHERE event_type = 'ValueMetric'",
+	  "refresh": true,
+	  "type": "query"
+	},
+	{
+	  "allFormat": "pipe",
+	  "current": {
+	    "text": "cf.DEA.total_warden_response_time_in_ms",
+	    "value": "cf.DEA.total_warden_response_time_in_ms",
+	    "tags": []
+	  },
+	  "datasource": null,
+	  "includeAll": false,
+	  "multi": true,
+	  "multiFormat": "glob",
+	  "name": "counter_events",
+	  "options": [
+	    {
+	      "text": "cf.DEA.total_warden_response_time_in_ms",
+	      "value": "cf.DEA.total_warden_response_time_in_ms",
+	      "selected": true
+	    },
+	    {
+	      "text": "cf.DEA.warden_request_count",
+	      "value": "cf.DEA.warden_request_count",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeListener.receivedByteCount",
+	      "value": "cf.DopplerServer.dropsondeListener.receivedByteCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeListener.receivedMessageCount",
+	      "value": "cf.DopplerServer.dropsondeListener.receivedMessageCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeUnmarshaller.containerMetricReceived",
+	      "value": "cf.DopplerServer.dropsondeUnmarshaller.containerMetricReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeUnmarshaller.counterEventReceived",
+	      "value": "cf.DopplerServer.dropsondeUnmarshaller.counterEventReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeUnmarshaller.httpStartStopReceived",
+	      "value": "cf.DopplerServer.dropsondeUnmarshaller.httpStartStopReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeUnmarshaller.logMessageTotal",
+	      "value": "cf.DopplerServer.dropsondeUnmarshaller.logMessageTotal",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.dropsondeUnmarshaller.valueMetricReceived",
+	      "value": "cf.DopplerServer.dropsondeUnmarshaller.valueMetricReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.httpServer.receivedMessages",
+	      "value": "cf.DopplerServer.httpServer.receivedMessages",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.listeners.receivedEnvelopes",
+	      "value": "cf.DopplerServer.listeners.receivedEnvelopes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.listeners.totalReceivedMessageCount",
+	      "value": "cf.DopplerServer.listeners.totalReceivedMessageCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.sentEnvelopes",
+	      "value": "cf.DopplerServer.sentEnvelopes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.sentMessagesFirehose.influxdb-firehose-nozzle",
+	      "value": "cf.DopplerServer.sentMessagesFirehose.influxdb-firehose-nozzle",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.signatureVerifier.validSignatures",
+	      "value": "cf.DopplerServer.signatureVerifier.validSignatures",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.udpListener.receivedByteCount",
+	      "value": "cf.DopplerServer.udpListener.receivedByteCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.DopplerServer.udpListener.receivedMessageCount",
+	      "value": "cf.DopplerServer.udpListener.receivedMessageCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.LoggregatorTrafficController.listeners.receivedEnvelopes",
+	      "value": "cf.LoggregatorTrafficController.listeners.receivedEnvelopes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.DopplerForwarder.sentMessages",
+	      "value": "cf.MetronAgent.DopplerForwarder.sentMessages",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.MessageAggregator.counterEventReceived",
+	      "value": "cf.MetronAgent.MessageAggregator.counterEventReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.MessageAggregator.uncategorizedEvents",
+	      "value": "cf.MetronAgent.MessageAggregator.uncategorizedEvents",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeAgentListener.receivedByteCount",
+	      "value": "cf.MetronAgent.dropsondeAgentListener.receivedByteCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeAgentListener.receivedMessageCount",
+	      "value": "cf.MetronAgent.dropsondeAgentListener.receivedMessageCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeMarshaller.sentEnvelopes",
+	      "value": "cf.MetronAgent.dropsondeMarshaller.sentEnvelopes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.containerMetricReceived",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.containerMetricReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.counterEventReceived",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.counterEventReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.httpStartStopReceived",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.httpStartStopReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.logMessageTotal",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.logMessageTotal",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.receivedEnvelopes",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.receivedEnvelopes",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.dropsondeUnmarshaller.valueMetricReceived",
+	      "value": "cf.MetronAgent.dropsondeUnmarshaller.valueMetricReceived",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.udp.sentByteCount",
+	      "value": "cf.MetronAgent.udp.sentByteCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.MetronAgent.udp.sentMessageCount",
+	      "value": "cf.MetronAgent.udp.sentMessageCount",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.dea_logging_agent.logSenderTotalMessagesRead",
+	      "value": "cf.dea_logging_agent.logSenderTotalMessagesRead",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.",
+	      "value": "cf.gorouter.registry_message.",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.CloudController",
+	      "value": "cf.gorouter.registry_message.CloudController",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.HM9K",
+	      "value": "cf.gorouter.registry_message.HM9K",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.blobstore",
+	      "value": "cf.gorouter.registry_message.blobstore",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.dea-0",
+	      "value": "cf.gorouter.registry_message.dea-0",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.directory-server-0",
+	      "value": "cf.gorouter.registry_message.directory-server-0",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.registry_message.uaa",
+	      "value": "cf.gorouter.registry_message.uaa",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.requests.CloudController",
+	      "value": "cf.gorouter.requests.CloudController",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.requests.uaa",
+	      "value": "cf.gorouter.requests.uaa",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.responses",
+	      "value": "cf.gorouter.responses",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.responses.2xx",
+	      "value": "cf.gorouter.responses.2xx",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.gorouter.total_requests",
+	      "value": "cf.gorouter.total_requests",
+	      "selected": false
+	    },
+	    {
+	      "text": "cf.syslog_drain_binder.pollCount",
+	      "value": "cf.syslog_drain_binder.pollCount",
+	      "selected": false
+	    }
+	  ],
+	  "query": " SHOW MEASUREMENTS WITH MEASUREMENT =~ /cf\\..*/ WHERE event_type = 'CounterEvent'",
+	  "refresh": true,
+	  "type": "query"
+	},
+	{
+	  "allFormat": "regex values",
+	  "current": {
+	    "tags": [],
+	    "text": "ip",
+	    "value": "ip"
+	  },
+	  "datasource": null,
+	  "hideLabel": false,
+	  "includeAll": false,
+	  "label": "",
+	  "multi": false,
+	  "multiFormat": "glob",
+	  "name": "group_by",
+	  "options": [
+	    {
+	      "selected": true,
+	      "text": "ip",
+	      "value": "ip"
+	    },
+	    {
+	      "selected": false,
+	      "text": "job",
+	      "value": "job"
+	    },
+	    {
+	      "selected": false,
+	      "text": "index",
+	      "value": "index"
+	    }
+	  ],
+	  "query": "ip,job,index",
+	  "refresh": false,
+	  "type": "custom"
+	}
+      ]
+    },
+    "annotations": {
+      "list": []
+    },
+    "refresh": false,
+    "schemaVersion": 8,
+    "version": 2,
+    "links": []
+  }
+}
