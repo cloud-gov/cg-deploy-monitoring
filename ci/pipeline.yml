@@ -24,34 +24,27 @@ jobs:
     - get: common-tooling
     - get: pipeline-tasks
     - get: influxdb-release
+    - get: grafana-release
     - get: cg-s3-riemann-release
     - get: cg-s3-collectd-release
-    - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
-    file: pipeline-tasks/spiff-merge.yml
-    config:
-      inputs:
-        - name: pipeline-tasks
-        - name: monitoring-config
-        - name: common-tooling
-      params:
-        OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-config/monitoring.yml
-        MERGE_FILES: common-tooling/secrets.yml
+    file: monitoring-config/ci/generate-deployment-manifest.yml
+    input_mapping:
+      common: common-tooling
   - put: monitoring-tooling-deployment
     params:
       cert: common-tooling/boshCA.crt
-      manifest: spiff-merge/manifest.yml
+      manifest: monitoring-manifest/manifest.yml
       releases: &releases
-        - influxdb-release/*.tgz
-        - cg-s3-riemann-release/riemann*.tgz
-        - cg-s3-grafana-release/grafana*.tgz
-        - cg-s3-collectd-release/collectd*.tgz
-        - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      - influxdb-release/*.tgz
+      - grafana-release/*.tgz
+      - cg-s3-riemann-release/riemann*.tgz
+      - cg-s3-collectd-release/collectd*.tgz
+      - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
       stemcells:
-        - monitoring-stemcell/*.tgz
+      - monitoring-stemcell/*.tgz
     on_failure:
       put: slack
       params:
@@ -76,32 +69,25 @@ jobs:
   - aggregate:
     - get: monitoring-config
       trigger: true
-    - get: common-stage
+    - get: common-staging
     - get: pipeline-tasks
     - get: influxdb-release
+    - get: grafana-release
     - get: cg-s3-riemann-release
     - get: cg-s3-collectd-release
-    - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
-    file: pipeline-tasks/spiff-merge.yml
-    config:
-      inputs:
-        - name: pipeline-tasks
-        - name: monitoring-config
-        - name: common-stage
-      params:
-        OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-config/monitoring.yml
-        MERGE_FILES: common-stage/secrets.yml
+    file: monitoring-config/ci/generate-deployment-manifest.yml
+    input_mapping:
+      common: common-staging
   - put: monitoring-staging-deployment
     params:
-      cert: common-stage/boshCA.crt
-      manifest: spiff-merge/manifest.yml
+      cert: common-staging/boshCA.crt
+      manifest: monitoring-manifest/manifest.yml
       releases: *releases
       stemcells:
-        - monitoring-stemcell/*.tgz
+      - monitoring-stemcell/*.tgz
     on_failure:
       put: slack
       params:
@@ -130,32 +116,25 @@ jobs:
     - get: monitoring-config
       passed: [deploy-monitoring-staging]
       trigger: true
-    - get: common-prod
+    - get: common-production
     - get: pipeline-tasks
     - get: influxdb-release
+    - get: grafana-release
     - get: cg-s3-riemann-release
     - get: cg-s3-collectd-release
-    - get: cg-s3-grafana-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
   - task: monitoring-manifest
-    file: pipeline-tasks/spiff-merge.yml
-    config:
-      inputs:
-        - name: pipeline-tasks
-        - name: monitoring-config
-        - name: common-prod
-      params:
-        OUTPUT_FILE: spiff-merge/manifest.yml
-        SOURCE_FILE: monitoring-config/monitoring.yml
-        MERGE_FILES: common-prod/secrets.yml
+    file: monitoring-config/ci/generate-deployment-manifest.yml
+    input_mapping:
+      common: common-production
   - put: monitoring-production-deployment
     params:
-      cert: common-prod/boshCA.crt
-      manifest: spiff-merge/manifest.yml
+      cert: common-production/boshCA.crt
+      manifest: monitoring-manifest/manifest.yml
       releases: *releases
       stemcells:
-        - monitoring-stemcell/*.tgz
+      - monitoring-stemcell/*.tgz
     on_failure:
       put: slack
       params:
@@ -175,7 +154,6 @@ jobs:
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
 
-
 resources:
 - name: common-tooling
   type: cg-common
@@ -188,7 +166,7 @@ resources:
     secrets_passphrase: {{monitoring-tooling-private-passphrase}}
     bosh_cert: bosh-tooling.pem
 
-- name: common-stage
+- name: common-staging
   type: cg-common
   source:
     region: {{monitoring-staging-private-region}}
@@ -199,7 +177,7 @@ resources:
     secrets_passphrase: {{monitoring-staging-private-passphrase}}
     bosh_cert: bosh.pem
 
-- name: common-prod
+- name: common-production
   type: cg-common
   source:
     region: {{monitoring-production-private-region}}
@@ -225,6 +203,11 @@ resources:
   source:
     repository: vito/influxdb-boshrelease
 
+- name: grafana-release
+  type: bosh-io-release
+  source:
+    repository: vito/grafana-boshrelease
+
 - name: cg-s3-riemann-release
   type: s3
   source:
@@ -233,16 +216,6 @@ resources:
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: riemann-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
-
-- name: cg-s3-grafana-release
-  type: s3
-  source:
-    region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
-    bucket: {{s3-bosh-releases-bucket}}
-    private: true
-    regexp: grafana-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
 - name: cg-s3-encrypt-blobstore-release
