@@ -159,27 +159,27 @@ properties:
       password: (( grab meta.influxdb.password ))
       isDefault: true
     dashboards:
-    - name: all-in-one-cf-components-dashboard.json
+    - name: all-in-one-cf-components-dashboard
       content: (( file "dashboards/all-in-one-cf-components-dashboard.json" ))
-    - name: cloud-controller.json
+    - name: cloud-controller
       content: (( file "dashboards/cloud-controller.json" ))
-    - name: dea.json
+    - name: dea
       content: (( file "dashboards/dea.json" ))
-    - name: diego.json
+    - name: diego
       content: (( file "dashboards/diego.json" ))
-    - name: doppler-server.json
+    - name: doppler-server
       content: (( file "dashboards/doppler-server.json" ))
-    - name: gorouter.json
+    - name: gorouter
       content: (( file "dashboards/gorouter.json" ))
-    - name: metron-agent.json
+    - name: metron-agent
       content: (( file "dashboards/metron-agent.json" ))
-    - name: syslog.json
+    - name: syslog
       content: (( file "dashboards/syslog.json" ))
-    - name: traffic-controller.json
+    - name: traffic-controller
       content: (( file "dashboards/traffic-controller.json" ))
-    - name: uaa.json
+    - name: uaa
       content: (( file "dashboards/uaa.json" ))
-    - name: etcd.json
+    - name: etcd
       content: (( file "dashboards/etcd.json" ))
 
   bosh-log-forwarder:
