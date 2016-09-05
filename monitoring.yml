@@ -151,12 +151,13 @@ properties:
         team_ids: (( grab meta.grafana.auth.github.team_ids ))
         allowed_organizations: (( grab meta.grafana.auth.github.allowed_organizations ))
     datasources:
-      - database_type: "influxdb"
-        database_name: (( grab meta.influxdb.database ))
-        url: (( grab "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-        name: (( grab meta.influxdb.name ))
-        user: (( grab meta.influxdb.user ))
-        password: (( grab meta.influxdb.password ))
+    - type: "influxdb"
+      database: (( grab meta.influxdb.database ))
+      url: (( concat "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
+      name: (( grab meta.influxdb.name ))
+      user: (( grab meta.influxdb.user ))
+      password: (( grab meta.influxdb.password ))
+      isDefault: true
     dashboards:
     - name: all-in-one-cf-components-dashboard.json
       content: (( file "dashboards/all-in-one-cf-components-dashboard.json" ))

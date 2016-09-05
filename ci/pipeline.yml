@@ -198,6 +198,16 @@ resources:
     regexp: collectd-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
+- name: cg-s3-grafana-release
+  type: s3
+  source:
+    region_name: {{s3-bosh-releases-region}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: grafana-(.*).tgz
+    secret_access_key: {{ci-secret-access-key}}
+
 - name: influxdb-release
   type: bosh-io-release
   source:
