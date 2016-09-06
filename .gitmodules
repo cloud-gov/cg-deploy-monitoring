@@ -1,0 +1,3 @@
+[submodule "src/heapster"]
+	path = src/heapster
+	url = https://github.com/kubernetes/heapster.git
