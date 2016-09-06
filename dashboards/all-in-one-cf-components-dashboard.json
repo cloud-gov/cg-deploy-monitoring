@@ -1,1 +1,1420 @@
-{"meta":{"type":"db","canSave":true,"canEdit":true,"canStar":true,"slug":"all-in-one-cf-components-dashboard","expires":"0001-01-01T00:00:00Z","created":"2016-03-09T15:47:24Z","updated":"2016-03-10T14:23:48Z"},"dashboard":{"annotations":{"list":[]},"editable":true,"hideControls":false,"id":null,"links":[],"originalTitle":"All-In-One CF Components Dashboard","refresh":false,"rows":[{"collapse":false,"editable":true,"height":"150px","panels":[{"cacheTimeout":null,"colorBackground":false,"colorValue":false,"colors":["rgba(245, 54, 54, 0.9)","rgba(237, 129, 40, 0.89)","rgba(50, 172, 45, 0.97)"],"datasource":"influxdb_production","editable":true,"error":false,"format":"none","id":1,"interval":null,"isNew":true,"links":[],"maxDataPoints":100,"nullPointMode":"connected","nullText":null,"postfix":"","postfixFontSize":"50%","prefix":"","prefixFontSize":"50%","span":3,"sparkline":{"fillColor":"rgba(31, 118, 189, 0.18)","full":true,"lineColor":"rgb(31, 120, 193)","show":true},"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.total_users","query":"SELECT mean(\"value\") FROM \"cf.cc.total_users\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"thresholds":"","title":"Total Users","type":"singlestat","valueFontSize":"80%","valueMaps":[{"op":"=","text":"N/A","value":"null"}],"valueName":"avg"},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","decimals":null,"editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":5,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":false,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":6,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.total_users","query":"SELECT median(\"value\") FROM \"cf.cc.total_users\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"median"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Total Users","tooltip":{"shared":true,"value_type":"individual"},"transparent":false,"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"cacheTimeout":null,"colorBackground":false,"colorValue":false,"colors":["rgba(245, 54, 54, 0.9)","rgba(237, 129, 40, 0.89)","rgba(50, 172, 45, 0.97)"],"datasource":"influxdb_production","editable":true,"error":false,"format":"none","id":11,"interval":null,"isNew":true,"links":[],"maxDataPoints":100,"nullPointMode":"connected","nullText":null,"postfix":"","postfixFontSize":"50%","prefix":"","prefixFontSize":"50%","span":3,"sparkline":{"fillColor":"rgba(31, 118, 189, 0.18)","full":true,"lineColor":"rgb(31, 120, 193)","show":true},"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.gorouter.total_routes","query":"SELECT mean(\"value\") FROM \"cf.gorouter.total_routes\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"thresholds":"","title":"Total Routes","type":"singlestat","valueFontSize":"80%","valueMaps":[{"op":"=","text":"N/A","value":"null"}],"valueName":"avg"}],"title":"Row"},{"collapse":false,"editable":true,"height":"150px","panels":[{"cacheTimeout":null,"colorBackground":false,"colorValue":false,"colors":["rgba(245, 54, 54, 0.9)","rgba(237, 129, 40, 0.89)","rgba(50, 172, 45, 0.97)"],"datasource":"influxdb_production","editable":true,"error":false,"format":"s","id":7,"interval":null,"isNew":true,"links":[],"maxDataPoints":100,"nullPointMode":"connected","nullText":null,"postfix":"","postfixFontSize":"50%","prefix":"","prefixFontSize":"50%","span":4,"sparkline":{"fillColor":"rgba(31, 118, 189, 0.18)","full":true,"lineColor":"rgb(31, 120, 193)","show":true},"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.vitals.uptime","query":"SELECT mean(\"value\") FROM \"cf.cc.vitals.uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"thresholds":"","title":"Cloud Controller Uptime","type":"singlestat","valueFontSize":"80%","valueMaps":[{"op":"=","text":"N/A","value":"null"}],"valueName":"avg"},{"cacheTimeout":null,"colorBackground":false,"colorValue":false,"colors":["rgba(245, 54, 54, 0.9)","rgba(237, 129, 40, 0.89)","rgba(50, 172, 45, 0.97)"],"datasource":"influxdb_production","editable":true,"error":false,"format":"s","id":8,"interval":null,"isNew":true,"links":[],"maxDataPoints":100,"nullPointMode":"connected","nullText":null,"postfix":"","postfixFontSize":"50%","prefix":"","prefixFontSize":"50%","span":4,"sparkline":{"fillColor":"rgba(31, 118, 189, 0.18)","full":true,"lineColor":"rgb(31, 120, 193)","show":true},"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.DopplerServer.Uptime","query":"SELECT mean(\"value\") FROM \"cf.DopplerServer.Uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"thresholds":"","title":"Doppler Server Uptime","type":"singlestat","valueFontSize":"80%","valueMaps":[{"op":"=","text":"N/A","value":"null"}],"valueName":"avg"},{"cacheTimeout":null,"colorBackground":false,"colorValue":false,"colors":["rgba(245, 54, 54, 0.9)","rgba(237, 129, 40, 0.89)","rgba(50, 172, 45, 0.97)"],"datasource":"influxdb_production","editable":true,"error":false,"format":"s","id":9,"interval":null,"isNew":true,"links":[],"maxDataPoints":100,"nullPointMode":"connected","nullText":null,"postfix":"","postfixFontSize":"50%","prefix":"","prefixFontSize":"50%","span":4,"sparkline":{"fillColor":"rgba(31, 118, 189, 0.18)","full":true,"lineColor":"rgb(31, 120, 193)","show":true},"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["null"],"type":"fill"}],"measurement":"cf.LoggregatorTrafficController.Uptime","query":"SELECT mean(\"value\") FROM \"cf.LoggregatorTrafficController.Uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"thresholds":"","title":"Traffic Controller Uptime","type":"singlestat","valueFontSize":"80%","valueMaps":[{"op":"=","text":"N/A","value":"null"}],"valueName":"avg"}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":true,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":3,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.vitals.cpu_load_avg","query":"SELECT mean(\"value\") FROM \"cf.cc.vitals.cpu_load_avg\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Cloud Controller Avg CPU Load","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":4,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.requests.completed","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.cc.requests.completed\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Cloud Controller Rate of Completed Requests","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":6,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.cc.requests.outstanding","query":"SELECT mean(\"value\") FROM \"cf.cc.requests.outstanding\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Cloud Controller Outstanding Requests","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":12,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.gorouter.total_requests","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.gorouter.total_requests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Gorouter Rate of Incoming Requests","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":13,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.gorouter.responses","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.gorouter.responses\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Gorouter Rate of Outgoing Responses","tooltip":{"shared":true,"value_type":"cumulative"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":14,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.uaa.audit_service.user_authentication_count","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.uaa.audit_service.user_authentication_count\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Successful User Authentications","tooltip":{"shared":true,"value_type":"cumulative"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":15,"isNew":true,"legend":{"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.uaa.audit_service.user_authentication_failure_count","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.uaa.audit_service.user_authentication_failure_count\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of User Authentication Failuers","tooltip":{"shared":true,"value_type":"cumulative"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"}],"schemaVersion":8,"sharedCrosshair":false,"style":"dark","tags":[],"templating":{"list":[]},"time":{"from":"now-3h","to":"now"},"timepicker":{"now":true,"refresh_intervals":["5s","10s","30s","1m","5m","15m","30m","1h","2h","1d"],"time_options":["5m","15m","1h","6h","12h","24h","2d","7d","30d"]},"timezone":"browser","title":"All-In-One CF Components Dashboard","version":7}}
+{
+  "editable": true,
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "annotations": {
+    "list": []
+  },
+  "templating": {
+    "list": []
+  },
+  "tags": [],
+  "rows": [
+    {
+      "editable": true,
+      "title": "Row",
+      "height": "150px",
+      "panels": [
+        {
+          "maxDataPoints": 100,
+          "editable": true,
+          "format": "none",
+          "colorBackground": false,
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "isNew": true,
+          "prefix": "",
+          "type": "singlestat",
+          "title": "Total Users",
+          "links": [],
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "id": 1,
+          "colorValue": false,
+          "prefixFontSize": "50%",
+          "datasource": null,
+          "sparkline": {
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true
+          },
+          "nullPointMode": "connected",
+          "interval": null,
+          "span": 3,
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.cc.total_users\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.total_users"
+            }
+          ],
+          "cacheTimeout": null,
+          "error": false,
+          "thresholds": "",
+          "postfix": "",
+          "valueName": "avg"
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "transparent": false,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "id": 5,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "decimals": null,
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "connected",
+          "span": 6,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT median(\"value\") FROM \"cf.cc.total_users\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "median"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.total_users"
+            }
+          ],
+          "title": "Total Users",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": false
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        },
+        {
+          "maxDataPoints": 100,
+          "editable": true,
+          "format": "none",
+          "colorBackground": false,
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "isNew": true,
+          "prefix": "",
+          "type": "singlestat",
+          "title": "Total Routes",
+          "links": [],
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "id": 11,
+          "colorValue": false,
+          "prefixFontSize": "50%",
+          "datasource": null,
+          "sparkline": {
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true
+          },
+          "nullPointMode": "connected",
+          "interval": null,
+          "span": 3,
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.gorouter.total_routes\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.gorouter.total_routes"
+            }
+          ],
+          "cacheTimeout": null,
+          "error": false,
+          "thresholds": "",
+          "postfix": "",
+          "valueName": "avg"
+        }
+      ],
+      "collapse": false
+    },
+    {
+      "editable": true,
+      "title": "New row",
+      "height": "150px",
+      "panels": [
+        {
+          "maxDataPoints": 100,
+          "editable": true,
+          "format": "s",
+          "colorBackground": false,
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "isNew": true,
+          "prefix": "",
+          "type": "singlestat",
+          "title": "Cloud Controller Uptime",
+          "links": [],
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "id": 7,
+          "colorValue": false,
+          "prefixFontSize": "50%",
+          "datasource": null,
+          "sparkline": {
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true
+          },
+          "nullPointMode": "connected",
+          "interval": null,
+          "span": 4,
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.cc.vitals.uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.vitals.uptime"
+            }
+          ],
+          "cacheTimeout": null,
+          "error": false,
+          "thresholds": "",
+          "postfix": "",
+          "valueName": "avg"
+        },
+        {
+          "maxDataPoints": 100,
+          "editable": true,
+          "format": "s",
+          "colorBackground": false,
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "isNew": true,
+          "prefix": "",
+          "type": "singlestat",
+          "title": "Doppler Server Uptime",
+          "links": [],
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "id": 8,
+          "colorValue": false,
+          "prefixFontSize": "50%",
+          "datasource": null,
+          "sparkline": {
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true
+          },
+          "nullPointMode": "connected",
+          "interval": null,
+          "span": 4,
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.DopplerServer.Uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.DopplerServer.Uptime"
+            }
+          ],
+          "cacheTimeout": null,
+          "error": false,
+          "thresholds": "",
+          "postfix": "",
+          "valueName": "avg"
+        },
+        {
+          "maxDataPoints": 100,
+          "editable": true,
+          "format": "s",
+          "colorBackground": false,
+          "valueFontSize": "80%",
+          "postfixFontSize": "50%",
+          "isNew": true,
+          "prefix": "",
+          "type": "singlestat",
+          "title": "Traffic Controller Uptime",
+          "links": [],
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "id": 9,
+          "colorValue": false,
+          "prefixFontSize": "50%",
+          "datasource": null,
+          "sparkline": {
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true,
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true
+          },
+          "nullPointMode": "connected",
+          "interval": null,
+          "span": 4,
+          "nullText": null,
+          "valueMaps": [
+            {
+              "value": "null",
+              "op": "=",
+              "text": "N/A"
+            }
+          ],
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.LoggregatorTrafficController.Uptime\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.LoggregatorTrafficController.Uptime"
+            }
+          ],
+          "cacheTimeout": null,
+          "error": false,
+          "thresholds": "",
+          "postfix": "",
+          "valueName": "avg"
+        }
+      ],
+      "collapse": false
+    },
+    {
+      "editable": true,
+      "title": "New row",
+      "height": "250px",
+      "panels": [
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": false,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 1,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "id": 3,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 4,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.cc.vitals.cpu_load_avg\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.vitals.cpu_load_avg"
+            }
+          ],
+          "title": "Cloud Controller Avg CPU Load",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": true,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": true
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "id": 4,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 4,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.cc.requests.completed\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.requests.completed"
+            }
+          ],
+          "title": "Cloud Controller Rate of Completed Requests",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "id": 6,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": true,
+          "datasource": null,
+          "nullPointMode": "connected",
+          "span": 4,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT mean(\"value\") FROM \"cf.cc.requests.outstanding\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "measurement": "cf.cc.requests.outstanding"
+            }
+          ],
+          "title": "Cloud Controller Outstanding Requests",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": true,
+            "alignAsTable": true,
+            "total": false,
+            "show": true,
+            "current": true,
+            "avg": false,
+            "min": false,
+            "max": false
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        }
+      ],
+      "collapse": false
+    },
+    {
+      "editable": true,
+      "title": "New row",
+      "height": "250px",
+      "panels": [
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "id": 12,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 3,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.gorouter.total_requests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "measurement": "cf.gorouter.total_requests"
+            }
+          ],
+          "title": "Gorouter Rate of Incoming Requests",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "id": 13,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 3,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.gorouter.responses\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "measurement": "cf.gorouter.responses"
+            }
+          ],
+          "title": "Gorouter Rate of Outgoing Responses",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "id": 14,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 3,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.uaa.audit_service.user_authentication_count\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "measurement": "cf.uaa.audit_service.user_authentication_count"
+            }
+          ],
+          "title": "Rate of Successful User Authentications",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        },
+        {
+          "steppedLine": false,
+          "editable": true,
+          "fill": 1,
+          "x-axis": true,
+          "lines": true,
+          "isNew": true,
+          "type": "graph",
+          "links": [],
+          "timeFrom": null,
+          "pointradius": 5,
+          "timeShift": null,
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "id": 15,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "stack": false,
+          "datasource": null,
+          "nullPointMode": "null",
+          "span": 3,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "tags": [],
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.uaa.audit_service.user_authentication_failure_count\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "measurement": "cf.uaa.audit_service.user_authentication_failure_count"
+            }
+          ],
+          "title": "Rate of User Authentication Failuers",
+          "aliasColors": {},
+          "grid": {
+            "threshold2": null,
+            "leftMin": null,
+            "threshold1": null,
+            "leftLogBase": 1,
+            "rightLogBase": 1,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "leftMax": null,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "renderer": "flot",
+          "percentage": false,
+          "points": false,
+          "linewidth": 2,
+          "error": false,
+          "legend": {
+            "values": false,
+            "total": false,
+            "max": false,
+            "current": false,
+            "avg": false,
+            "min": false,
+            "show": true
+          },
+          "seriesOverrides": [],
+          "y-axis": true,
+          "bars": false
+        }
+      ],
+      "collapse": false
+    }
+  ],
+  "timezone": "browser",
+  "originalTitle": "All-In-One CF Components Dashboard",
+  "title": "All-In-One CF Components Dashboard",
+  "refresh": false,
+  "links": [],
+  "timepicker": {
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "now": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "version": 7,
+  "schemaVersion": 8,
+  "id": null,
+  "style": "dark",
+  "hideControls": false,
+  "sharedCrosshair": false
+}

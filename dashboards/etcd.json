@@ -1,1 +1,3255 @@
-{"meta":{"type":"db","canSave":true,"canEdit":true,"canStar":true,"slug":"etcd","expires":"0001-01-01T00:00:00Z","created":"2016-03-08T16:11:45Z","updated":"2016-03-10T14:47:14Z"},"dashboard":{"annotations":{"list":[]},"editable":true,"hideControls":false,"id":null,"links":[],"originalTitle":"etcd","rows":[{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":1,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.ReceivingBandwidthRate","query":"SELECT mean(\"value\") FROM \"cf.etcd.ReceivingBandwidthRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Receiving Bandwidth Rate","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["Bps","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":4,"isNew":true,"legend":{"alignAsTable":false,"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.ReceivingRequestRate","query":"SELECT mean(\"value\") FROM \"cf.etcd.ReceivingRequestRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Receiving Request Rate","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["ops","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":5,"isNew":true,"legend":{"alignAsTable":false,"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.ReceivedAppendRequests","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.ReceivedAppendRequests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Received Append Requests","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"Row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":6,"isNew":true,"legend":{"alignAsTable":false,"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.SendingBandwidthRate","query":"SELECT mean(\"value\") FROM \"cf.etcd.SendingBandwidthRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Sending Bandwidth Rate","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["Bps","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":9,"isNew":true,"legend":{"alignAsTable":false,"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.SendingRequestRate","query":"SELECT mean(\"value\") FROM \"cf.etcd.SendingRequestRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Sending Request Rate","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["ops","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":10,"isNew":true,"legend":{"alignAsTable":false,"avg":false,"current":false,"max":false,"min":false,"show":true,"total":false,"values":false},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.SentAppendRequests","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SentAppendRequests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Sent Append Requests","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":11,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.IsLeader","query":"SELECT mean(\"value\") FROM \"cf.etcd.IsLeader\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"IsLeader","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":12,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.Followers","query":"SELECT mean(\"value\") FROM \"cf.etcd.Followers\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Followers","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":13,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.Watchers","query":"SELECT mean(\"value\") FROM \"cf.etcd.Watchers\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Watchers","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":14,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":3,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.Latency","query":"SELECT mean(\"value\") FROM \"cf.etcd.Latency\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Follower Latency","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":15,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CompareAndDeleteSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CompareAndDeleteFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Compare And Delete Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":16,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CompareAndSwapSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndSwapSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CompareAndSwapFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndSwapFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Compare And Swap Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":17,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CreateSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CreateSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CreateFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CreateFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Create Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":18,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.DeleteSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.DeleteSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.CompareAndDeleteFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Delete Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":19,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.SetsSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SetsSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.SetsFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SetsFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Sets Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":20,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.UpdateSuccess","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.UpdateSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"B","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]},{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.UpdateFail","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.UpdateFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Update Successes vs. Failures","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":21,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":6,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.numCPUS","query":"SELECT mean(\"value\") FROM \"cf.etcd.numCPUS\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Number of CPUs","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":23,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":6,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["$interval"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.numGoRoutines","query":"SELECT mean(\"value\") FROM \"cf.etcd.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Number of Goroutines","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"},{"collapse":false,"editable":true,"height":"250px","panels":[{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":24,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.numFrees","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.memoryStats.numFrees\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Frees","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":25,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.numMallocs","query":"SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.memoryStats.numMallocs\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"},{"params":["1m"],"type":"derivative"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Rate of Mallocs","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":26,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":true,"linewidth":2,"links":[],"nullPointMode":"connected","percentage":false,"pointradius":5,"points":false,"renderer":"flot","seriesOverrides":[],"span":4,"stack":true,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.lastGCPauseTimeNS","query":"SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"Duration of the last Garbage Collector pause","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["ns","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":27,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.numBytesAllocated","query":"SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocated\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"In Use Bytes Allocated","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":28,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.numBytesAllocatedStack","query":"SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocatedStack\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"In Use Bytes Allocated on Stack","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]},{"aliasColors":{},"bars":false,"datasource":"influxdb_production","editable":true,"error":false,"fill":1,"grid":{"leftLogBase":1,"leftMax":null,"leftMin":null,"rightLogBase":1,"rightMax":null,"rightMin":null,"threshold1":null,"threshold1Color":"rgba(216, 200, 27, 0.27)","threshold2":null,"threshold2Color":"rgba(234, 112, 112, 0.22)"},"id":29,"isNew":true,"legend":{"alignAsTable":true,"avg":false,"current":true,"max":false,"min":false,"show":true,"total":false,"values":true},"lines":false,"linewidth":2,"links":[],"nullPointMode":"null","percentage":false,"pointradius":1,"points":true,"renderer":"flot","seriesOverrides":[],"span":4,"stack":false,"steppedLine":false,"targets":[{"dsType":"influxdb","groupBy":[{"params":["1m"],"type":"time"},{"params":["index"],"type":"tag"},{"params":["ip"],"type":"tag"},{"params":["job"],"type":"tag"},{"params":["null"],"type":"fill"}],"measurement":"cf.etcd.memoryStats.numBytesAllocatedHeap","query":"SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)","refId":"A","resultFormat":"time_series","select":[[{"params":["value"],"type":"field"},{"params":[],"type":"mean"}]],"tags":[]}],"timeFrom":null,"timeShift":null,"title":"In Use Bytes Allocated on Heap","tooltip":{"shared":true,"value_type":"individual"},"type":"graph","x-axis":true,"y-axis":true,"y_formats":["short","short"]}],"title":"New row"}],"schemaVersion":8,"sharedCrosshair":false,"style":"dark","tags":[],"templating":{"list":[]},"time":{"from":"now-6h","to":"now"},"timepicker":{"refresh_intervals":["5s","10s","30s","1m","5m","15m","30m","1h","2h","1d"],"time_options":["5m","15m","1h","6h","12h","24h","2d","7d","30d"]},"timezone":"browser","title":"etcd","version":14}}
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "hideControls": false,
+  "id": null,
+  "links": [],
+  "originalTitle": "etcd",
+  "rows": [
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 1,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.ReceivingBandwidthRate",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.ReceivingBandwidthRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Receiving Bandwidth Rate",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "Bps",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 4,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.ReceivingRequestRate",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.ReceivingRequestRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Receiving Request Rate",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "ops",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 5,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.ReceivedAppendRequests",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.ReceivedAppendRequests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Received Append Requests",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "Row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 6,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.SendingBandwidthRate",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.SendingBandwidthRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Sending Bandwidth Rate",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "Bps",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 9,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.SendingRequestRate",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.SendingRequestRate\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Sending Request Rate",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "ops",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 10,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.SentAppendRequests",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SentAppendRequests\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Sent Append Requests",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 11,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.IsLeader",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.IsLeader\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "IsLeader",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 12,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.Followers",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.Followers\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Followers",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 13,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.Watchers",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.Watchers\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Watchers",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 14,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.Latency",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.Latency\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Follower Latency",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 15,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CompareAndDeleteSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CompareAndDeleteFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Compare And Delete Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 16,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CompareAndSwapSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndSwapSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CompareAndSwapFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndSwapFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Compare And Swap Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 17,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CreateSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CreateSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CreateFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CreateFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Create Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 18,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.DeleteSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.DeleteSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.CompareAndDeleteFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.CompareAndDeleteFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Delete Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 19,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.SetsSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SetsSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.SetsFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.SetsFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Sets Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 20,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.UpdateSuccess",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.UpdateSuccess\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.UpdateFail",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.UpdateFail\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Update Successes vs. Failures",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 21,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.numCPUS",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.numCPUS\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Number of CPUs",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 23,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.numGoRoutines",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.numGoRoutines\" WHERE $timeFilter GROUP BY time($interval), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Number of Goroutines",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 24,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.numFrees",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.memoryStats.numFrees\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Frees",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 25,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.numMallocs",
+              "query": "SELECT derivative(mean(\"value\"), 1m) FROM \"cf.etcd.memoryStats.numMallocs\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "derivative"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Rate of Mallocs",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 26,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.lastGCPauseTimeNS",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.lastGCPauseTimeNS\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Duration of the last Garbage Collector pause",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "ns",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 27,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.numBytesAllocated",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocated\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "In Use Bytes Allocated",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 28,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.numBytesAllocatedStack",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocatedStack\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "In Use Bytes Allocated on Stack",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": null,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "leftMin": null,
+            "rightLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2": null,
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 29,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": false,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 1,
+          "points": true,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "1m"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "index"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "ip"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "job"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "cf.etcd.memoryStats.numBytesAllocatedHeap",
+              "query": "SELECT mean(\"value\") FROM \"cf.etcd.memoryStats.numBytesAllocatedHeap\" WHERE $timeFilter GROUP BY time(1m), \"index\", \"ip\", \"job\" fill(null)",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "In Use Bytes Allocated on Heap",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ]
+        }
+      ],
+      "title": "New row"
+    }
+  ],
+  "schemaVersion": 8,
+  "sharedCrosshair": false,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "etcd",
+  "version": 14
+}
