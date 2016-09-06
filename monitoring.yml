@@ -181,6 +181,10 @@ properties:
       content: (( file "dashboards/uaa.json" ))
     - name: etcd
       content: (( file "dashboards/etcd.json" ))
+    - name: k8s-cluster
+      content: (( file "dashboards-tmp/cluster.json" ))
+    - name: k8s-pods
+      content: (( file "dashboards-tmp/pods.json" ))
 
   bosh-log-forwarder:
     elasticsearch:
