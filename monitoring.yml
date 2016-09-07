@@ -23,8 +23,6 @@ meta:
     user: ~
     password: ~
     database: ~
-  elasticsearch:
-    hosts: ~
   riemann:
     pagerduty_api_key: ~
     platform_logs_threshold: ~
@@ -56,8 +54,6 @@ releases:
 - name: tripwire
   version: latest
 - name: awslogs
-  version: latest
-- name: bosh-log-forwarder
   version: latest
 - name: nessus-agent
   version: latest
@@ -92,7 +88,6 @@ jobs:
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
   - {name: awslogs, release: awslogs}
-  - {name: bosh-log-forwarder, release: bosh-log-forwarder}
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
@@ -113,7 +108,6 @@ jobs:
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
   - {name: awslogs, release: awslogs}
-  - {name: bosh-log-forwarder, release: bosh-log-forwarder}
   - {name: nessus-agent, release: nessus-agent}
   - {name: newrelic-monitor, release: newrelic}
   - {name: riemannc, release: riemannc}
@@ -186,9 +180,6 @@ properties:
     - name: k8s-pods
       content: (( file "dashboards-tmp/pods.json" ))
 
-  bosh-log-forwarder:
-    elasticsearch:
-      hosts: (( grab meta.elasticsearch.hosts ))
   influxdb:
     database: (( grab meta.influxdb.database ))
     user: (( grab meta.influxdb.user ))
