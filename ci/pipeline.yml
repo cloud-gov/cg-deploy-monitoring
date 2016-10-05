@@ -29,6 +29,7 @@ jobs:
     - get: cg-s3-collectd-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
+      trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
     input_mapping:
@@ -77,6 +78,7 @@ jobs:
     - get: cg-s3-collectd-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
+      trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
     input_mapping:
@@ -124,6 +126,7 @@ jobs:
     - get: cg-s3-collectd-release
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
+      trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
     input_mapping:
