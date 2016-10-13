@@ -84,6 +84,7 @@ jobs:
   templates:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
+  - {name: riemann-checkawslogs, release: riemann}
   - {name: encrypt-blobstore, release: encrypt-blobstore}
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
@@ -217,6 +218,7 @@ resource_pools:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   cloud_properties:
+    iam_instance_profile: check-awslogs
     instance_type: t2.medium
     elbs: (( grab meta.elbs ))
     ephemeral_disk:
