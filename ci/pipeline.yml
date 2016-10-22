@@ -1,27 +1,13 @@
 ---
-groups:
-  - name: all
-    jobs:
-    - deploy-monitoring-tooling
-    - deploy-monitoring-staging
-    - deploy-monitoring-production
-  - name: tooling
-    jobs:
-    - deploy-monitoring-tooling
-  - name: staging
-    jobs:
-    - deploy-monitoring-staging
-  - name: production
-    jobs:
-    - deploy-monitoring-production
-
 jobs:
 - name: deploy-monitoring-tooling
   plan:
   - aggregate:
     - get: monitoring-config
       trigger: true
-    - get: common-tooling
+    - get: common
+      resource: common-tooling
+      trigger: true
     - get: pipeline-tasks
     - get: influxdb-release
     - get: grafana-release
@@ -32,13 +18,11 @@ jobs:
       trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
-    input_mapping:
-      common: common-tooling
   - put: monitoring-tooling-deployment
-    params:
-      cert: common-tooling/boshCA.crt
+    params: &deploy-params
+      cert: common/boshCA.crt
       manifest: monitoring-manifest/manifest.yml
-      releases: &releases
+      releases:
       - influxdb-release/*.tgz
       - grafana-release/*.tgz
       - cg-s3-riemann-release/riemann*.tgz
@@ -51,7 +35,7 @@ jobs:
       params:
         text: |
           :x: FAILED to deploy monitoring on tooling
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -60,7 +44,7 @@ jobs:
       params:
         text: |
           :white_check_mark: Successfully deployed monitoring on tooling
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -70,7 +54,9 @@ jobs:
   - aggregate:
     - get: monitoring-config
       trigger: true
-    - get: common-staging
+    - get: common
+      resource: common-staging
+      trigger: true
     - get: pipeline-tasks
     - get: influxdb-release
     - get: grafana-release
@@ -81,21 +67,14 @@ jobs:
       trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
-    input_mapping:
-      common: common-staging
   - put: monitoring-staging-deployment
-    params:
-      cert: common-staging/boshCA.crt
-      manifest: monitoring-manifest/manifest.yml
-      releases: *releases
-      stemcells:
-      - monitoring-stemcell/*.tgz
+    params: *deploy-params
     on_failure:
       put: slack
       params:
         text: |
           :x: FAILED to deploy monitoring on staging
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -104,7 +83,7 @@ jobs:
       params:
         text: |
           :white_check_mark: Successfully deployed monitoring on staging
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -118,32 +97,34 @@ jobs:
     - get: monitoring-config
       passed: [deploy-monitoring-staging]
       trigger: true
-    - get: common-production
+    - get: common
+      resource: common-production
+      trigger: true
     - get: pipeline-tasks
+      passed: [deploy-monitoring-staging]
     - get: influxdb-release
+      passed: [deploy-monitoring-staging]
     - get: grafana-release
+      passed: [deploy-monitoring-staging]
     - get: cg-s3-riemann-release
+      passed: [deploy-monitoring-staging]
     - get: cg-s3-collectd-release
+      passed: [deploy-monitoring-staging]
     - get: cg-s3-encrypt-blobstore-release
+      passed: [deploy-monitoring-staging]
     - get: monitoring-stemcell
+      passed: [deploy-monitoring-staging]
       trigger: true
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
-    input_mapping:
-      common: common-production
   - put: monitoring-production-deployment
-    params:
-      cert: common-production/boshCA.crt
-      manifest: monitoring-manifest/manifest.yml
-      releases: *releases
-      stemcells:
-      - monitoring-stemcell/*.tgz
+    params: *deploy-params
     on_failure:
       put: slack
       params:
         text: |
           :x: FAILED to deploy monitoring on production
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -152,7 +133,7 @@ jobs:
       params:
         text: |
           :white_check_mark: Successfully deployed monitoring on production
-          <$ATC_EXTERNAL_URL/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
         channel: {{slack-channel}}
         username: {{slack-username}}
         icon_url: {{slack-icon-url}}
@@ -199,16 +180,6 @@ resources:
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: collectd-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
-
-- name: cg-s3-grafana-release
-  type: s3
-  source:
-    region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
-    bucket: {{s3-bosh-releases-bucket}}
-    private: true
-    regexp: grafana-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
 - name: influxdb-release
