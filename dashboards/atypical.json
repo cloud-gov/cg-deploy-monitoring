@@ -381,7 +381,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "influxdb_production",
+          "datasource": null,
           "editable": true,
           "error": false,
           "fill": 1,
@@ -511,7 +511,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "influxdb_production",
+          "datasource": null,
           "editable": true,
           "error": false,
           "fill": 1,
