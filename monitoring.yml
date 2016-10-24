@@ -176,6 +176,8 @@ properties:
       content: (( file "dashboards/uaa.json" ))
     - name: etcd
       content: (( file "dashboards/etcd.json" ))
+    - name: atypical
+      content: (( file "dashboards/atypical.json" ))
     - name: k8s-cluster
       content: (( file "dashboards-tmp/cluster.json" ))
     - name: k8s-pods
