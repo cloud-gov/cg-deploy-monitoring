@@ -16,6 +16,7 @@ jobs:
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
       trigger: true
+    - get: cg-s3-cron-release
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
   - put: monitoring-tooling-deployment
@@ -28,6 +29,7 @@ jobs:
       - cg-s3-riemann-release/riemann*.tgz
       - cg-s3-collectd-release/collectd*.tgz
       - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      - cg-s3-cron-release/cron-*.tgz
       stemcells:
       - monitoring-stemcell/*.tgz
     on_failure:
@@ -65,6 +67,7 @@ jobs:
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
       trigger: true
+    - get: cg-s3-cron-release
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
   - put: monitoring-staging-deployment
@@ -115,6 +118,8 @@ jobs:
     - get: monitoring-stemcell
       passed: [deploy-monitoring-staging]
       trigger: true
+    - get: cg-s3-cron-release
+      passed: [deploy-monitoring-staging]
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
   - put: monitoring-production-deployment
@@ -211,6 +216,17 @@ resources:
     private: true
     regexp: encrypt-blobstore-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
+
+- name: cg-s3-cron-release
+  type: s3
+  source:
+    region_name: {{s3-bosh-releases-region}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: cron-(.*).tgz
+    secret_access_key: {{ci-secret-access-key}}
+
 
 - name: monitoring-config
   type: git
