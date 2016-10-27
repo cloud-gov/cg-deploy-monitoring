@@ -23,6 +23,7 @@ meta:
     user: ~
     password: ~
     database: ~
+    retention: ~
   riemann:
     pagerduty_api_key: ~
     platform_logs_threshold: ~
@@ -236,6 +237,7 @@ properties:
     database: (( grab meta.influxdb.database ))
     user: (( grab meta.influxdb.user ))
     password: (( grab meta.influxdb.password ))
+    retention: (( grab meta.influxdb.retention ))
   riemann:
     server: (( grab properties.collectd.riemann_server ))
     port: 5555
