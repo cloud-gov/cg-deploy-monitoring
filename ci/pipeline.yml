@@ -1,56 +1,5 @@
 ---
 jobs:
-- name: deploy-monitoring-tooling
-  plan:
-  - aggregate:
-    - get: monitoring-config
-      trigger: true
-    - get: common
-      resource: common-tooling
-      trigger: true
-    - get: pipeline-tasks
-    - get: influxdb-release
-    - get: grafana-release
-    - get: cg-s3-riemann-release
-    - get: cg-s3-collectd-release
-    - get: cg-s3-encrypt-blobstore-release
-    - get: monitoring-stemcell
-      trigger: true
-    - get: cg-s3-cron-release
-  - task: monitoring-manifest
-    file: monitoring-config/ci/generate-deployment-manifest.yml
-  - put: monitoring-tooling-deployment
-    params: &deploy-params
-      cert: common/boshCA.crt
-      manifest: monitoring-manifest/manifest.yml
-      releases:
-      - influxdb-release/*.tgz
-      - grafana-release/*.tgz
-      - cg-s3-riemann-release/riemann*.tgz
-      - cg-s3-collectd-release/collectd*.tgz
-      - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
-      - cg-s3-cron-release/cron-*.tgz
-      stemcells:
-      - monitoring-stemcell/*.tgz
-    on_failure:
-      put: slack
-      params:
-        text: |
-          :x: FAILED to deploy monitoring on tooling
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
-    on_success:
-      put: slack
-      params:
-        text: |
-          :white_check_mark: Successfully deployed monitoring on tooling
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
-
 - name: deploy-monitoring-staging
   plan:
   - aggregate:
@@ -71,7 +20,18 @@ jobs:
   - task: monitoring-manifest
     file: monitoring-config/ci/generate-deployment-manifest.yml
   - put: monitoring-staging-deployment
-    params: *deploy-params
+    params: &deploy-params
+      cert: common/boshCA.crt
+      manifest: monitoring-manifest/manifest.yml
+      releases:
+      - influxdb-release/*.tgz
+      - grafana-release/*.tgz
+      - cg-s3-riemann-release/riemann*.tgz
+      - cg-s3-collectd-release/collectd*.tgz
+      - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
+      - cg-s3-cron-release/cron-*.tgz
+      stemcells:
+      - monitoring-stemcell/*.tgz
     on_failure:
       put: slack
       params:
@@ -144,17 +104,6 @@ jobs:
         icon_url: {{slack-icon-url}}
 
 resources:
-- name: common-tooling
-  type: cg-common
-  source:
-    region: {{monitoring-tooling-private-region}}
-    bucket_name: {{monitoring-tooling-private-bucket}}
-    access_key_id: {{ci-access-key-id}}
-    secret_access_key: {{ci-secret-access-key}}
-    secrets_file: monitoring-tooling.yml
-    secrets_passphrase: {{monitoring-tooling-private-passphrase}}
-    bosh_cert: bosh-tooling.pem
-
 - name: common-staging
   type: cg-common
   source:
@@ -162,9 +111,9 @@ resources:
     bucket_name: {{monitoring-staging-private-bucket}}
     access_key_id: {{ci-access-key-id}}
     secret_access_key: {{ci-secret-access-key}}
-    secrets_file: monitoring.yml
+    secrets_file: monitoring-staging.yml
     secrets_passphrase: {{monitoring-staging-private-passphrase}}
-    bosh_cert: bosh.pem
+    bosh_cert: bosh-tooling.pem
 
 - name: common-production
   type: cg-common
@@ -173,9 +122,9 @@ resources:
     bucket_name: {{monitoring-production-private-bucket}}
     access_key_id: {{monitoring-production-private-access-key-id}}
     secret_access_key: {{monitoring-production-private-secret-access-key}}
-    secrets_file: monitoring.yml
+    secrets_file: monitoring-production.yml
     secrets_passphrase: {{monitoring-production-private-passphrase}}
-    bosh_cert: bosh.pem
+    bosh_cert: bosh-tooling.pem
 
 - name: cg-s3-collectd-release
   type: s3
@@ -242,15 +191,6 @@ resources:
     regexp: light-bosh-stemcell-(.*)-aws-xen-hvm-ubuntu-trusty-go_agent.tgz
     region_name: us-gov-west-1
     secret_access_key: {{ci-secret-access-key}}
-
-- name: monitoring-tooling-deployment
-  type: 18f-bosh-deployment
-  source:
-    target: {{monitoring-tooling-deployment-bosh-target}}
-    username: {{monitoring-tooling-deployment-bosh-username}}
-    password: {{monitoring-tooling-deployment-bosh-password}}
-    deployment: {{monitoring-tooling-deployment-bosh-deployment}}
-    ignore_ssl: false
 
 - name: monitoring-staging-deployment
   type: 18f-bosh-deployment
