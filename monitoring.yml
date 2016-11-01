@@ -125,6 +125,8 @@ properties:
       content: (( file "dashboards/uaa.json" ))
     - name: etcd
       content: (( file "dashboards/etcd.json" ))
+    - name: concourse
+      content: (( file "dashboards/concourse.json" ))
     - name: atypical
       content: (( file "dashboards/atypical.json" ))
     - name: k8s-cluster
