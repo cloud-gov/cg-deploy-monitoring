@@ -78,7 +78,9 @@ properties:
       S3_BUCKET_NAME: (( grab properties.aws.backup_bucket ))
       INFLUX_DB_NAME: (( grab properties.influxdb.database ))
     entries:
-    - script: (( file "cronjobs/influx_backup.sh" ))
+    - script:
+        name: influx_backup.sh
+        contents: (( file "cronjobs/influx_backup.sh" ))
       minute: 0
       hour: 0
       day: '*'
