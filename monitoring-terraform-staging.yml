@@ -1,5 +1,5 @@
 meta:
-  subnet: (( grab staging_monitoring_subnet ))
-  security_group: (( grab staging_monitoring_security_group ))
+  subnet: (( grab terraform_outputs.staging_monitoring_subnet ))
+  security_group: (( grab terraform_outputs.staging_monitoring_security_group ))
   elb_name: (( grab terraform_outputs.staging_monitoring_elb_name ))
   influxdb_bucket_name: (( grab terraform_outputs.staging_monitoring_influxdb_bucket_name ))
