@@ -16,9 +16,37 @@ jobs:
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
       trigger: true
+    - get: terraform-state
+      resource: state-file-staging
+      trigger: true
     - get: cg-s3-cron-release
+  - task: terraform-state-to-yaml
+    file: pipeline-tasks/terraform-state-to-yaml.yml
+    params:
+      STATE_FILE: terraform.tfstate
   - task: monitoring-manifest
-    file: monitoring-config/ci/generate-deployment-manifest.yml
+    config: &manifest-config
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: 18fgsa/concourse-task
+      inputs:
+      - name: monitoring-config
+      - name: terraform-yaml
+      - name: common
+      outputs:
+      - name: monitoring-manifest
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          monitoring-config/generate-manifest.sh \
+            monitoring-config/monitoring-terraform-staging.yml \
+            terraform-yaml/state.yml \
+            common/secrets.yml \
+            > admin-manifest/manifest.yml
   - put: monitoring-staging-deployment
     params: &deploy-params
       cert: common/boshCA.crt
@@ -80,8 +108,22 @@ jobs:
       trigger: true
     - get: cg-s3-cron-release
       passed: [deploy-monitoring-staging]
+    - get: terraform-state
+      resource: state-file-production
+      trigger: true
   - task: monitoring-manifest
-    file: monitoring-config/ci/generate-deployment-manifest.yml
+    config:
+      <<: *manifest-config
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          monitoring-config/generate-manifest.sh \
+            monitoring-config/monitoring-terraform-production.yml \
+            terraform-yaml/state.yml \
+            common/secrets.yml \
+            > admin-manifest/manifest.yml
   - put: monitoring-production-deployment
     params: *deploy-params
     on_failure:
@@ -221,6 +263,20 @@ resources:
   source:
     url: {{slack-webhook-url}}
 
+- name: state-file-staging
+  type: s3-iam
+  source:
+    bucket: {{tf-state-bucket-staging}}
+    versioned_file: {{tf-state-file-staging}}
+    region_name: {{aws-region}}
+
+- name: state-file-production
+  type: s3-iam
+  source:
+    bucket: {{tf-state-bucket-production}}
+    versioned_file: {{tf-state-file-production}}
+    region_name: {{aws-region}}
+
 resource_types:
 - name: slack-notification
   type: docker-image
@@ -234,3 +290,9 @@ resource_types:
   type: docker-image
   source:
     repository: 18fgsa/cg-common-resource
+- name: s3-iam
+  type: docker-image
+  source:
+    repository: 18fgsa/s3-resource
+
+

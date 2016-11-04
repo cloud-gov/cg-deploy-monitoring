@@ -14,4 +14,7 @@ mkdir $path/dashboards-tmp
 cat $path/src/heapster/grafana/dashboards/cluster.json | jq .dashboard > $path/dashboards-tmp/cluster.json
 cat $path/src/heapster/grafana/dashboards/pods.json | jq .dashboard > $path/dashboards-tmp/pods.json
 
-SPRUCE_FILE_BASE_PATH=$path spruce merge "$path/monitoring.yml" "$@"
+SPRUCE_FILE_BASE_PATH=$path spruce merge \
+  --prune meta --prune terraform_outputs \
+  "$path/monitoring.yml" \
+  "$@"

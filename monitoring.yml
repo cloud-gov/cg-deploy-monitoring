@@ -28,6 +28,15 @@ releases:
 - name: cron
   version: latest
 
+networks:
+- name: monitoring
+  type: manual
+  subnets:
+  - cloud_properties:
+      subnet: (( grab meta.subnet ))
+      security_groups:
+      - (( grab meta.security_group ))
+
 jobs:
 - name: monitoring
   templates:
@@ -75,7 +84,7 @@ properties:
   cron:
     variables:
       AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-      S3_BUCKET_NAME: (( grab properties.aws.backup_bucket ))
+      S3_BUCKET_NAME: (( grab meta.influxdb_bucket_name ))
       INFLUX_DB_NAME: (( grab properties.influxdb.database ))
     entries:
     - script: (( file "cronjobs/influx_backup.sh" ))
@@ -159,7 +168,7 @@ resource_pools:
   cloud_properties:
     iam_instance_profile: check-awslogs
     instance_type: t2.medium
-    elbs: (( grab properties.aws.elbs ))
+    elbs: (( grab meta.elb_name ))
     ephemeral_disk:
       size: 30000
       type: gp2

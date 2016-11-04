@@ -1,0 +1,7 @@
+# production.yml
+meta:
+  subnet: (( grab production_monitoring_subnet ))
+  security_group: (( grab production_monitoring_security_group ))
+  elb_name: (( grab terraform_outputs.production_monitoring_elb_name ))
+  influxdb_bucket_name: (( grab terraform_outputs.production_monitoring_influxdb_bucket_name ))
+
