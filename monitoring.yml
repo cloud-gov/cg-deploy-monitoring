@@ -168,7 +168,8 @@ resource_pools:
   cloud_properties:
     iam_instance_profile: check-awslogs
     instance_type: t2.medium
-    elbs: (( grab meta.elb_name ))
+    elbs:
+    - (( grab meta.elb_name ))
     ephemeral_disk:
       size: 30000
       type: gp2
