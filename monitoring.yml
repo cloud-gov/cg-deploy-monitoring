@@ -87,9 +87,20 @@ properties:
       S3_BUCKET_NAME: (( grab meta.influxdb_bucket_name ))
       INFLUX_DB_NAME: (( grab properties.influxdb.database ))
     entries:
-    - script: (( file "cronjobs/influx_backup.sh" ))
+    - script:
+        name: influx_backup.sh
+        contents: (( file "cronjobs/influx_backup.sh" ))
       minute: 0
       hour: 0
+      day: '*'
+      month: '*'
+      wday: '*'
+      user: root
+    - script:
+        name: describe_instances.sh
+        contents: (( file "cronjobs/describe_instances.sh" ))
+      minute: '*'
+      hour: '*'
       day: '*'
       month: '*'
       wday: '*'
