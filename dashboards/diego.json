@@ -1197,7 +1197,7 @@
                 {
                   "key": "deployment",
                   "operator": "=",
-                  "value": "cf-ketchup-diego"
+                  "value": "/^cf-\\w+-diego$/"
                 }
               ]
             }
@@ -1319,7 +1319,7 @@
                 {
                   "key": "deployment",
                   "operator": "=",
-                  "value": "cf-ketchup-diego"
+                  "value": "/^cf-\\w+-diego$/"
                 }
               ]
             }
