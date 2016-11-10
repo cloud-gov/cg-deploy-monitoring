@@ -1,3 +1,44 @@
+meta:
+  aws:
+    access_key_id: ~
+    secret_access_key: ~
+    availability_zone: ~
+    availability_zone2: ~
+    default_region: ~
+  collectd:
+    riemann_server: ~
+  environment: ~
+  grafana:
+    url: ~
+    user: ~
+    pass: ~
+    auth:
+      github:
+        client_id: ~
+        client_secret: ~
+        allowed_organizations: ~
+        team_ids: ~
+  influxdb:
+    name: ~
+    user: ~
+    password: ~
+    database: ~
+    retention: ~
+  riemann:
+    pagerduty_api_key: ~
+    platform_logs_threshold: ~
+    app_logs_threshold: ~
+    rds_cpu_threshold: ~
+  network:
+    range: ~
+    reserved: ~
+    static: ~
+    dns: ~
+    gateway: ~
+    subnet: ~
+    security_groups: ~
+  elbs: ~
+
 releases:
 - name: grafana
   version: latest
@@ -27,6 +68,19 @@ releases:
   version: latest
 - name: cron
   version: latest
+
+networks:
+- name: monitoring
+  type: manual
+  subnets:
+  - range: (( grab meta.network.range ))
+    reserved: (( grab meta.network.reserved ))
+    gateway: (( grab meta.network.gateway ))
+    dns: (( grab meta.network.dns ))
+    static: (( grab meta.network.static ))
+    cloud_properties:
+      security_groups: (( grab meta.network.security_groups ))
+      subnet: (( grab meta.network.subnet ))
 
 jobs:
 - name: monitoring
@@ -74,33 +128,80 @@ jobs:
 properties:
   cron:
     variables:
-      AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-      S3_BUCKET_NAME: (( grab properties.aws.backup_bucket ))
-      INFLUX_DB_NAME: (( grab properties.influxdb.database ))
+      AWS_DEFAULT_REGION: (( grab meta.aws.default_region ))
+      INFLUX_DB_NAME: (( grab meta.influxdb.database ))
+      S3_BUCKET_NAME: (( grab meta.aws.backup_bucket ))
     entries:
-    - script: (( file "cronjobs/influx_backup.sh" ))
+    - script: |
+        #!/bin/bash -exu
+
+        # where is influx?
+        BACKUP="/var/vcap/packages/influxdb/influxd backup"
+
+        # and the rieman client
+        # this comes from https://github.com/18F/cg-riemannc-boshrelease which must be co-located with this job
+        RIEMANNC=/var/vcap/jobs/riemannc/bin/riemannc
+
+        # and AWS
+        # this comes from https://github.com/18F/cg-awslogs-boshrelease which must be co-located with this job
+        AWSCLI=/var/vcap/packages/awslogs/bin/aws 
+
+        # where do we store the backups?
+        TMPD=$(mktemp -d)
+
+        # backup the metastore
+        ${BACKUP} ${TMPD}
+
+        # back up the database
+        ${BACKUP} -database ${INFLUX_DB_NAME} -since $(date +%Y-%m-%dT%H:%M:%SZ -d "yesterday") ${TMPD}
+
+        # sync to s3
+        export LD_LIBRARY_PATH=/var/vcap/packages/awslogs/lib
+        ${AWSCLI} s3 sync --sse AES256 ${TMPD} s3://${S3_BUCKET_NAME}/$(date +%Y-%m-%d)
+
+        # clean up
+        rm -fr ${TMPD}
+
+        # tell riemann we did a thing
+        TTL=90000 # 25 hours
+        ${RIEMANNC} --service "influxdb.backup" --host $(hostname) --ttl ${TTL} --metric_sint64 $(date +%s)
       minute: 0
       hour: 0
       day: '*'
       month: '*'
       wday: '*'
       user: root
+  collectd:
+    hostname_prefix: (( grab meta.environment "." ))
+    riemann_server: (( grab meta.collectd.riemann_server ))
+  encrypt-blobstore:
+    buckets: (( param "please set encrypt-blobstore buckets" ))
+    access_key: (( meta.aws.access_key_id  ))
+    secret_access_key: (( meta.aws.secret_access_key  ))
+    default_region: (( meta.aws.default_region  ))
   grafana:
+    admin_username: (( grab meta.grafana.user ))
+    admin_password: (( grab meta.grafana.pass ))
     listen_port: 3000
+    root_url: (( grab meta.grafana.url ))
     auth:
       github:
         enabled: true
+        client_id: (( grab meta.grafana.auth.github.client_id ))
+        client_secret: (( grab meta.grafana.auth.github.client_secret ))
         allowed_sign_up: true
         auth_url: https://github.com/login/oauth/authorize
         token_url: https://github.com/login/oauth/access_token
         api_url: https://api.github.com/user
+        team_ids: (( grab meta.grafana.auth.github.team_ids ))
+        allowed_organizations: (( grab meta.grafana.auth.github.allowed_organizations ))
     datasources:
     - type: "influxdb"
-      database: (( grab properties.influxdb.database ))
+      database: (( grab meta.influxdb.database ))
       url: (( concat "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
-      name: (( grab properties.influxdb.name ))
-      user: (( grab properties.influxdb.user ))
-      password: (( grab properties.influxdb.password ))
+      name: (( grab meta.influxdb.name ))
+      user: (( grab meta.influxdb.user ))
+      password: (( grab meta.influxdb.password ))
       isDefault: true
     dashboards:
     - name: all-in-one-cf-components-dashboard
@@ -132,9 +233,15 @@ properties:
     - name: k8s-pods
       content: (( file "dashboards-tmp/pods.json" ))
 
+  influxdb:
+    database: (( grab meta.influxdb.database ))
+    user: (( grab meta.influxdb.user ))
+    password: (( grab meta.influxdb.password ))
+    retention: (( grab meta.influxdb.retention ))
   riemann:
     server: (( grab properties.collectd.riemann_server ))
     port: 5555
+    pagerduty_api_key: (( grab meta.riemann.pagerduty_api_key ))
     swap:
       critical: 25
       warn: 10
@@ -143,10 +250,19 @@ properties:
       warn: 70
     influxdb:
       host: (( grab jobs.influxdb.networks.monitoring.static_ips.[0] ))
-      username: (( grab properties.influxdb.user ))
-      password: (( grab properties.influxdb.password ))
-      database: (( grab properties.influxdb.database ))
+      username: (( grab meta.influxdb.user ))
+      password: (( grab meta.influxdb.password ))
       port: 8086
+      database: (( grab meta.influxdb.database ))
+    logsearch:
+      platform_logs_threshold: (( grab meta.riemann.platform_logs_threshold ))
+      app_logs_threshold: (( grab meta.riemann.app_logs_threshold ))
+    rds:
+      cpu_threshold: (( grab meta.riemann.rds_cpu_threshold ))
+  tripwire: ~
+  awslogs: ~
+  nessus-agent: ~
+  newrelic: ~
 
 resource_pools:
 - name: riemann_z1
@@ -157,12 +273,12 @@ resource_pools:
   cloud_properties:
     iam_instance_profile: check-awslogs
     instance_type: t2.medium
-    elbs: (( grab properties.aws.elbs ))
+    elbs: (( grab meta.elbs ))
     ephemeral_disk:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: (( grab properties.aws.availability_zone ))
+    availability_zone: (( grab meta.aws.availability_zone ))
 - name: xlarge_z1
   network: monitoring
   stemcell:
@@ -175,7 +291,7 @@ resource_pools:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: (( grab properties.aws.availability_zone ))
+    availability_zone: (( grab meta.aws.availability_zone ))
 
 disk_pools:
 - name: riemann
@@ -197,7 +313,7 @@ compilation:
       size: 30000
       type: gp2
       encrypted: true
-    availability_zone: (( grab properties.aws.availability_zone ))
+    availability_zone: (( grab meta.aws.availability_zone ))
 
 update:
   canaries: 1
