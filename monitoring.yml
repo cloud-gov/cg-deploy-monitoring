@@ -1,5 +1,6 @@
 meta:
   aws:
+    backup_bucket: ~
     access_key_id: ~
     secret_access_key: ~
     availability_zone: ~
