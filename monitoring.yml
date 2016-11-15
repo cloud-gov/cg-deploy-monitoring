@@ -96,15 +96,6 @@ properties:
       month: '*'
       wday: '*'
       user: root
-    - script:
-        name: describe_instances.sh
-        contents: (( file "cronjobs/describe_instances.sh" ))
-      minute: '*'
-      hour: '*'
-      day: '*'
-      month: '*'
-      wday: '*'
-      user: root
   grafana:
     listen_port: 3000
     auth:
