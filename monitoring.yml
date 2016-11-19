@@ -42,7 +42,6 @@ jobs:
   templates:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
-  - {name: riemann-checkawslogs, release: riemann}
   - {name: encrypt-blobstore, release: encrypt-blobstore}
   - {name: harden, release: fisma}
   - {name: tripwire, release: tripwire}
@@ -52,6 +51,7 @@ jobs:
   - {name: riemannc, release: riemannc}
   - {name: clamav, release: clamav}
   - {name: snort, release: snort}
+  - {name: cron, release: cron}
 
   instances: 1
   resource_pool: riemann_z1
@@ -59,6 +59,23 @@ jobs:
   networks:
   - name: monitoring
     static_ips: (( static_ips(0) ))
+
+  properties:
+    cron:
+      variables:
+        AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
+        TTL: 600
+        HEARTBEAT_GROUP: /var/log/syslog
+      entries:
+      - script:
+          name: check_awslogs.sh
+          contents: (( file "cronjobs/check_awslogs.sh" ))
+        minute: '*/5'
+        hour: 0
+        day: '*'
+        month: '*'
+        wday: '*'
+        user: root
 
 - name: influxdb
   templates:
@@ -80,22 +97,24 @@ jobs:
   - name: monitoring
     static_ips: (( static_ips(1) ))
 
+  properties:
+    cron:
+      variables:
+        AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
+        S3_BUCKET_NAME: (( grab meta.influxdb_bucket_name ))
+        INFLUX_DB_NAME: (( grab properties.influxdb.database ))
+      entries:
+      - script:
+          name: influx_backup.sh
+          contents: (( file "cronjobs/influx_backup.sh" ))
+        minute: 0
+        hour: 0
+        day: '*'
+        month: '*'
+        wday: '*'
+        user: root
+
 properties:
-  cron:
-    variables:
-      AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-      S3_BUCKET_NAME: (( grab meta.influxdb_bucket_name ))
-      INFLUX_DB_NAME: (( grab properties.influxdb.database ))
-    entries:
-    - script:
-        name: influx_backup.sh
-        contents: (( file "cronjobs/influx_backup.sh" ))
-      minute: 0
-      hour: 0
-      day: '*'
-      month: '*'
-      wday: '*'
-      user: root
   grafana:
     listen_port: 3000
     auth:
