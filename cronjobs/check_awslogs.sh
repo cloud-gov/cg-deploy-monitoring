@@ -30,7 +30,7 @@ for streaminfo in $(${AWSCLI_PATH} logs describe-log-streams --output text --max
     aws_id=$(echo ${streaminfo} | cut -f1)
     last=$(( $(echo ${streaminfo} | cut -f2) / 1000 ))
 
-    ${RIEMANNC_PATH} --service "aws.logs.describe-log-streams.$HEARTBEAT_GROUP" --host ${aws_id} --ttl ${TTL} --metric_sint64 $(( $(date +%s) - ${last} ))
+    ${RIEMANNC_PATH} --service "aws.logs.describe-log-streams.heartbeat" --host ${aws_id} --ttl ${TTL} --metric_sint64 $(( $(date +%s) - ${last} ))
 done
 
 
