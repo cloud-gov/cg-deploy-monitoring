@@ -98,6 +98,8 @@ properties:
       user: root
   grafana:
     listen_port: 3000
+    session:
+      cookie_secure: "true"
     auth:
       github:
         enabled: true
