@@ -129,8 +129,6 @@ properties:
       content: (( file "dashboards-tmp/pods.json" ))
 
   riemann:
-    server: (( param "specify riemann server" ))
-    port: 5555
     swap:
       critical: 25
       warn: 10
