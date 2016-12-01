@@ -5,27 +5,7 @@ releases:
   version: latest
 - name: riemann
   version: latest
-- name: collectd
-  version: latest
 - name: encrypt-blobstore
-  version: latest
-- name: fisma
-  version: latest
-- name: tripwire
-  version: latest
-- name: awslogs
-  version: latest
-- name: nessus-agent
-  version: latest
-- name: newrelic
-  version: latest
-- name: riemannc
-  version: latest
-- name: clamav
-  version: latest
-- name: snort
-  version: latest
-- name: cron
   version: latest
 
 networks:
@@ -43,15 +23,6 @@ jobs:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   - {name: encrypt-blobstore, release: encrypt-blobstore}
-  - {name: harden, release: fisma}
-  - {name: tripwire, release: tripwire}
-  - {name: awslogs, release: awslogs}
-  - {name: nessus-agent, release: nessus-agent}
-  - {name: newrelic-monitor, release: newrelic}
-  - {name: riemannc, release: riemannc}
-  - {name: clamav, release: clamav}
-  - {name: snort, release: snort}
-  - {name: cron, release: cron}
 
   instances: 1
   resource_pool: riemann_z1
@@ -80,15 +51,6 @@ jobs:
 - name: influxdb
   templates:
   - {name: influxdb, release: influxdb}
-  - {name: collectd, release: collectd}
-  - {name: harden, release: fisma}
-  - {name: tripwire, release: tripwire}
-  - {name: awslogs, release: awslogs}
-  - {name: nessus-agent, release: nessus-agent}
-  - {name: newrelic-monitor, release: newrelic}
-  - {name: riemannc, release: riemannc}
-  - {name: clamav, release: clamav}
-  - {name: cron, release: cron}
 
   instances: 1
   resource_pool: xlarge_z1
@@ -167,8 +129,6 @@ properties:
       content: (( file "dashboards-tmp/pods.json" ))
 
   riemann:
-    server: (( grab properties.collectd.riemann_server ))
-    port: 5555
     swap:
       critical: 25
       warn: 10
