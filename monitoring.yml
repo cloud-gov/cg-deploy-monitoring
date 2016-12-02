@@ -82,12 +82,10 @@ properties:
     session:
       cookie_secure: "true"
     auth:
-      github:
+      generic_oauth:
         enabled: true
-        allowed_sign_up: true
-        auth_url: https://github.com/login/oauth/authorize
-        token_url: https://github.com/login/oauth/access_token
-        api_url: https://api.github.com/user
+        allow_sign_up: true
+        scopes: [openid,monitoring.read]
     datasources:
     - type: "influxdb"
       database: (( grab properties.influxdb.database ))
