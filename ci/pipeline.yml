@@ -165,10 +165,19 @@ resources:
   source:
     repository: vito/influxdb-boshrelease
 
+# TODO: Restore upstream release after https://github.com/vito/grafana-boshrelease/pull/19 is accepted.
 - name: grafana-release
-  type: bosh-io-release
+  # type: bosh-io-release
+  # source:
+  #   repository: vito/grafana-boshrelease
+  type: s3
   source:
-    repository: vito/grafana-boshrelease
+    region_name: {{s3-bosh-releases-region}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: grafana-(.*).tgz
+    secret_access_key: {{ci-secret-access-key}}
 
 - name: cg-s3-encrypt-blobstore-release
   type: s3
