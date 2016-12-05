@@ -9,8 +9,12 @@ jobs:
       resource: common-staging
       trigger: true
     - get: pipeline-tasks
+    - get: riemann-release
+      trigger: true
     - get: influxdb-release
+      trigger: true
     - get: grafana-release
+      trigger: true
     - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
       trigger: true
@@ -49,6 +53,7 @@ jobs:
       cert: common/boshCA.crt
       manifest: monitoring-manifest/manifest.yml
       releases:
+      - riemann-release/*.tgz
       - influxdb-release/*.tgz
       - grafana-release/*.tgz
       - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
@@ -86,6 +91,8 @@ jobs:
       resource: common-production
       trigger: true
     - get: pipeline-tasks
+      passed: [deploy-monitoring-staging]
+    - get: riemann-release
       passed: [deploy-monitoring-staging]
     - get: influxdb-release
       passed: [deploy-monitoring-staging]
@@ -164,6 +171,16 @@ resources:
   type: bosh-io-release
   source:
     repository: vito/influxdb-boshrelease
+
+- name: riemann-release
+  type: s3
+  source:
+    region_name: {{s3-bosh-releases-region}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: riemann-(.*).tgz
+    secret_access_key: {{ci-secret-access-key}}
 
 # TODO: Restore upstream release after https://github.com/vito/grafana-boshrelease/pull/19 is accepted.
 - name: grafana-release
