@@ -85,7 +85,7 @@ properties:
       generic_oauth:
         enabled: true
         allow_sign_up: true
-        scopes: [openid,monitoring.read]
+        scopes: [openid,metrics.read]
     datasources:
     - type: "influxdb"
       database: (( grab properties.influxdb.database ))
