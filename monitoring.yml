@@ -7,6 +7,8 @@ releases:
   version: latest
 - name: encrypt-blobstore
   version: latest
+- name: cron
+  version: latest
 
 networks:
 - name: monitoring
@@ -23,6 +25,7 @@ jobs:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   - {name: encrypt-blobstore, release: encrypt-blobstore}
+  - {name: cron, release: cron}
 
   instances: 1
   resource_pool: riemann_z1
