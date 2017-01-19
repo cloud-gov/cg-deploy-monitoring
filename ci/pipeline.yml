@@ -16,7 +16,6 @@ jobs:
       trigger: true
     - get: grafana-release
       trigger: true
-    - get: cg-s3-encrypt-blobstore-release
     - get: monitoring-stemcell
       trigger: true
     - get: terraform-state
@@ -57,27 +56,26 @@ jobs:
       - riemann-release/*.tgz
       - influxdb-release/*.tgz
       - grafana-release/*.tgz
-      - cg-s3-encrypt-blobstore-release/encrypt-blobstore-*.tgz
       stemcells:
       - monitoring-stemcell/*.tgz
-    on_failure:
-      put: slack
-      params:
-        text: |
-          :x: FAILED to deploy monitoring on staging
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
-    on_success:
-      put: slack
-      params:
-        text: |
-          :white_check_mark: Successfully deployed monitoring on staging
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
+  on_failure:
+    put: slack
+    params:
+      text: |
+        :x: FAILED to deploy monitoring on staging
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
+  on_success:
+    put: slack
+    params:
+      text: |
+        :white_check_mark: Successfully deployed monitoring on staging
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
 
 - name: deploy-monitoring-production
   serial: true
@@ -99,8 +97,6 @@ jobs:
     - get: influxdb-release
       passed: [deploy-monitoring-staging]
     - get: grafana-release
-      passed: [deploy-monitoring-staging]
-    - get: cg-s3-encrypt-blobstore-release
       passed: [deploy-monitoring-staging]
     - get: monitoring-stemcell
       passed: [deploy-monitoring-staging]
@@ -127,24 +123,24 @@ jobs:
             > monitoring-manifest/manifest.yml
   - put: monitoring-production-deployment
     params: *deploy-params
-    on_failure:
-      put: slack
-      params:
-        text: |
-          :x: FAILED to deploy monitoring on production
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
-    on_success:
-      put: slack
-      params:
-        text: |
-          :white_check_mark: Successfully deployed monitoring on production
-          <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-        channel: {{slack-channel}}
-        username: {{slack-username}}
-        icon_url: {{slack-icon-url}}
+  on_failure:
+    put: slack
+    params:
+      text: |
+        :x: FAILED to deploy monitoring on production
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
+  on_success:
+    put: slack
+    params:
+      text: |
+        :white_check_mark: Successfully deployed monitoring on production
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: {{slack-channel}}
+      username: {{slack-username}}
+      icon_url: {{slack-icon-url}}
 
 resources:
 - name: master-bosh-root-cert
@@ -207,16 +203,6 @@ resources:
     regexp: grafana-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
-- name: cg-s3-encrypt-blobstore-release
-  type: s3
-  source:
-    region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
-    bucket: {{s3-bosh-releases-bucket}}
-    private: true
-    regexp: encrypt-blobstore-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
-
 - name: monitoring-config
   type: git
   source:
@@ -273,17 +259,18 @@ resource_types:
   type: docker-image
   source:
     repository: cfcommunity/slack-notification-resource
+
 - name: 18f-bosh-deployment
   type: docker-image
   source:
     repository: 18fgsa/bosh-deployment-resource
+
 - name: cg-common
   type: docker-image
   source:
     repository: 18fgsa/cg-common-resource
+
 - name: s3-iam
   type: docker-image
   source:
     repository: 18fgsa/s3-resource
-
-
