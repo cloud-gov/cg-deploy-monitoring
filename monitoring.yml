@@ -41,6 +41,7 @@ jobs:
       - script:
           name: check_awslogs.sh
           contents: (( file "cronjobs/check_awslogs.sh" ))
+        lock: /var/vcap/sys/run/cron/check_awslogs.lock
         minute: '*/5'
         hour: '*'
         day: '*'
@@ -127,6 +128,14 @@ properties:
       content: (( file "dashboards-tmp/pods.json" ))
 
   riemann:
+    memory:
+      overrides:
+      - host: '^queue.\d+'
+        threshold: 50
+        state: critical
+      - host: '^queue.\d+'
+        threshold: 25
+        state: warn
     swap:
       critical: 25
       warn: 10
@@ -172,11 +181,11 @@ resource_pools:
 
 disk_pools:
 - name: riemann
-  disk_size: 30_000
+  disk_size: 5_000
   cloud_properties:
     encrypted: true
 - name: influxdb
-  disk_size: 500_000
+  disk_size: 150_000
   cloud_properties:
     encrypted: true
 
