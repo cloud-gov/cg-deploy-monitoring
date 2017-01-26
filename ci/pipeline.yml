@@ -1,6 +1,7 @@
 ---
 jobs:
 - name: deploy-monitoring-staging
+  serial: true
   plan:
   - aggregate:
     - get: master-bosh-root-cert
@@ -285,5 +286,3 @@ resource_types:
   type: docker-image
   source:
     repository: 18fgsa/s3-resource
-
-
