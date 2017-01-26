@@ -34,14 +34,27 @@ jobs:
   properties:
     cron:
       variables:
+        UAA_URL: (( param "specify uaa url" ))
+        UAA_CLIENT_ID: (( param "specify uaa client id" ))
+        UAA_CLIENT_SECRET: (( param "specify uaa client secret" ))
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-        TTL: 600
         HEARTBEAT_GROUP: /var/log/syslog
+        TTL: 600
       entries:
       - script:
           name: check_awslogs.sh
           contents: (( file "cronjobs/check_awslogs.sh" ))
         lock: /var/vcap/sys/run/cron/check_awslogs.lock
+        minute: '*/5'
+        hour: '*'
+        day: '*'
+        month: '*'
+        wday: '*'
+        user: root
+      - script:
+          name: audit_tokens.sh
+          contents: (( file "cronjobs/audit_tokens.sh" ))
+        lock: /var/vcap/sys/run/cron/audit_tokens.lock
         minute: '*/5'
         hour: '*'
         day: '*'
