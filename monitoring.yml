@@ -1,3 +1,14 @@
+meta:
+  uaa-alert:
+    ops:
+      url: (( param "specify ops uaa url" ))
+      client_id: (( param "specify ops uaa client id" ))
+      client_secret: (( param "specify ops uaa client secret" ))
+    client:
+      url: (( param "specify client uaa url" ))
+      client_id: (( param "specify client uaa client id" ))
+      client_secret: (( param "specify client uaa client secret" ))
+
 releases:
 - name: grafana
   version: latest
@@ -34,9 +45,6 @@ jobs:
   properties:
     cron:
       variables:
-        UAA_URL: (( param "specify uaa url" ))
-        UAA_CLIENT_ID: (( param "specify uaa client id" ))
-        UAA_CLIENT_SECRET: (( param "specify uaa client secret" ))
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
         HEARTBEAT_GROUP: /var/log/syslog
         TTL: 600
@@ -54,8 +62,26 @@ jobs:
       - script:
           name: audit_tokens.sh
           contents: (( file "cronjobs/audit_tokens.sh" ))
-        lock: /var/vcap/sys/run/cron/audit_tokens.lock
-        minute: '*/5'
+        variables:
+          UAA_URL: (( grab meta.uaa-alert.ops.url ))
+          UAA_CLIENT_ID: (( grab meta.uaa-alert.ops.client_id ))
+          UAA_CLIENT_SECRET: (( grab meta.uaa-alert.ops.client_secret ))
+        lock: /var/vcap/sys/run/cron/audit_tokens_opslogin.lock
+        minute: '0'
+        hour: '*'
+        day: '*'
+        month: '*'
+        wday: '*'
+        user: root
+      - script:
+          name: audit_tokens.sh
+          contents: (( file "cronjobs/audit_tokens.sh" ))
+        variables:
+          UAA_URL: (( grab meta.uaa-alert.client.url ))
+          UAA_CLIENT_ID: (( grab meta.uaa-alert.client.client_id ))
+          UAA_CLIENT_SECRET: (( grab meta.uaa-alert.client.client_secret ))
+        lock: /var/vcap/sys/run/cron/audit_tokens_client.lock
+        minute: '0'
         hour: '*'
         day: '*'
         month: '*'
