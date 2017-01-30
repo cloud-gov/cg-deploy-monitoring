@@ -36,12 +36,8 @@ process_user_tokens() {
     done
   done
 
-  HAS_NEXT_PAGE=false
   NEXT_PAGE_START=$(($start + $ITEMS_PER_PAGE))
   if [ "$TOTAL_RESULTS" -ge "$NEXT_PAGE_START" ]; then
-    HAS_NEXT_PAGE=true
-  fi
-  if $HAS_NEXT_PAGE; then
     process_user_tokens $NEXT_PAGE_START
   fi
 }
