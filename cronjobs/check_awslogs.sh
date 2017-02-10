@@ -4,7 +4,7 @@ set -e -u -x
 
 JQ_PATH=/var/vcap/packages/jq-1.5/bin/jq
 RIEMANNC_PATH=/var/vcap/jobs/riemannc/bin/riemannc
-AWSCLI_PATH=/var/vcap/packages/aws-cli/bin/aws
+AWSCLI_PATH=/var/vcap/packages/awslogs/bin/aws
 
 GLOBAL_LAST_UPDATE=0
 
