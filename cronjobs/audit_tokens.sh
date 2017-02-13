@@ -32,7 +32,7 @@ process_user_tokens() {
       count=$(echo $client | ${JQ_PATH} --raw-output ".count | tonumber")
       is_admin=$(echo $client | ${JQ_PATH} ".is_admin")
       client_id=$(echo $client | ${JQ_PATH} --raw-output ".id")
-      ${RIEMANNC_PATH} --service uaa-token-audit --host ${UAA_URL} --ttl ${TTL} --metric_sint64 ${count} --attributes user-id=${user_id},client-id=${client_id},is-admin=${is_admin}
+      ${RIEMANNC_PATH} --service uaa-token-audit --host ${UAA_URL} --ttl ${TTL} --metric_sint64 ${count} --attributes user-id=${user_id},user-name=${user_name},client-id=${client_id},is-admin=${is_admin}
     done
   done
 
