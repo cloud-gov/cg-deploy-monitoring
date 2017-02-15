@@ -213,7 +213,7 @@ resource_pools:
     version: latest
   cloud_properties:
     iam_instance_profile: influxdb-archive
-    instance_type: m3.2xlarge
+    instance_type: r4.4xlarge
     ephemeral_disk:
       size: 30000
       type: gp2
