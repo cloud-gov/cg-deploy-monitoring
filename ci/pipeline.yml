@@ -19,13 +19,8 @@ jobs:
       trigger: true
     - get: monitoring-stemcell
       trigger: true
-    - get: terraform-state
-      resource: state-file-tooling
+    - get: terraform-yaml
       trigger: true
-  - task: terraform-state-to-yaml
-    file: pipeline-tasks/terraform-state-to-yaml.yml
-    params:
-      STATE_FILE: terraform.tfstate
   - task: monitoring-manifest
     config: &manifest-config
       platform: linux
@@ -102,13 +97,8 @@ jobs:
     - get: monitoring-stemcell
       passed: [deploy-monitoring-staging]
       trigger: true
-    - get: terraform-state
-      resource: state-file-tooling
+    - get: terraform-yaml
       trigger: true
-  - task: terraform-state-to-yaml
-    file: pipeline-tasks/terraform-state-to-yaml.yml
-    params:
-      STATE_FILE: terraform.tfstate
   - task: monitoring-manifest
     config:
       <<: *manifest-config
@@ -248,7 +238,7 @@ resources:
   source:
     url: {{slack-webhook-url}}
 
-- name: state-file-tooling
+- name: terraform-yaml
   type: s3-iam
   source:
     bucket: {{tf-state-bucket-tooling}}
