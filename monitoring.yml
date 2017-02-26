@@ -167,6 +167,8 @@ properties:
       content: (( file "dashboards-tmp/pods.json" ))
 
   riemann:
+    java:
+      xmx: 2048m
     memory:
       overrides:
       - host: '^queue.\d+'
