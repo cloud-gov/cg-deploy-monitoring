@@ -15,6 +15,8 @@ jobs:
       trigger: true
     - get: influxdb-release
       trigger: true
+    - get: secureproxy-release
+      trigger: true
     - get: grafana-release
       trigger: true
     - get: monitoring-stemcell
@@ -51,6 +53,7 @@ jobs:
       releases:
       - riemann-release/*.tgz
       - influxdb-release/*.tgz
+      - secureproxy-release/*.tgz
       - grafana-release/*.tgz
       stemcells:
       - monitoring-stemcell/*.tgz
@@ -91,6 +94,8 @@ jobs:
     - get: riemann-release
       passed: [deploy-monitoring-staging]
     - get: influxdb-release
+      passed: [deploy-monitoring-staging]
+    - get: secureproxy-release
       passed: [deploy-monitoring-staging]
     - get: grafana-release
       passed: [deploy-monitoring-staging]
@@ -178,6 +183,16 @@ resources:
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: riemann-(.*).tgz
+    secret_access_key: {{ci-secret-access-key}}
+
+- name: secureproxy-release
+  type: s3
+  source:
+    region_name: {{s3-bosh-releases-region}}
+    access_key_id: {{ci-access-key-id}}
+    bucket: {{s3-bosh-releases-bucket}}
+    private: true
+    regexp: secureproxy-(.*).tgz
     secret_access_key: {{ci-secret-access-key}}
 
 # TODO: Restore upstream release after https://github.com/vito/grafana-boshrelease/pull/19 is accepted.
