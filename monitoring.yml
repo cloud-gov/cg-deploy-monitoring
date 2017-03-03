@@ -18,6 +18,8 @@ releases:
   version: latest
 - name: cron
   version: latest
+- name: secureproxy
+  version: latest
 
 networks:
 - name: monitoring
@@ -34,6 +36,7 @@ jobs:
   - {name: grafana, release: grafana}
   - {name: riemann, release: riemann}
   - {name: cron, release: cron}
+  - {name: secureproxy, release: secureproxy}
 
   instances: 1
   resource_pool: riemann_z1
@@ -43,6 +46,10 @@ jobs:
     static_ips: (( static_ips(0) ))
 
   properties:
+    secureproxy:
+      listen_port: 3000
+      proxy_port: 3001
+
     cron:
       variables:
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
@@ -118,7 +125,7 @@ jobs:
 
 properties:
   grafana:
-    listen_port: 3000
+    listen_port: 3001
     session:
       cookie_secure: "true"
     auth:
