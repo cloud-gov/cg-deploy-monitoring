@@ -53,14 +53,15 @@ jobs:
     cron:
       variables:
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-        HEARTBEAT_GROUP: /var/log/syslog
-        TTL: 600
       entries:
       - script:
           name: check_awslogs.sh
           contents: (( file "cronjobs/check_awslogs.sh" ))
         lock: /var/vcap/sys/run/cron/check_awslogs.lock
-        minute: '*/5'
+        variables:
+          HEARTBEAT_GROUP: /var/log/syslog
+          TTL: 900
+        minute: '*/10'
         hour: '*'
         day: '*'
         month: '*'
