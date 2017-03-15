@@ -191,8 +191,8 @@ properties:
       critical: 25
       warn: 10
     disk:
-      critical: 75
-      warn: 70
+      critical: 80
+      warn: 75
     influxdb:
       host: (( grab jobs.influxdb.networks.monitoring.static_ips.[0] ))
       username: (( grab properties.influxdb.user ))
