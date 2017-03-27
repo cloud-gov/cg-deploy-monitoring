@@ -108,6 +108,8 @@ jobs:
     static_ips: (( static_ips(1) ))
 
   properties:
+    influxdb:
+      retention: "180d"
     cron:
       variables:
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
@@ -236,7 +238,7 @@ disk_pools:
   cloud_properties:
     encrypted: true
 - name: influxdb
-  disk_size: 150_000
+  disk_size: 175_000
   cloud_properties:
     encrypted: true
 
