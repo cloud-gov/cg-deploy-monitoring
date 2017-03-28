@@ -201,6 +201,17 @@ properties:
       password: (( grab properties.influxdb.password ))
       database: (( grab properties.influxdb.database ))
       port: 8086
+    # CloudWatch Log Group timestamps may be delayed by up to an hour or more:
+    # https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LogStream.html#CWL-Type-LogStream-lastEventTimestamp
+    awslogs:
+      metrics:
+      - service: awslogs.kubernetes
+        threshold: 3600
+      - service: awslogs._GLOBAL
+        threshold: 300
+    nologs:
+      alert_threshold: 3600
+      stop_threshold: 5400
 
 resource_pools:
 - name: riemann_z1
