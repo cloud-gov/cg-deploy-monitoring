@@ -220,7 +220,7 @@ resource_pools:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   cloud_properties:
-    iam_instance_profile: riemann-monitoring
+    iam_instance_profile: (( grab terraform_outputs.riemann_monitoring_profile ))
     instance_type: t2.medium
     elbs:
     - (( grab meta.elb_name ))
@@ -235,7 +235,7 @@ resource_pools:
     name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
     version: latest
   cloud_properties:
-    iam_instance_profile: influxdb-archive
+    iam_instance_profile: (( grab terraform_outputs.influxdb_monitoring_profile ))
     instance_type: r4.4xlarge
     ephemeral_disk:
       size: 30000
