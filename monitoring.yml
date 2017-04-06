@@ -263,6 +263,7 @@ compilation:
       size: 30000
       type: gp2
       encrypted: true
+    iam_instance_profile: (( grab terraform_outputs.bosh_compilation_profile ))
     availability_zone: (( grab properties.aws.availability_zone ))
 
 update:
