@@ -249,7 +249,7 @@ disk_pools:
   cloud_properties:
     encrypted: true
 - name: influxdb
-  disk_size: 175_000
+  disk_size: 200_000
   cloud_properties:
     encrypted: true
 
