@@ -245,7 +245,7 @@ resource_pools:
 
 disk_pools:
 - name: riemann
-  disk_size: 5_000
+  disk_size: 20_000
   cloud_properties:
     encrypted: true
 - name: influxdb
