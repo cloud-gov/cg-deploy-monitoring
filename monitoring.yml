@@ -21,16 +21,7 @@ releases:
 - name: secureproxy
   version: latest
 
-networks:
-- name: monitoring
-  type: manual
-  subnets:
-  - cloud_properties:
-      subnet: (( grab meta.subnet ))
-      security_groups:
-      - (( grab meta.security_group ))
-
-jobs:
+instance_groups:
 - name: monitoring
   templates:
   - {name: grafana, release: grafana}
@@ -38,12 +29,8 @@ jobs:
   - {name: cron, release: cron}
   - {name: secureproxy, release: secureproxy}
 
+  stemcell: default
   instances: 1
-  resource_pool: riemann_z1
-  persistent_disk_pool: riemann
-  networks:
-  - name: monitoring
-    static_ips: (( static_ips(0) ))
 
   properties:
     secureproxy:
@@ -100,12 +87,8 @@ jobs:
   templates:
   - {name: influxdb, release: influxdb}
 
+  stemcell: default
   instances: 1
-  resource_pool: xlarge_z1
-  persistent_disk_pool: influxdb
-  networks:
-  - name: monitoring
-    static_ips: (( static_ips(1) ))
 
   properties:
     influxdb:
@@ -139,7 +122,6 @@ properties:
     datasources:
     - type: "influxdb"
       database: (( grab properties.influxdb.database ))
-      url: (( concat "http://" jobs.influxdb.networks.monitoring.static_ips.[0] ":8086" ))
       name: (( grab properties.influxdb.name ))
       user: (( grab properties.influxdb.user ))
       password: (( grab properties.influxdb.password ))
@@ -196,7 +178,6 @@ properties:
       critical: 80
       warn: 75
     influxdb:
-      host: (( grab jobs.influxdb.networks.monitoring.static_ips.[0] ))
       username: (( grab properties.influxdb.user ))
       password: (( grab properties.influxdb.password ))
       database: (( grab properties.influxdb.database ))
@@ -213,58 +194,10 @@ properties:
       alert_threshold: 3600
       stop_threshold: 5400
 
-resource_pools:
-- name: riemann_z1
-  network: monitoring
-  stemcell:
-    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
-    version: latest
-  cloud_properties:
-    iam_instance_profile: (( grab terraform_outputs.riemann_monitoring_profile ))
-    instance_type: t2.medium
-    elbs:
-    - (( grab meta.elb_name ))
-    ephemeral_disk:
-      size: 30000
-      type: gp2
-      encrypted: true
-    availability_zone: (( grab properties.aws.availability_zone ))
-- name: xlarge_z1
-  network: monitoring
-  stemcell:
-    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
-    version: latest
-  cloud_properties:
-    iam_instance_profile: (( grab terraform_outputs.influxdb_monitoring_profile ))
-    instance_type: r4.4xlarge
-    ephemeral_disk:
-      size: 30000
-      type: gp2
-      encrypted: true
-    availability_zone: (( grab properties.aws.availability_zone ))
-
-disk_pools:
-- name: riemann
-  disk_size: 5_000
-  cloud_properties:
-    encrypted: true
-- name: influxdb
-  disk_size: 200_000
-  cloud_properties:
-    encrypted: true
-
-compilation:
-  network: monitoring
-  reuse_compilation_vms: true
-  workers: 4
-  cloud_properties:
-    instance_type: m3.xlarge
-    ephemeral_disk:
-      size: 30000
-      type: gp2
-      encrypted: true
-    iam_instance_profile: (( grab terraform_outputs.bosh_compilation_profile ))
-    availability_zone: (( grab properties.aws.availability_zone ))
+stemcells:
+- alias: default
+  name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+  version: latest
 
 update:
   canaries: 1

@@ -42,7 +42,7 @@ jobs:
         - -exc
         - |
           monitoring-config/generate-manifest.sh \
-            monitoring-config/monitoring-terraform-staging.yml \
+            monitoring-config/monitoring-staging.yml \
             terraform-yaml/state.yml \
             common/secrets.yml \
             > monitoring-manifest/manifest.yml
@@ -113,7 +113,7 @@ jobs:
         - -exc
         - |
           monitoring-config/generate-manifest.sh \
-            monitoring-config/monitoring-terraform-production.yml \
+            monitoring-config/monitoring-production.yml \
             terraform-yaml/state.yml \
             common/secrets.yml \
             > monitoring-manifest/manifest.yml
@@ -228,8 +228,8 @@ resources:
   type: 18f-bosh-deployment
   source:
     target: {{monitoring-staging-deployment-bosh-target}}
-    username: {{monitoring-staging-deployment-bosh-username}}
-    password: {{monitoring-staging-deployment-bosh-password}}
+    client_id: {{monitoring-staging-deployment-bosh-client-id}}
+    client_secret: {{monitoring-staging-deployment-bosh-client-secret}}
     deployment: {{monitoring-staging-deployment-bosh-deployment}}
     ignore_ssl: false
 
@@ -237,8 +237,8 @@ resources:
   type: 18f-bosh-deployment
   source:
     target: {{monitoring-production-deployment-bosh-target}}
-    username: {{monitoring-production-deployment-bosh-username}}
-    password: {{monitoring-production-deployment-bosh-password}}
+    client_id: {{monitoring-production-deployment-bosh-client-id}}
+    client_secret: {{monitoring-production-deployment-bosh-client-secret}}
     deployment: {{monitoring-production-deployment-bosh-deployment}}
     ignore_ssl: false
 

@@ -1,0 +1,31 @@
+meta:
+  influxdb_bucket_name: (( grab terraform_outputs.production_monitoring_influxdb_bucket_name ))
+
+instance_groups:
+- name: monitoring
+  azs: [z1]
+  vm_type: production-monitoring-riemann
+  vm_extensions: [production-monitoring-riemann-profile, production-monitoring-grafana-lb]
+  persistent_disk_type: production-monitoring-riemann
+  networks:
+  - name: production-monitoring
+    static_ips:
+    - (( grab terraform_outputs.production_monitoring_riemann_address ))
+- name: influxdb
+  azs: [z1]
+  vm_type: production-monitoring-influxdb
+  vm_extensions: [production-monitoring-influxdb-profile]
+  persistent_disk_type: production-monitoring-influxdb
+  networks:
+  - name: production-monitoring
+    static_ips:
+    - (( grab terraform_outputs.production_monitoring_influxdb_address ))
+
+properties:
+  grafana:
+    datasources:
+    - type: influxdb
+      url: (( concat "http://" terraform_outputs.production_monitoring_influxdb_address ":8086" ))
+  riemann:
+    influxdb:
+      host: (( grab terraform_outputs.production_monitoring_influxdb_address ))
