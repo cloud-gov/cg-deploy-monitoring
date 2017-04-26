@@ -1,0 +1,31 @@
+meta:
+  influxdb_bucket_name: (( grab terraform_outputs.staging_monitoring_influxdb_bucket_name ))
+
+instance_groups:
+- name: monitoring
+  azs: [z2]
+  vm_type: staging-monitoring-riemann
+  vm_extensions: [staging-monitoring-riemann-profile, staging-monitoring-grafana-lb]
+  persistent_disk_type: staging-monitoring-riemann
+  networks:
+  - name: staging-monitoring
+    static_ips:
+    - (( grab terraform_outputs.staging_monitoring_riemann_address ))
+- name: influxdb
+  azs: [z2]
+  vm_type: staging-monitoring-influxdb
+  vm_extensions: [staging-monitoring-influxdb-profile]
+  persistent_disk_type: staging-monitoring-influxdb
+  networks:
+  - name: staging-monitoring
+    static_ips:
+    - (( grab terraform_outputs.staging_monitoring_influxdb_address ))
+
+properties:
+  grafana:
+    datasources:
+    - type: influxdb
+      url: (( concat "http://" terraform_outputs.staging_monitoring_influxdb_address ":8086" ))
+  riemann:
+    influxdb:
+      host: (( grab terraform_outputs.staging_monitoring_influxdb_address ))
