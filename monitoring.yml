@@ -92,7 +92,7 @@ instance_groups:
 
   properties:
     influxdb:
-      retention: "180d"
+      retention: "90d"
     cron:
       variables:
         AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
