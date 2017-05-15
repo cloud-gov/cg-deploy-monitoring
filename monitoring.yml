@@ -1,4 +1,12 @@
 meta:
+  # some day influxdb-release will support links :/
+  influxdb:
+    user: (( param "specify influxdb user" ))
+    name: (( param "specify influxdb name" ))
+    password: (( param "specify influxdb password" ))
+    database: ((param "specify influxdb database" ))
+    backup_bucket: ((param "specify influxdb backup s3 bucket name" ))
+  # this is also referenced in multiple places, so leaving it in meta
   uaa-alert:
     ops:
       url: (( param "specify ops uaa url" ))
@@ -23,176 +31,207 @@ releases:
 
 instance_groups:
 - name: monitoring
-  templates:
-  - {name: grafana, release: grafana}
-  - {name: riemann, release: riemann}
-  - {name: cron, release: cron}
-  - {name: secureproxy, release: secureproxy}
-
   stemcell: default
   instances: 1
+  jobs:
+  - name: secureproxy
+    release: securerpoxy
+    properties:
+      secureproxy:
+        listen_port: 3000
+        proxy_port: 3001
 
-  properties:
-    secureproxy:
-      listen_port: 3000
-      proxy_port: 3001
+  - name: grafana
+    release: grafana
+    properties:
+      grafana:
+        listen_port: 3001
+        session:
+          cookie_secure: "true"
+        auth:
+          generic_oauth:
+            enabled: true
+            allow_sign_up: true
+            scopes: [openid,metrics.read]
+        datasources:
+        - type: "influxdb"
+          database: (( grab meta.influxdb.database ))
+          name: (( grab meta.influxdb.name ))
+          user: (( grab meta.influxdb.user ))
+          password: (( grab meta.influxdb.password ))
+          isDefault: true
+        dashboards:
+        - name: all-in-one-cf-components-dashboard
+          content: (( file "dashboards/all-in-one-cf-components-dashboard.json" ))
+        - name: cloud-controller
+          content: (( file "dashboards/cloud-controller.json" ))
+        - name: dea
+          content: (( file "dashboards/dea.json" ))
+        - name: diego
+          content: (( file "dashboards/diego.json" ))
+        - name: doppler-server
+          content: (( file "dashboards/doppler-server.json" ))
+        - name: gorouter
+          content: (( file "dashboards/gorouter.json" ))
+        - name: metron-agent
+          content: (( file "dashboards/metron-agent.json" ))
+        - name: syslog
+          content: (( file "dashboards/syslog.json" ))
+        - name: traffic-controller
+          content: (( file "dashboards/traffic-controller.json" ))
+        - name: uaa
+          content: (( file "dashboards/uaa.json" ))
+        - name: etcd
+          content: (( file "dashboards/etcd.json" ))
+        - name: concourse
+          content: (( file "dashboards/concourse.json" ))
+        - name: atypical
+          content: (( file "dashboards/atypical.json" ))
+        - name: k8s-cluster
+          content: (( file "dashboards-tmp/cluster.json" ))
+        - name: k8s-pods
+          content: (( file "dashboards-tmp/pods.json" ))
 
-    cron:
-      variables:
-        AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-      entries:
-      - script:
-          name: check_awslogs.sh
-          contents: (( file "cronjobs/check_awslogs.sh" ))
-        lock: /var/vcap/sys/run/cron/check_awslogs.lock
+  - name: riemann
+    release: riemann
+    properties:
+      riemann:
+        java:
+          xmx: 2048m
+        memory:
+          overrides:
+          - host: '^queue.\d+'
+            threshold: 50
+            state: critical
+            description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
+          - host: '^queue.\d+'
+            threshold: 25
+            state: warn
+            description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
+        swap:
+          critical: 25
+          warn: 10
+        disk:
+          critical: 80
+          warn: 75
+        influxdb:
+          username: (( grab meta.influxdb.user ))
+          password: (( grab meta.influxdb.password ))
+          database: (( grab meta.influxdb.database ))
+          port: 8086
+        # CloudWatch Log Group timestamps may be delayed by up to an hour or more:
+        # https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LogStream.html#CWL-Type-LogStream-lastEventTimestamp
+        awslogs:
+          metrics:
+          - service: awslogs.kubernetes
+            threshold: 3600
+          - service: awslogs._GLOBAL
+            threshold: 300
+          whitelist:
+          - kubernetes-minion
+        nologs:
+          alert_threshold: 3600
+          stop_threshold: 5400
+        logsearch:
+          app_logs_threshold: 1000
+        monitor:
+          metrics:
+          - service: monitor.uaa.audit_service.user_authentication_failure_count.stddevs
+            stddevs: 2
+          - service: monitor.uaa.audit_service.user_not_found_count.stddevs
+            stddevs: 2
+          - service: monitor.uaa.audit_service.user_password_changes.stddevs
+            stddevs: 2
+          - service: monitor.cc.http_status.4xx.stddevs
+            stddevs: 2
+          - service: monitor.cc.http_status.5xx.stddevs
+            stddevs: 2
+          - service: monitor.bbs.LRPsRunning.stddevs
+            stddevs: 1.5
+          - service: monitor.bbs.TasksRunning.stddevs
+            stddevs: 1.5
+
+  - name: cron
+    release: cron
+    properties:
+      cron:
         variables:
-          HEARTBEAT_GROUP: /var/log/syslog
-          TTL: 900
-        minute: '*/10'
-        hour: '*'
-        day: '*'
-        month: '*'
-        wday: '*'
-        user: root
-      - script:
-          name: audit_tokens.sh
-          contents: (( file "cronjobs/audit_tokens.sh" ))
-        variables:
-          UAA_URL: (( grab meta.uaa-alert.ops.url ))
-          UAA_CLIENT_ID: (( grab meta.uaa-alert.ops.client_id ))
-          UAA_CLIENT_SECRET: (( grab meta.uaa-alert.ops.client_secret ))
-        lock: /var/vcap/sys/run/cron/audit_tokens_opslogin.lock
-        minute: '0'
-        hour: '*'
-        day: '*'
-        month: '*'
-        wday: '*'
-        user: root
-      - script:
-          name: audit_tokens.sh
-          contents: (( file "cronjobs/audit_tokens.sh" ))
-        variables:
-          UAA_URL: (( grab meta.uaa-alert.client.url ))
-          UAA_CLIENT_ID: (( grab meta.uaa-alert.client.client_id ))
-          UAA_CLIENT_SECRET: (( grab meta.uaa-alert.client.client_secret ))
-        lock: /var/vcap/sys/run/cron/audit_tokens_client.lock
-        minute: '0'
-        hour: '*'
-        day: '*'
-        month: '*'
-        wday: '*'
-        user: root
+          AWS_DEFAULT_REGION: (( grab terraform_outputs.vpc_region ))
+        entries:
+        - script:
+            name: check_awslogs.sh
+            contents: (( file "cronjobs/check_awslogs.sh" ))
+          lock: /var/vcap/sys/run/cron/check_awslogs.lock
+          variables:
+            HEARTBEAT_GROUP: /var/log/syslog
+            TTL: 900
+          minute: '*/10'
+          hour: '*'
+          day: '*'
+          month: '*'
+          wday: '*'
+          user: root
+        - script:
+            name: audit_tokens.sh
+            contents: (( file "cronjobs/audit_tokens.sh" ))
+          variables:
+            UAA_URL: (( grab meta.uaa-alert.ops.url ))
+            UAA_CLIENT_ID: (( grab meta.uaa-alert.ops.client_id ))
+            UAA_CLIENT_SECRET: (( grab meta.uaa-alert.ops.client_secret ))
+          lock: /var/vcap/sys/run/cron/audit_tokens_opslogin.lock
+          minute: '0'
+          hour: '*'
+          day: '*'
+          month: '*'
+          wday: '*'
+          user: root
+        - script:
+            name: audit_tokens.sh
+            contents: (( file "cronjobs/audit_tokens.sh" ))
+          variables:
+            UAA_URL: (( grab meta.uaa-alert.client.url ))
+            UAA_CLIENT_ID: (( grab meta.uaa-alert.client.client_id ))
+            UAA_CLIENT_SECRET: (( grab meta.uaa-alert.client.client_secret ))
+          lock: /var/vcap/sys/run/cron/audit_tokens_client.lock
+          minute: '0'
+          hour: '*'
+          day: '*'
+          month: '*'
+          wday: '*'
+          user: root
 
 - name: influxdb
-  templates:
-  - {name: influxdb, release: influxdb}
-
   stemcell: default
   instances: 1
+  jobs:
+  - name: influxdb
+    release: influxdb
+    properties:
+      influxdb:
+        database: (( grab meta.influxdb.database ))
+        name: (( grab meta.influxdb.name ))
+        user: (( grab meta.influxdb.user ))
+        password: (( grab meta.influxdb.password ))
+        retention: 90d
 
-  properties:
-    influxdb:
-      retention: "180d"
-    cron:
-      variables:
-        AWS_DEFAULT_REGION: (( grab properties.aws.default_region ))
-        S3_BUCKET_NAME: (( grab meta.influxdb_bucket_name ))
-        INFLUX_DB_NAME: (( grab properties.influxdb.database ))
-      entries:
-      - script:
-          name: influx_backup.sh
-          contents: (( file "cronjobs/influx_backup.sh" ))
-        minute: 0
-        hour: 0
-        day: '*'
-        month: '*'
-        wday: '*'
-        user: root
-
-properties:
-  grafana:
-    listen_port: 3001
-    session:
-      cookie_secure: "true"
-    auth:
-      generic_oauth:
-        enabled: true
-        allow_sign_up: true
-        scopes: [openid,metrics.read]
-    datasources:
-    - type: "influxdb"
-      database: (( grab properties.influxdb.database ))
-      name: (( grab properties.influxdb.name ))
-      user: (( grab properties.influxdb.user ))
-      password: (( grab properties.influxdb.password ))
-      isDefault: true
-    dashboards:
-    - name: all-in-one-cf-components-dashboard
-      content: (( file "dashboards/all-in-one-cf-components-dashboard.json" ))
-    - name: cloud-controller
-      content: (( file "dashboards/cloud-controller.json" ))
-    - name: dea
-      content: (( file "dashboards/dea.json" ))
-    - name: diego
-      content: (( file "dashboards/diego.json" ))
-    - name: doppler-server
-      content: (( file "dashboards/doppler-server.json" ))
-    - name: gorouter
-      content: (( file "dashboards/gorouter.json" ))
-    - name: metron-agent
-      content: (( file "dashboards/metron-agent.json" ))
-    - name: syslog
-      content: (( file "dashboards/syslog.json" ))
-    - name: traffic-controller
-      content: (( file "dashboards/traffic-controller.json" ))
-    - name: uaa
-      content: (( file "dashboards/uaa.json" ))
-    - name: etcd
-      content: (( file "dashboards/etcd.json" ))
-    - name: concourse
-      content: (( file "dashboards/concourse.json" ))
-    - name: atypical
-      content: (( file "dashboards/atypical.json" ))
-    - name: k8s-cluster
-      content: (( file "dashboards-tmp/cluster.json" ))
-    - name: k8s-pods
-      content: (( file "dashboards-tmp/pods.json" ))
-
-  riemann:
-    java:
-      xmx: 2048m
-    memory:
-      overrides:
-      - host: '^queue.\d+'
-        threshold: 50
-        state: critical
-        description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
-      - host: '^queue.\d+'
-        threshold: 25
-        state: warn
-        description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
-    swap:
-      critical: 25
-      warn: 10
-    disk:
-      critical: 80
-      warn: 75
-    influxdb:
-      username: (( grab properties.influxdb.user ))
-      password: (( grab properties.influxdb.password ))
-      database: (( grab properties.influxdb.database ))
-      port: 8086
-    # CloudWatch Log Group timestamps may be delayed by up to an hour or more:
-    # https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LogStream.html#CWL-Type-LogStream-lastEventTimestamp
-    awslogs:
-      metrics:
-      - service: awslogs.kubernetes
-        threshold: 3600
-      - service: awslogs._GLOBAL
-        threshold: 300
-    nologs:
-      alert_threshold: 3600
-      stop_threshold: 5400
+  - name: cron
+    release: cron
+    properties:
+      cron:
+        variables:
+          AWS_DEFAULT_REGION: (( grab terraform_outputs.vpc_region ))
+          S3_BUCKET_NAME: (( grab meta.influxdb.backup_bucket ))
+          INFLUX_DB_NAME: (( grab meta.influxdb.database ))
+        entries:
+        - script:
+            name: influx_backup.sh
+            contents: (( file "cronjobs/influx_backup.sh" ))
+          minute: 0
+          hour: 0
+          day: '*'
+          month: '*'
+          wday: '*'
+          user: root
 
 stemcells:
 - alias: default
