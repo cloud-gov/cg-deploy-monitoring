@@ -35,7 +35,7 @@ instance_groups:
   instances: 1
   jobs:
   - name: secureproxy
-    release: securerpoxy
+    release: secureproxy
     properties:
       secureproxy:
         listen_port: 3000
