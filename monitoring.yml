@@ -10,11 +10,11 @@ meta:
   uaa-alert:
     ops:
       url: (( param "specify ops uaa url" ))
-      client_id: (( param "specify ops uaa client id" ))
+      client_id: uaa-token-audit 
       client_secret: (( param "specify ops uaa client secret" ))
     client:
       url: (( param "specify client uaa url" ))
-      client_id: (( param "specify client uaa client id" ))
+      client_id: uaa-token-audit
       client_secret: (( param "specify client uaa client secret" ))
 
 releases:
