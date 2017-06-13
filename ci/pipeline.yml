@@ -140,12 +140,10 @@ jobs:
 
 resources:
 - name: master-bosh-root-cert
-  type: s3
+  type: s3-iam
   source:
-    access_key_id: {{ci-access-key-id}}
     bucket: {{monitoring-production-private-bucket}}
     region_name: {{aws-region}}
-    secret_access_key: {{ci-secret-access-key}}
     versioned_file: master-bosh.crt
 
 - name: common-staging
@@ -153,8 +151,6 @@ resources:
   source:
     region: {{monitoring-staging-private-region}}
     bucket_name: {{monitoring-staging-private-bucket}}
-    access_key_id: {{ci-access-key-id}}
-    secret_access_key: {{ci-secret-access-key}}
     secrets_file: monitoring-staging.yml
     secrets_passphrase: {{monitoring-staging-private-passphrase}}
     bosh_cert: bosh-tooling.pem
@@ -164,8 +160,6 @@ resources:
   source:
     region: {{monitoring-production-private-region}}
     bucket_name: {{monitoring-production-private-bucket}}
-    access_key_id: {{monitoring-production-private-access-key-id}}
-    secret_access_key: {{monitoring-production-private-secret-access-key}}
     secrets_file: monitoring-production.yml
     secrets_passphrase: {{monitoring-production-private-passphrase}}
     bosh_cert: bosh-tooling.pem
@@ -176,38 +170,32 @@ resources:
     repository: vito/influxdb-boshrelease
 
 - name: riemann-release
-  type: s3
+  type: s3-iam
   source:
     region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: riemann-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
 
 - name: secureproxy-release
-  type: s3
+  type: s3-iam
   source:
     region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: secureproxy-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
 
 # TODO: Restore upstream release after https://github.com/vito/grafana-boshrelease/pull/19 is accepted.
 - name: grafana-release
   # type: bosh-io-release
   # source:
   #   repository: vito/grafana-boshrelease
-  type: s3
+  type: s3-iam
   source:
     region_name: {{s3-bosh-releases-region}}
-    access_key_id: {{ci-access-key-id}}
     bucket: {{s3-bosh-releases-bucket}}
     private: true
     regexp: grafana-(.*).tgz
-    secret_access_key: {{ci-secret-access-key}}
 
 - name: monitoring-config
   type: git
@@ -216,13 +204,11 @@ resources:
     branch: {{cg-deploy-monitoring-git-branch}}
 
 - name: monitoring-stemcell
-  type: s3
+  type: s3-iam
   source:
-    access_key_id: {{ci-access-key-id}}
     bucket: cg-stemcell-images
     regexp: light-bosh-stemcell-(.*)-aws-xen-hvm-ubuntu-trusty-go_agent.tgz
     region_name: us-gov-west-1
-    secret_access_key: {{ci-secret-access-key}}
 
 - name: monitoring-staging-deployment
   type: 18f-bosh-deployment
