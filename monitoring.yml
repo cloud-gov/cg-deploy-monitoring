@@ -212,6 +212,9 @@ instance_groups:
         name: (( grab meta.influxdb.name ))
         user: (( grab meta.influxdb.user ))
         password: (( grab meta.influxdb.password ))
+        # changing this retention policy has no effect due a bug in the upstream boshrelease
+        # you must change the retention policy by hand by running the following command on the influxdb node
+        # curl -X POST -G 'http://localhost:8086/query?pretty=true' --data-urlencode "q=ALTER RETENTION POLICY \"default\" ON \"production\" DURATION :duration:;"
         retention: 90d
 
   - name: cron
