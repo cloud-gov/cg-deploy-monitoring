@@ -101,10 +101,7 @@ instance_groups:
         memory:
           overrides:
           - host: 'influxdb.\d+'
-            threshold: 100
-            state: critical
-          - host: 'influxdb.\d+'
-            threshold: 98
+            threshold: 89
             state: warn
           - host: '^queue.\d+'
             threshold: 50
