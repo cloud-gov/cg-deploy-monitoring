@@ -28,7 +28,6 @@ instance_groups:
 - name: influxdb
   azs: [z1]
   vm_type: production-monitoring-influxdb
-  vm_extensions: [production-monitoring-influxdb-profile]
   persistent_disk_type: production-monitoring-influxdb
   networks:
   - name: production-monitoring
