@@ -29,7 +29,6 @@ instance_groups:
 - name: influxdb
   azs: [z2]
   vm_type: staging-monitoring-influxdb
-  vm_extensions: [staging-monitoring-influxdb-profile]
   persistent_disk_type: staging-monitoring-influxdb
   networks:
   - name: staging-monitoring
