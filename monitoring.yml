@@ -5,12 +5,11 @@ meta:
     name: (( param "specify influxdb name" ))
     password: (( param "specify influxdb password" ))
     database: ((param "specify influxdb database" ))
-    backup_bucket: ((param "specify influxdb backup s3 bucket name" ))
   # this is also referenced in multiple places, so leaving it in meta
   uaa-alert:
     ops:
       url: (( param "specify ops uaa url" ))
-      client_id: uaa-token-audit 
+      client_id: uaa-token-audit
       client_secret: (( param "specify ops uaa client secret" ))
     client:
       url: (( param "specify client uaa url" ))
@@ -218,26 +217,7 @@ instance_groups:
         # changing this retention policy has no effect due a bug in the upstream boshrelease
         # you must change the retention policy by hand by running the following command on the influxdb node
         # curl -X POST -G 'http://localhost:8086/query?pretty=true' --data-urlencode "q=ALTER RETENTION POLICY \"default\" ON \"production\" DURATION :duration:;"
-        retention: 90d
-
-  - name: cron
-    release: cron
-    properties:
-      cron:
-        variables:
-          AWS_DEFAULT_REGION: (( grab terraform_outputs.vpc_region ))
-          S3_BUCKET_NAME: (( grab meta.influxdb.backup_bucket ))
-          INFLUX_DB_NAME: (( grab meta.influxdb.database ))
-        entries:
-        - script:
-            name: influx_backup.sh
-            contents: (( file "cronjobs/influx_backup.sh" ))
-          minute: 0
-          hour: 0
-          day: '*'
-          month: '*'
-          wday: '*'
-          user: root
+        retention: 30d
 
 stemcells:
 - alias: default
