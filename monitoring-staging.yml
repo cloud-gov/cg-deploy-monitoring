@@ -1,7 +1,3 @@
-meta:
-  influxdb:
-    backup_bucket: (( grab terraform_outputs.staging_monitoring_influxdb_bucket_name ))
-
 instance_groups:
 - name: monitoring
   azs: [z2]
