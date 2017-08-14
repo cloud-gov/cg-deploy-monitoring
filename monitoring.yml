@@ -102,14 +102,6 @@ instance_groups:
           - host: 'influxdb.\d+'
             threshold: 89
             state: warn
-          - host: '^queue.\d+'
-            threshold: 50
-            state: critical
-            description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
-          - host: '^queue.\d+'
-            threshold: 25
-            state: warn
-            description: 'Log data is not reaching ElasticSearch! See: https://cloud.gov/docs/ops/runbook/troubleshooting-logsearch/#debugging-queue-memory-usage'
         swap:
           critical: 25
           warn: 10
